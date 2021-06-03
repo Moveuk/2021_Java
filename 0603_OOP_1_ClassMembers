@@ -1,0 +1,49 @@
+// 이것이 자바다 _ 신용권 : 197p ~
+//-----------------------------------------------
+// 클래스의 구성 멤버
+
+    // 필드(Field) : 객체의 데이터가 저장되는 곳 - 객체가 존재하는 한 데이터로서 함께 존재함.
+//    ex) int fieldName;
+
+    // 생성자(Constructor) : 객체 생성 시 초기화 역할 담당
+//    ex) ClassName() {...};
+
+    // 메소드(Method) : 객체의 동작에 해당하는 실행 블록
+//    ex) void methodName() {...};
+
+
+// 예제 코드 시작--------------------------------------------------------
+public class Car {
+
+	// 필드 : 전역변수
+	String company; // = "현대자동차";
+	String model; // = "그랜저";
+	String color; // = "검정";
+	int maxSpeed; // = 350;
+	int speed;
+
+//	public Car() {
+//		company = "현대자동차";
+//		model = "그랜저";
+//		color = "검정";
+//		int maxSpeed = 350;
+//	}
+
+// 생성자 초기화(초기값 선언)
+	public Car() {
+		this("BMW", "빨강", 100);
+	}
+
+	Car(String model) {
+		this(model, "디폴트", 250);
+	}
+
+	Car(String model, String color) {
+		this(model, color, 250);
+	}
+
+	public Car(String model, String color, int maxSpeed) {
+		this.model = model;
+		this.color = color;
+		this.maxSpeed = maxSpeed;
+	}
