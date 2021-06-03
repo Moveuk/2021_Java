@@ -47,3 +47,41 @@ public class Car {
 		this.color = color;
 		this.maxSpeed = maxSpeed;
 	}
+	// 이후 Calc를 통한 매개변수 메소드 수업 진행.
+
+
+
+
+	//----------------------------------------------
+	
+	
+	
+	
+	// 0603_4교시 : Calc CalcTest 이후 메소드 기능 수업.
+	// 메소드(기능)
+
+	void keyTurnOn() {
+		System.out.println("시동을 걸다.");
+	}
+
+	void keyTurnOff() {
+		System.out.println("시동을 끄다.");
+	}
+
+	void accel() {
+		for (int i = 0; i < 200; i++) {
+//			// 속도를 조절해서 보여주고 싶은 경우 : 꼼수임. 자바에서 할필요 없는 기능?일듯
+//			for (int k =0; k<1000000000;k++) {
+//			} 컴사양이 좋아서 안됨.. ㅋㅋㅋㅋ
+			speed = i;
+			if (i%10==0 && i%3==0) {
+				System.out.println(speed);
+			} else if (i==199) {
+				System.out.println(speed);
+			}
+		}
+	}
+
+	
+
+}
