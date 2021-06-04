@@ -1,0 +1,38 @@
+// com.mycompany.Car.java 를 위한 외부 패키지 코드.
+
+// com.hankook -------------------------------
+      // Tire.java class
+      
+      package com.hankook;
+
+      public class Tire {
+
+        public Tire() { // Generate Constructors from superclass -> 기본 생산자 생성.
+
+          // public : 외부 패키지에서 사용 가능
+          // private : 내,외부 모두 생성자 호출 불가능.
+          // default : 같은 패키지 내부에서는 사용 가능.
+          // protected : 같은 패키지 내부에서는 사용 가능. 
+          //			   && 외부의 클래스가 자신의 자식(child) 클래스라면 생성자 생성 가능.
+          // 			   (inherit 상속받은 클래스일 경우)
+        }
+      }
+      // SnowTire.java class-----------------------------
+      
+      package com.hankook;
+
+      public class SnowTire {
+      }
+
+// ------------------------------------------------
+
+// com.kumho.Tire ---------------------------------
+
+      package com.kumho;
+
+      public class Tire {
+      }
+
+// ------------------------------------------------
+
+
