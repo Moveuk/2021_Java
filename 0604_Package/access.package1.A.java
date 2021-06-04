@@ -1,3 +1,7 @@
+// 이것이 자바다 _ 신용권 : 248p ~
+// Key Word : 패키지(Package), 접근 제한자(Access Modifier), public, protected, default, private, 
+//------------------------------------
+
 package access.package1;
 
 public class A {
