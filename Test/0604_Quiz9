@@ -2,7 +2,7 @@
 
 public class Student {
 
-		int name;
+		String name;
 		int classroom;
 		int number;
 		int korean;
