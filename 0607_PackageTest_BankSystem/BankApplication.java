@@ -55,14 +55,14 @@ public class BankApplication {
 
 		System.out.print("계좌번호: ");
 		String ano = sc.next();
-		
-		// next 와 nextline의 차이
-		// next는 엔터값을 받지 않음. 
-		// 따라서 line일때는 값을 넣어준후 한줄 더 넣어줌으로써 빈 값이 들어가는 것을 막아줘야함.
 //		sc.nextLine();
 
+		// next 와 nextline의 차이
+		// next는 엔터값을 받지 않음.
+		// 따라서 line일때는 값을 넣어준후 한줄 더 넣어줌으로써 빈 값이 들어가는 것을 막아줘야함.
+
 		System.out.print("계좌주: ");
-		String owner = sc.nextLine();
+		String owner = sc.next();
 
 		System.out.print("초기입금액: ");
 		int balance = sc.nextInt();
@@ -128,6 +128,7 @@ public class BankApplication {
 
 		if (account == null) {
 			System.out.println("계좌가 존재하지 않습니다.");
+			return;
 		} else {
 			account.setBalance(account.getBalance() + money);
 		}
@@ -206,6 +207,7 @@ public class BankApplication {
 			if (acc != null) {
 				String dbAno = acc.getAno();
 				if (dbAno.equals(ano)) {
+					System.out.println(ano);
 					account = acc;
 					break;
 				}
@@ -216,6 +218,47 @@ public class BankApplication {
 		return account;
 
 	}
+
+//	// 가변형인 계좌값을 받아서 동일한 계좌 정보 찾아내기 !! ------------------------------
+
+//	// 가변형 인자값으로 받아서 사용한다.
+//	private static Account[] findAccount(String... ano) {
+//		// 중요: "반환값이 여러개 이므로 반환 타입을 배열로 바꿔줘야함"
+//
+//		Account[] account = new Account[ano.length];
+//		// 넘어오는 인자의 갯수만큼의 크기로 배열을 만들어서 인스턴스화함.
+//
+//		for (int i = 0; accountArray[i] != null; i++) {
+//			// 널값까지 : 널을 찾아서 자료를 저장했음으로 처음부터 끝까지 라는 뜻.
+//			String dbAno = accountArray[i].getAno();
+//			for(int j =0;j<ano.length;j++) {
+//				if(dbAno.equals(ano[j])) {
+//					//i번쨰 계좌(dbAno)가 내가 넣은 계좌와 같으면
+//					//j번째 배열칸에 그 계좌에 대한 정보(account 타입 데이터)를 넣어라.
+//					account[j] = accountArray[i];
+//					break;
+//				}
+//			}
+//		}
+//		return account;
+
+	// 본인 답안.
+//		for (String ano : anos) {
+//			for (Account acc : accountArray) {
+//				if (acc != null) {
+//					String dbAno = acc.getAno();
+//					if (dbAno.equals(ano)) {
+//						System.out.println(ano);
+//						account = acc;
+//						break;
+//					}
+//				}
+//
+//			}
+//
+//			return account;
+//		}
+//	}
 
 	// quiz 송금 기능 추가
 	private static void send() {
@@ -241,6 +284,17 @@ public class BankApplication {
 		}
 		toAccount.setBalance(toAccount.getBalance() + money);
 		fromAccount.setBalance(fromAccount.getBalance() - money);
+
+//		//가변형 인자용 코드
+//		Account[] acc = findAccount(toAno,fromAno);
+//		
+//		
+//		if (acc[0] == null || acc[1] == null) {
+//			System.out.println("계좌가 존재하지 않습니다.");
+//			return;
+//		}
+//		acc[1].setBalance(acc[1].getBalance() + money);
+//		acc[0].setBalance(acc[0].getBalance() - money);
 
 		System.out.println("결과 : 송금이 성공되었습니다.");
 	}
