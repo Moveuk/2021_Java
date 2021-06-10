@@ -95,7 +95,7 @@ public class Television implements RemoteControl {
  위의 코드를 보면 인터페이스로부터 상속된 필드를 이용하여 제어하고 있음을 알 수 있다.
  
  
-    <hr/>   
+  <hr/>   
       
 ### 354p : 8.3.2 익명 구현 객체
 
@@ -233,6 +233,59 @@ public class Audio implements RemoteControl {
 ```
 
 RemoteControl 클래스에 선언된 디폴트 메소드를 상속받은 후 다른 클래스에서 사용하려면 디폴트 메소드에 대한 재정의가 필요하다. 
-따라서 필요한 mute 필드를 선언해주고
+따라서 필요한 mute 필드를 선언해주고 디폴트 메소드 또한 오버라이드를 하면 RemoteControlTest에서 사용할 수 있다.
+
+
+<hr/>
+   
+### 362p : 8.4.3 정적 메소드 사용
+
+
+ 인터페이스의 정적 메소드는 인터페이스로 바로 호출이 가능하다. 다음 예제는 RemoteControl의 ChangeBatter() 정적 메소드를 호출한다.
+
+
+**RemoteControl 클래스에 선언된 디폴트 메소드**   
+```java
+public interface RemoteControl {
+	...
+	
+	// 349p : 8.2.5 정적 메소드 선언
+	static void ChangeBattery() {  // public 이 자동으로 컴파일 과정에서 붙음.
+		System.out.println("건전지 교체");
+	}
+}
+```
+**RemoteControlTest 클래스에서 정적 메소드 사용**
+```java
+public class RemoteControlTest {
+		a.setMute(true);
+		
+		RemoteControl.ChangeBattery();
+//		a.ChangeBattery(); // 사용 불가능.
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
