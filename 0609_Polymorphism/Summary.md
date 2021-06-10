@@ -267,3 +267,101 @@ public class Airplane extends Vehicle {
 ```
 
 <hr/>
+
+  ### 324p : 7.7.5 강제 타입 변환(Casting)
+  
+  ```
+  자식 클래스 변수 = (자식클래스) <U>부모 클래스 타입;<U/>
+  				자식 타입이 부모 타입으로 변환된 상태.
+  like
+  
+  Class Parent; Class Child;
+  
+  public class ChildExample {
+	public static void main(String[] args) {
+		Parent parent = new Child();
+		parent.field1 = "data1";
+		parent.method1();
+		parent.method2();
+		/*
+		parent.field2 = "data2";  //(불가능)
+		parent.method3();         //(불가능)
+		*/
+		
+		Child child = (Child) parent;
+		child.field2 = "yyy";  //(가능)
+		child.method3();     //(가능)
+	}
+}
+  ```
+
+ 위 코드 내용 처럼 Chlid 를 Parent 타입으로 변환했을때는 Child의 필드와 메소드를 사용하지 못하지만, 다시 Child 타입의 변수에 선언하게 되면 Child의 필드와 메소드를 다시 사용할 수 있게 된다.   
+
+   
+<hr/>
+   
+ ### 326p : 7.7.6 객체 타입 확인(instanceof)
+
+ 앞서 말한 강제 타입 변환은 **자식 타입이 부모타입으로 변환되어 있는 상태**에서만 가능하기 때문에 다음과같이 부모 타입의 변수가 부모 객체를 참조할 경우 자식 타입으로 변환할 수 없다.
+ 
+ ```java
+  Parent parent = new Parent();
+  Child child = (Child) parent;   // 강제 타입 변환을 할 수 없다.(위에 부모가 자식으로 안바뀌었기 때문.)
+ ```
+    
+ 이런 경우 부모 변수가 참조하는 객체가 부모 객체인지 자식 객체인지 확인할 필요가 있다. 이 때 사용하는 것이 instanceof 이다.   
+ 
+ instanceof는 **어떤 객체가 어떤 클래스의 인스턴스인지 확인**하기 위하여 사용하는 것이다.   
+ 
+ 사용법은 다음과 같다.   
+ ```java
+ boolean result = 좌향(객체) instanceof 우향(타입)
+ ```
+ (해석) : 좌향(객체) 가 우향의 타입인지(true) 아닌지(false)를 result에 반환하라.
+ 
+ 위 코드의 타입처럼 instanceof는 boolean 타입의 true or false로 반환되며 메소드 내에서 강제 타입 변환이 필요할 경우 반드시 매개값이 어떤 객체인지 instanceof 연산자로 확인하고 안전하게 강제 타입 변환을 해야 한다.
+   
+ 만약 타입을 확인 하지 않고 강제 타입 변환을 시도하면 ClassCastException 예외가 발생할 수 있으며 다음 예제를 통해 이해해보자.
+
+ **Car.java class 작성**
+ **FireCar.java class 작성**
+ **Ambulance.java class 작성**
+```java
+```
+ **CarTest.java class**
+```java
+package instance;
+
+public class CarTest {
+
+	public static void main(String[] args) {
+		FireCar fc = new FireCar();
+		Ambulance ab = new Ambulance();
+		
+		work(fc); // work의 매개변수는 Car 타입, fc는 FireCar 타입이지만 자동 타입 변환이 일어남.
+		work(ab); // work의 매개변수는 Car 타입, fc는 Ambulance 타입이지만 자동 타입 변환이 일어남.
+	}
+	
+	public static void work(Car c) {
+		if(c instanceof FireCar) { // c의 타입이 FireCar인가?
+			
+		} else if (c instanceof Ambulance) { // c의 타입이 Ambulance인가?
+			
+		}
+	}
+}
+```
+
+ 위 코드 처럼 어떤 메소드에 들어가는 매개 변수가 부모 자식 간의 상속 관계에서 다양해질 수 있으므로 매개 변수를 받을 때 instanceof 연산자를 통해 구분할 수 있다.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
