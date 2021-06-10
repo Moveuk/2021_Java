@@ -299,7 +299,8 @@ public class Airplane extends Vehicle {
 
    
 <hr/>
-   
+   2021.06.10 이어서 수업..   
+      
  ### 326p : 7.7.6 객체 타입 확인(instanceof)
 
  앞서 말한 강제 타입 변환은 **자식 타입이 부모타입으로 변환되어 있는 상태**에서만 가능하기 때문에 다음과같이 부모 타입의 변수가 부모 객체를 참조할 경우 자식 타입으로 변환할 수 없다.
@@ -321,12 +322,17 @@ public class Airplane extends Vehicle {
  
  위 코드의 타입처럼 instanceof는 boolean 타입의 true or false로 반환되며 메소드 내에서 강제 타입 변환이 필요할 경우 반드시 매개값이 어떤 객체인지 instanceof 연산자로 확인하고 안전하게 강제 타입 변환을 해야 한다.
    
- 만약 타입을 확인 하지 않고 강제 타입 변환을 시도하면 ClassCastException 예외가 발생할 수 있으며 다음 예제를 통해 이해해보자.
-
- **Car.java class 작성**
- **FireCar.java class 작성**
- **Ambulance.java class 작성**
+ 만약 타입을 확인 하지 않고 강제 타입 변환을 시도하면 ClassCastException 예외가 발생할 수 있으며 다음 예제를 통해 이해해보자.   
+   
+ **Car.java class 작성**   	: Car 에는 아무런 필드, 메소드가 없음.
+ **FireCar.java class 작성**   	
+ **Ambulance.java class 작성**   	: Firecar와 Ambulance에는 다음과 같은 메소드가 들어있음.
 ```java
+public class FireCar extends Car {
+	void fire() {
+		System.out.println("화재진압~~");
+	}
+}
 ```
  **CarTest.java class**
 ```java
@@ -344,9 +350,11 @@ public class CarTest {
 	
 	public static void work(Car c) {
 		if(c instanceof FireCar) { // c의 타입이 FireCar인가?
-			
+			FireCar fc = (FireCar) c;
+			fc.fire();
 		} else if (c instanceof Ambulance) { // c의 타입이 Ambulance인가?
-			
+			Ambulance ab = (Ambulance)c;
+			ab.siren();
 		}
 	}
 }
@@ -354,14 +362,112 @@ public class CarTest {
 
  위 코드 처럼 어떤 메소드에 들어가는 매개 변수가 부모 자식 간의 상속 관계에서 다양해질 수 있으므로 매개 변수를 받을 때 instanceof 연산자를 통해 구분할 수 있다.
  
+ 또한, 굳이 강제 타입 변환(Casting)하는 이유는 Car에는 없는 메소드(fire,siren)를 사용하기 위함이다. 
  
+ 실행해보면 다음과 같이 Car 타입으로 넣었지만 Car에는 없는 메소드가 출력된다.
  
+ ![image](https://user-images.githubusercontent.com/84966961/121449219-56b6c380-c9d4-11eb-947f-a5aaa85020fa.png)
+   
+    
+    <hr/>
+
+ ## 329p : 7.8 추상클래스(Astract)   
+ <hr/>
+ ### 329p : 7.8.1 추상클래스의 개념(instanceof) 
  
+ 추상화를 하게 되면 메소드의 경우 특히 상속받는 자식 클래스에서 반드시 오버라이딩을 해주어야 하므로 전체적인 기능 구성에서 필요한 부분들을 강제할 수 있다는 장점이 있다.
+ 즉, 추상화는 코드 작성 혹은 기능 구현에 있어서 청사진을 제공하며 효율을 올려주는 역할을 할 수 있다.
  
+**추상 클래스의 생성 방법.**   
+ 아래 그림처럼 클래스 생성시 Abstract 버튼을 클릭하면 된다. 혹은 아래 코드처럼 선언해주면 된다.
+
+![image](https://user-images.githubusercontent.com/84966961/121449075-ff185800-c9d3-11eb-878e-d5a8aa1f0c6b.png)
+```java
+public abstract class Phone {
+	// 추상클래스의 특징
+	// 1. 생성이 불가능하다.
+	// 2. 상속만 가능하다.
+	// 3. 추상 메소드를 포함한다. (선언부만 정의한다.)
+	// 4. 자식에서 추상 메소드를 반드시 오버라이딩 해야한다.
+	// 5. 일반 클래스와 동일하게 멤버 변수와 메소드를 정의 할 수 있다.
+}
+```
+
+
+
+### 334p : 7.8.4 추상 메소드와 오버라이딩
+
+모식도 그림
+
+ 추상 클래스에 추상 메소드를 만든 후 상속받는 자식 클래스를 생성하면 다음 그림과 같이 자동으로 Override할 sound() 메소드가 생성된다.
+![image](https://user-images.githubusercontent.com/84966961/121449920-b366ae00-c9d5-11eb-9e9a-48dd3c79b95b.png)
+   
+ 다음은 AnimalTest.java 코드를 통해 개념을 잡아보자.
  
+```java
+package abstract1;
+
+public class AnimalTest {
+	public static void main(String[] args) {
+		Dog dog = new Dog("강아지");
+		Cat cat = new Cat("고양이");
+		dog.sound();
+		cat.sound();
+		System.out.println("-----");
+		
+		//변수의 자동 타입 변환
+		Animal animal = null;
+		animal = new Dog("강아지");      // 부모 타입으로 매개 변수를 잡고
+		animal.sound();			// animal에 내용이 정의되지 않은 메소드를 넣더라도 내용물이 잘나옴.
+		animal = new Cat("고양이");
+		animal.sound();
+		System.out.println("-----");
+		
+		//매개변수의 자동 타입 변환
+		animalSound(new Dog("강아지")); // Animal 타입으로 각 매개 변수가 바뀜.
+		animalSound(new Cat("고양이"));
+	}
+	
+	public static void animalSound(Animal animal) {
+		animal.sound();
+	}
+}
+```
+
+  교재 310p ~ 311p의 내용처럼 자동 타입 변환에 의해 추상화된 객체의 메소드 또한 쉽게 사용가능하다.
+  
+  일반 클래스의 상속과 크게 기능적으로는 다르지 않으므로 결국 초반에 설명한 것처럼 추상화의 핵심은 **전체 구현의 청사진을 제공**하는 역할을 한다는 점이다.
+
+ <hr/>
+   
+ 다음 스타크래프트 예제를 통해 상속과 추상화에 대해 이해해보자.
  
- 
- 
+![image](https://user-images.githubusercontent.com/84966961/121452072-bf546f00-c9d9-11eb-8613-4923763dc5c2.png)
+
+ Marine, Dropship, Tank에 모두 같은 필드와 메소드들이 정의 되어있다.    
+ 이런 경우 **상속**을 사용하여 코드의 중복을 줄일 수 있다.(코드의 최소화)
+   
+ Unit이라는 클래스를 만들어 공통 인자들을 상속 시켜주도록 만들면 된다.
+
+![image](https://user-images.githubusercontent.com/84966961/121453501-3ee33d80-c9dc-11eb-89fb-01636745130a.png)
+
+ 문제점은 지상 유닛과 공중 유닛의 이동하는 부분이 다르다는 점이다.   
+ 지상 유닛은 한정된 x,y 값에서 움직이며 언덕을 못넘어가지만 공중 유닛은 x,y 값에 상관없이 이동이 가능하다.
+   
+ 이 경우에 사용할 수 있는 것이 **추상화**이다. 
+
+ stop은 같은 기능을 사용하지만 move는 유닛마다 다른 기능을 구현해 주어야 한다.
+
+ move를 추상화하면 다음과 같이 오류가 생기며 override 로 재정의해주면 된다.
+
+![image](https://user-images.githubusercontent.com/84966961/121454137-3fc89f00-c9dd-11eb-9bc8-95408ebd3bea.png)
+   
+ 다음 코드 작성처럼 Unit이 추상화가 되어 있다면 상속된 자식 클래스의 내용과 기능을 강제할 수 있다.
+   
+![image](https://user-images.githubusercontent.com/84966961/121454347-9504b080-c9dd-11eb-9c7c-029f3488b95e.png)
+   
+   
+
 
 
 
