@@ -119,6 +119,7 @@ public class StarcraftTest {
   **실행화면**
   ![image](https://user-images.githubusercontent.com/84966961/121627500-6ad0f280-cab2-11eb-97f7-a9ed1160bb60.png)
    10. 하지만, 무엇이 수리가 완료되었는지 궁금하므로 toString의 override를 이용하게 되면 단순히 u를 출력하더라도 주소값이 아닌 toString을 호출하므로 따로 이름을 불러오는 함수를 추가하는 것이 아니라 toString을 사용한다.(CallBack 함수)
+ % toString에 대한 내용은 맨 밑 참조에 넣어 놓음.
 ![image](https://user-images.githubusercontent.com/84966961/121627645-b6839c00-cab2-11eb-940e-673b330cd4ea.png)
    ```java
 	public void repair(Repairable r) { // 치료가 필요한 것들.
@@ -133,30 +134,38 @@ public class StarcraftTest {
   위의 설명처럼 단순히 u를 불러도 이름값이 나오는 것을 알 수 있음.
   ![image](https://user-images.githubusercontent.com/84966961/121628135-a0c2a680-cab3-11eb-90d0-7c81be50f345.png)
 
-   11. a
-   12. a
-   13. a
-   14. a
-   15. 
+   11. UML 다이어그램을 그릴 수 있도록 이클립스 추가 플러그인을 설치후 ucls 파일을 생성함.   
+**Starcraft 패키지의 UML Diagram**
+![image](https://user-images.githubusercontent.com/84966961/121635187-c609e180-cac0-11eb-951c-ab0c7d4bd51c.png)
+   
+   12. 다음과 같은 구조로 Medic과 인터페이스 추가해보자.   
+![image](https://user-images.githubusercontent.com/84966961/121635451-387ac180-cac1-11eb-8e12-852481295ab9.png)
+   **작성 후**
+![image](https://user-images.githubusercontent.com/84966961/121636382-cacf9500-cac2-11eb-8723-95b020f96464.png)
 
 
 
 
+<hr/>
 
+ ### 객체 값 출력_toString 메소드 오버라이딩
 
+[ toString 메소드 ]
 
+기본 상속된 Object 클래스의 메소드   
+객체가 가진 정보를 문자열로 만들어 출력   
+인스턴스 출력 시 Object.hashCode()로 생성된 해시값을 문자열로 반환시켜줌   
+인스턴스의 값을 출력할 때 그냥 인스턴스를 넣거나 기본 toString()메소드를 사용하면 해시값을 포함한 이상한 값이 출력됩니다. 만들어 둔 인스턴스의 정보를 편하게 출력하기 위해 toString()메소드를 오버라이딩 해두면 편리합니다.
 
+<hr/>   
+**콜백(callback)**
 
-
-
-
-
-
-
-
-
-
-
-
-
+ 1. 피호출자(Callee)가 호출자(Caller)를 다시 호출하는 것   
+ 2. 비동기적 처리를 하기 위한 디자인 패턴의 종류   
+   
+간단하게는 위와 같은 개념을 가지고 있지만, 저는 이렇게 이해하는 것이 더 명확하게 느껴졌습니다.
+   
+콜백함수를 등록하면, 특정 이벤트가 발생되었을 때 콜백함수를 호출하여 실행한다. 즉, 콜백함수는 바로 사용할 수도 있으며, 추후에 사용할 수도 있다. 이때 콜백함수가 등록되는 곳과 이벤트가 발생할 때 호출하는 것은 서버이다.
+   
+이때, 특정 이벤트라는 것은 어떠한 조건을 만족시키는 것을 의미합니다.
 
