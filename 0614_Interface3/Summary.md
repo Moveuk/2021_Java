@@ -56,7 +56,40 @@ public class LiftableImpl implements Liftable {
 <br/><br/>
 <hr/>
     
-3. ㅁ
+ 3. 이제 이 기능을 각각 Lift 기능을 넣어줄 건물들(배럭, 팩토리)에 포함시켜주면 될 것이다. 방법은 `LifatableImpl`의 인스턴스를 만들어서 호출해주면 될 것이다.   
+   
+```
+public class Barrack extends Building implements Liftable{
+
+	LiftableImpl lf = new LiftableImpl();
+	
+	@Override
+	public void liftoff() {
+		lf.liftoff();
+	}
+
+	@Override
+	public void move(int x, int y) {
+		lf.move(x, y);
+	}
+
+	@Override
+	public void stop() {
+		lf.stop();
+	}
+
+	@Override
+	public void land() {
+		lf.land();
+	}
+}
+```
+   
+ 이렇게 하면 배럭과 팩토리가 `LiftableImpl`과 포함 관계를 맺은 것이다. 이 상태에서 건물 부양의 기능을 바꾸고 싶다면 모든 건물의 메소드를 변경하는 것이 아니라 `LiftableImpl`만 수정해주면 될 것이다.
+   
+<br/><br/>
+<hr/>
+    
  4. ㅁ
  5. ㅁ
  6. ㅁ
