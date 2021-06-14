@@ -17,13 +17,15 @@
  => 개발 코드를 수정하지 않고, 사용하는 객체를 변경할 수 있도록 하기 위해서이다. 위의 그림처럼 인터페이스는 여러 객체와 함께 상호 작용하므로 어떤 객체를 사용하느냐에 따라서 실행 내용과 리턴값이 다를 수 있다. 따라서 개발 코드 측면에서는 **코드 변경 없이 실행 내용과 리턴값을 다양화할 수 있다는 장점**을 가지게 된다.   
     
  <hr/> 
+   
 ## 344p : 8.2 인터페이스 선언   
-**인터페이스 선언**
-![image](https://user-images.githubusercontent.com/84966961/121458217-f29bfb80-c9e3-11eb-817d-d5df614d9601.png)   
-**인터페이스 생성 방법**   
-![image](https://user-images.githubusercontent.com/84966961/121455527-9800a080-c9df-11eb-8a19-12e8fd17f903.png)
-    
-**인터페이스의 특징**
+   
+**인터페이스 선언**   
+![image](https://user-images.githubusercontent.com/84966961/121458217-f29bfb80-c9e3-11eb-817d-d5df614d9601.png)     
+**인터페이스 생성 방법**     
+![image](https://user-images.githubusercontent.com/84966961/121455527-9800a080-c9df-11eb-8a19-12e8fd17f903.png)   
+     
+**인터페이스의 특징**   
 ```java
 public interface Phone {
 	// 상수 
