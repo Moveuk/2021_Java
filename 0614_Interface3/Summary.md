@@ -236,12 +236,17 @@ public class DaoImpl implements DataAccessObject {
 }
 ```
  위 코드 처럼 바꿔주면 어답터화 되는 것을 알 수 있다.
+   
+![image](https://user-images.githubusercontent.com/84966961/121832001-f097ac80-cd03-11eb-8893-919bcd010a54.png)   
+   
+<br/><br/><br/>
+<hr/>
 
- 3. 
- 4. a
- 5. a
- 6. a
- 7. 
+## 389p : 중첩 클래스와 중첩 인터페이스   
+   
+<hr/>
+   
+### 390p ~ 395p 설명
 
 
 
