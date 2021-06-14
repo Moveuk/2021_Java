@@ -1,5 +1,5 @@
-#
-Key Word : 
+# Interface 복습
+Key Word : 인터페이스(Interface), 클래스(class), 캐스팅(Casting), toString, 콜백(call back)
 <hr/>
    
  ### 344p ~ 375p : 인터페이스와 객체 구조 복습
