@@ -90,16 +90,169 @@ public class Barrack extends Building implements Liftable{
 <br/><br/>
 <hr/>
     
- 4. ㅁ
- 5. ㅁ
- 6. ㅁ
- 7. ㅁㅁ
- 8. ㅁ
- 9. ㅁ
- 10. ㅁ
- 11. ㅁ
- 12. ㅁ
- 13. ㅁ
- 14. ㅁ
- 15. ㅁ
- 16. 
+ 4. 실행 클래스를 만들어서 테스트 해보자.   
+   
+```java
+public class BuildTest {
+
+	public static void main(String[] args) {
+
+		Barrack ba = new Barrack();
+		Factory ft = new Factory();
+		
+		ba.liftoff();
+		ba.move(0, 0);
+		ba.stop();
+		ba.land();
+		
+		System.out.println("=================");
+		
+		ft.liftoff();
+		ft.move(0, 0);
+		ft.stop();
+		ft.land();
+	}
+}
+```
+**실행 이미지**   
+![image](https://user-images.githubusercontent.com/84966961/121827933-e7eda900-ccf8-11eb-80a2-ee2eb8da6e13.png)
+
+ `LiftableImpl` 클래스 변경 후   
+    
+ ![image](https://user-images.githubusercontent.com/84966961/121828042-529ee480-ccf9-11eb-8b1e-75ab4c88f5f9.png)
+
+   
+<br/><br/>
+<hr/>
+    
+ ### 교재 387p Example 4번      
+**만들고자 하는 원하는 예제의 구조**   
+
+ ![image](https://user-images.githubusercontent.com/84966961/121828851-ce9a2c00-ccfb-11eb-8d99-ff75f9e92a73.png)
+   
+ 1. 예제 풀어보기.
+```java
+public class DaoExample {
+	public static void dbWork(DataAccessObject dao) {
+		dao.select();
+		dao.insert();
+		dao.update();
+		dao.delete();
+	}
+
+	public static void main(String[] args) {
+		dbWork(new OracleDao());
+		dbWork(new MySqlDao());
+	}
+}
+```
+```java
+public interface DataAccessObject {
+	void select();
+	void insert();
+	void update();
+	void delete();
+}
+```
+```java
+	@Override
+	public void select() {
+		System.out.println("Oracle DB에서 검색");
+	}
+
+	@Override
+	public void insert() {
+		System.out.println("Oracle DB에 삽입");
+	}
+
+	@Override
+	public void update() {
+		System.out.println("Oracle DB를 수정");
+	}
+
+	@Override
+	public void delete() {
+		System.out.println("Oracle DB에서 삭제");
+	}
+```
+
+   
+<br/><br/>
+<hr/>
+    
+ 2. OracleDao와 MySqlDao를 합쳐 어답터 구조로 만들어 보자.   
+   
+```java
+public class OracleDao implements DataAccessObject {
+	DaoImpl di = new DaoImpl();
+
+	String DBname = "Oracle";
+	
+	@Override
+	public void select() {
+		System.out.print(DBname);
+		di.select();
+	}
+	@Override
+	public void insert() {
+		System.out.print(DBname);
+		di.insert();
+	}
+	@Override
+	public void update() {
+		System.out.print(DBname);
+		di.update();
+	}
+	@Override
+	public void delete() {
+		System.out.print(DBname);
+		di.delete();
+	}
+}
+```
+```java
+public class DaoImpl implements DataAccessObject {
+	
+	@Override
+	public void select() {
+		System.out.println(" DB에서 검색");
+	}
+
+	@Override
+	public void insert() {
+		System.out.println(" DB에 삽입");
+	}
+
+	@Override
+	public void update() {
+		System.out.println(" DB를 수정");
+	}
+
+	@Override
+	public void delete() {
+		System.out.println(" DB에서 삭제");
+	}
+
+}
+```
+ 위 코드 처럼 바꿔주면 어답터화 되는 것을 알 수 있다.
+
+ 3. 
+ 4. a
+ 5. a
+ 6. a
+ 7. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
