@@ -251,6 +251,37 @@ public class DaoImpl implements DataAccessObject {
    
 ### 교재 390p ~ 395p 설명
    
+ 클래스 안에 클래스를 두어 중첩 클래스(Nested Class)를 사용하는 이유는 보안성이 좋으며 관계 되는 클래스의 멤버들을 서로 쉽게 접근할 수 있다는 장점과 외부에는 불필요한 관계 클래스를 감춤으로써 코드의 복잡성을 줄일 수 있다.   
+```java
+class ClassName {
+	Class NestedClassName {				// 중첩 클래스
+	}
+}
+```
+    
+ 인터페이스 또한 클래스 내부에 선언할 수 있는데 이렇게 중첩 인터페이스를 사용하는 이유는 해달 클래스와 긴말한 관계를 맺는 구현 클래스를 만들기위해서이다.   
+   
+```java
+class ClassName {
+	interface NestedInterfaceName {		// 중첩 인터페이스
+	}
+}
+```
+   
+ 중첩 인터페이스는 주로 UI 프로그래밍에서 이벤트를 처리할 목적으로 많이 활용 된다. 예를 들어 안드로이드 에서는 다음과 같이 View 클래스의 클릭 이벤트를 처리하는 구현 클래스를 만들 수 있도록 View 클래스 내부에 OnClickListner라는 중첩 인터페이스를 가지고 있다.   
+   
+```java
+public class View {
+	public interface OnClickListener {
+		public void onClick(View v);
+	}
+}
+```
+   
+<br/>
+      
+**교재 391p ~ 395p 예제**
+
 ```java
 package nested.class1;
 
