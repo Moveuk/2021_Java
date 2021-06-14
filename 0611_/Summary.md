@@ -117,6 +117,7 @@ public class StarcraftTest {
 ```
    
   **실행화면**    
+     
   ![image](https://user-images.githubusercontent.com/84966961/121627500-6ad0f280-cab2-11eb-97f7-a9ed1160bb60.png)   
      
    10. 하지만, 무엇이 수리가 완료되었는지 궁금하므로 toString의 override를 이용하게 되면 단순히 u를 출력하더라도 주소값이 아닌 toString을 호출하므로 따로 이름을 불러오는 함수를 추가하는 것이 아니라 toString을 사용한다.(CallBack 함수)   
@@ -138,20 +139,26 @@ public class StarcraftTest {
   위의 설명처럼 단순히 u를 불러도 이름값이 나오는 것을 알 수 있음.   
      
 **실행화면**   
+   
   ![image](https://user-images.githubusercontent.com/84966961/121628135-a0c2a680-cab3-11eb-90d0-7c81be50f345.png)   
    
 11. UML 다이어그램을 그릴 수 있도록 이클립스 추가 플러그인을 설치후 ucls 파일을 생성함.   
    
-**Starcraft 패키지의 UML Diagram**
+**Starcraft 패키지의 UML Diagram**   
+   
 ![image](https://user-images.githubusercontent.com/84966961/121635187-c609e180-cac0-11eb-951c-ab0c7d4bd51c.png)
    
+   
    12. 다음과 같은 구조로 Medic과 인터페이스 추가해보자.   
-![image](https://user-images.githubusercontent.com/84966961/121635451-387ac180-cac1-11eb-8e12-852481295ab9.png)
-   **작성 후**
-![image](https://user-images.githubusercontent.com/84966961/121636382-cacf9500-cac2-11eb-8723-95b020f96464.png)
+   
+![image](https://user-images.githubusercontent.com/84966961/121635451-387ac180-cac1-11eb-8e12-852481295ab9.png)   
+   
+ **작성 후**   
+      
+![image](https://user-images.githubusercontent.com/84966961/121636382-cacf9500-cac2-11eb-8723-95b020f96464.png)    
+   
 
-
-
+   
 
 <hr/>
 
@@ -176,4 +183,76 @@ public class StarcraftTest {
 콜백함수를 등록하면, 특정 이벤트가 발생되었을 때 콜백함수를 호출하여 실행한다. 즉, 콜백함수는 바로 사용할 수도 있으며, 추후에 사용할 수도 있다. 이때 콜백함수가 등록되는 곳과 이벤트가 발생할 때 호출하는 것은 서버이다.
    
 이때, 특정 이벤트라는 것은 어떠한 조건을 만족시키는 것을 의미합니다.
+   
+   
+   
+<hr/> 
+
+ ### UML Diagram 생성기 설치 방법.   
+    
+ 1. Help > Install New Software... 클릭.
+   
+![image](https://user-images.githubusercontent.com/84966961/121830791-d4ded700-cd00-11eb-91e3-3285f5d47450.png)   
+   
+   
+   
+ 2. add 버튼 클릭.
+   
+![image](https://user-images.githubusercontent.com/84966961/121830907-20918080-cd01-11eb-9335-1cf830bdc517.png)   
+   
+   
+   
+ 3. https://www.objectaid.com/download 홈페이지의 값을 이클립스 창에 기입.    
+   
+![image](https://user-images.githubusercontent.com/84966961/121830980-5171b580-cd01-11eb-9921-dd10d9310207.png)   
+   
+![image](https://user-images.githubusercontent.com/84966961/121831019-677f7600-cd01-11eb-9b40-1b8afa050e18.png)   
+   
+   
+   
+ 4. add 버튼 클릭 후 다음 그림처럼 체크박스 클릭.   
+   
+![image](https://user-images.githubusercontent.com/84966961/121831061-82ea8100-cd01-11eb-9821-114908bc2a63.png)   
+   
+   
+   
+ 5. Next를 눌러 진행하다 term 동의 버튼 클릭 후 설치 진행.   
+   
+![image](https://user-images.githubusercontent.com/84966961/121831121-aa414e00-cd01-11eb-9dc5-c968843778cc.png)   
+   
+ 설치를 진행하면 다음과 같이 이클립스 하단 부분에 초록색 창으로 설치 진행중인 것이 보인다.
+   
+ ![image](https://user-images.githubusercontent.com/84966961/121831229-ee345300-cd01-11eb-8cb4-79ee130beffc.png)   
+   
+ 설치 후 재실행.
+    
+    
+    
+ 6. 생성을 원하는 패키지에 오른쪽 버튼 클릭을 하여 New > Other... 클릭.   
+   
+![image](https://user-images.githubusercontent.com/84966961/121831385-49664580-cd02-11eb-9e3f-8d4bc1b3d9d6.png)   
+   
+      
+      
+
+ 7. UML을 검색하여 UML ObjectAid class Diagram 클릭 후 다음 페이지로.   
+   
+ ![image](https://user-images.githubusercontent.com/84966961/121831475-816d8880-cd02-11eb-91da-8f3d186d4daa.png)   
+   
+   
+   
+ 8. 원하는 이름 입력 후 생성.   
+   
+![image](https://user-images.githubusercontent.com/84966961/121831532-a7932880-cd02-11eb-8ee0-83abb1fe49fd.png)   
+   
+   
+ 9. 구조를 보고 싶은 파일들을 그래그 앤 드롭(drag n drop).   
+    
+ ![image](https://user-images.githubusercontent.com/84966961/121831644-e7f2a680-cd02-11eb-91c0-fa024ed145c1.png)   
+    
+    
+    
+ 10. UML Diagram 생성!   
+   
+![image](https://user-images.githubusercontent.com/84966961/121831683-05c00b80-cd03-11eb-9184-175034367334.png)   
 
