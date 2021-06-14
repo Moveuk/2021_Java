@@ -116,10 +116,13 @@ public class StarcraftTest {
 	}}
 ```
    
-  **실행화면**
-  ![image](https://user-images.githubusercontent.com/84966961/121627500-6ad0f280-cab2-11eb-97f7-a9ed1160bb60.png)
-   10. 하지만, 무엇이 수리가 완료되었는지 궁금하므로 toString의 override를 이용하게 되면 단순히 u를 출력하더라도 주소값이 아닌 toString을 호출하므로 따로 이름을 불러오는 함수를 추가하는 것이 아니라 toString을 사용한다.(CallBack 함수)
- % toString에 대한 내용은 맨 밑 참조에 넣어 놓음.
+  **실행화면**   
+  ![image](https://user-images.githubusercontent.com/84966961/121627500-6ad0f280-cab2-11eb-97f7-a9ed1160bb60.png)   
+     
+   10. 하지만, 무엇이 수리가 완료되었는지 궁금하므로 toString의 override를 이용하게 되면 단순히 u를 출력하더라도 주소값이 아닌 toString을 호출하므로 따로 이름을 불러오는 함수를 추가하는 것이 아니라 toString을 사용한다.(CallBack 함수)   
+   
+% toString에 대한 내용은 맨 밑 참조에 넣어 놓음.   
+   
 ![image](https://user-images.githubusercontent.com/84966961/121627645-b6839c00-cab2-11eb-940e-673b330cd4ea.png)
    ```java
 	public void repair(Repairable r) { // 치료가 필요한 것들.
@@ -131,10 +134,12 @@ public class StarcraftTest {
 			}
 			System.out.println(u +" 수리 완료");  }}
 ```
+   
   위의 설명처럼 단순히 u를 불러도 이름값이 나오는 것을 알 수 있음.
-  ![image](https://user-images.githubusercontent.com/84966961/121628135-a0c2a680-cab3-11eb-90d0-7c81be50f345.png)
-
-   11. UML 다이어그램을 그릴 수 있도록 이클립스 추가 플러그인을 설치후 ucls 파일을 생성함.   
+  ![image](https://user-images.githubusercontent.com/84966961/121628135-a0c2a680-cab3-11eb-90d0-7c81be50f345.png)   
+   
+11. UML 다이어그램을 그릴 수 있도록 이클립스 추가 플러그인을 설치후 ucls 파일을 생성함.   
+   
 **Starcraft 패키지의 UML Diagram**
 ![image](https://user-images.githubusercontent.com/84966961/121635187-c609e180-cac0-11eb-951c-ab0c7d4bd51c.png)
    
