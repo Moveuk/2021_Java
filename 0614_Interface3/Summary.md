@@ -411,6 +411,7 @@ public class A {
    
 ### 교재 397p : 9.3.2 멤버 클래스에서 사용 제한   
 <br/> 
+   
 ![image](https://user-images.githubusercontent.com/84966961/121913055-08a31680-cd6c-11eb-960f-b904f612cbdc.png)   
    
  하지만, 바깥 클래스에서의 접근과는 달리 멤버 클래스 내부에서 바깥 클래스의 필드와 메소드를 접근할 때는 **정반대**이다.    
