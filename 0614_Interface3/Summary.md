@@ -249,7 +249,118 @@ public class DaoImpl implements DataAccessObject {
    
 <hr/>
    
-### 390p ~ 395p 설명
+### 교재 390p ~ 395p 설명
+   
+```java
+package nested.class1;
+
+public class A {
+	A() {
+		System.out.println("A객체 생성");
+	}
+	
+	class B{
+		B() {
+			System.out.println("B객체 생성");
+		}
+		
+		int field;
+		void method1() {
+			
+		}
+	}
+	static class C {
+		C() {
+			System.out.println("static한 C객체 생성");
+		}
+		
+		int field;
+		static int field2;
+		void method1() {
+			
+		}
+		static void method2() {
+			
+		}
+		
+	}
+	
+	void method() {
+		class D {
+			D() {
+				System.out.println("void한 D객체 생성");
+			}
+			int field;
+			void method() {
+				
+			}
+		}
+		D d = new D();
+		d.field = 3;
+		d.method();
+	}
+}
+```
+   
+```java
+package nested.class1;
+
+public class InnerTest {
+
+	public static void main(String[] args) {
+
+		A a = new A();
+		
+		A.B b = a.new B();  //인스턴스한 내부클래스는 이렇게 생성 해야함.
+		
+		b.field = 3;
+		b.method1();
+		
+		//------------------------------
+		
+		A.C c = new A.C();	// 정적 내부 클래스.
+		c.field = 3;
+		c.method1();
+		A.C.field2 = 3 ; 	// 스태틱한 변수이기 때문에 인스턴스화 하지 않아도 호출 가능함.
+		A.C.method2(); 		// 스태틱 메소드기 때문에 바로 호출 가능.
+
+		//------------------------------
+		
+		a.method(); 		// 로컬 내부 클래스
+		// 내부 클래스들을 실행 시키는 코드.
+	}
+
+}
+```
+   
+ **a.method() 실행 결과**
+   
+![image](https://user-images.githubusercontent.com/84966961/121832951-3d7c8280-cd06-11eb-96a9-64557e388828.png)
+   
+<br/><br/>   
+<hr/>
+   
+### 교재 396p : 중첩 클래스의 접근 제한   
+<br/> 
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
