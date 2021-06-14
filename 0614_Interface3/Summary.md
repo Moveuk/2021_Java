@@ -1,5 +1,5 @@
 # Interface 활용
-Key Word : -able, -able implements, 중첩 클래스, 
+Key Word : -able, -able implements, 중첩 클래스, 중첩 인터페이스
 <hr/>
    
 ### Starcraft의 건물(Building)으로 구조 익히기   
@@ -375,34 +375,144 @@ public class InnerTest {
 <br/> 
    
 
+<br/><br/>   
+<hr/>
+   
+### 교재 400p : 중첩 클래스에서 바깥 클래스 참조 얻기      
+<br/> 
+ 클래스 내부에서 this는 **객체 자신의 참조**이다. 중첩 클래스에서 this 키워드를 사용하면 바깥 클래스의 객체 잠조가 아니라, 중첩 클래스의 객체 참조가 된다. 따라서 중첩 클래스가 아닌 바깥 클래스의 참조를 하고 싶을 때는 앞에 바깥 클래스의 이름을 this 앞에 붙여주면 된다.   
+   
+```java
+바깥클래스.this.필드
+바깥클래스.this.메소드();
+```
+   
+ 다음 예제를 통해 알아보자.
+   
+**Outter.java 파일**   
+```java
+public class Outter {
+	String field = "Outter-field";
+	void method() {
+		System.out.println("Outter-method");
+	}
+	
+	class Nested {
+		String field = "Nested-field";
+		void method() {
+			System.out.println("Nested-method");
+		}
+		void print() {
+			System.out.println(this.field);			// 중첩 객체(Nested) 참조.
+			this.method();
+			System.out.println(Outter.this.field);		// 바깥 객체(Outter) 참조.
+			Outter.this.method();
+		}
+	}
+}
+```
+   
+**OutterExample.java 파일**   
+   
+```java
+public class OutterExample {
+
+	public static void main(String[] args) {
+		Outter outter = new Outter();
+		Outter.Nested nested = outter.new Nested();
+		nested.print(); 	// 아마도 static 이었다면 Outter.Nested.print();로 바로 호출이 가능 했을 것이다.
+	}
+}
+```
 
 
 
+<br/><br/>   
+<hr/>
+   
+## 교재 401p : 9.4 중첩 인터페이스   
+<br/>   
+ 중첩 인터페이스는 **클래스의 멤버로 선언된 인터페이스**를 말한다.   
+    
+```java
+class A {
+	interface I {
+		void method();
+	}
+}
+```
 
+ ### Button을 클릭했을때 이벤트를 처리하는 객체 사용시 쓰이는 중첩 인터페이스   
+    
+ **Button.java 중첩 인터페이스**
+     
+```java
+public class Button {
+	
+	OnClickListener listener;
+	
+	void setOnClickListener(OnClickListener listener) {	// 매개 변수에 Call 과 Message가 모두 들어갈 수 있음.
+		this.listener = listener;
+	}
+	void touch() {
+		listener.onClick();
+	}
+	interface OnClickListener {		 // 내부에서 listener에 다양한 타입(다형성을 위해서, 다양한 자식 객체를 넣기 위해서)을 넣기 위해 정의를 함.
+		void onClick();
+	}
+}
+```
+   
+ 주석의 내용 처럼 내부에서 listener에 다양한 타입 **(다형성을 위해서, 다양한 자식 객체를 넣기 위해서)** 을 넣기 위해 정의를 하는 용도이다. 이는 곧 해당 클래스가 하나의 클래스로 여러가지 기능을 수행할 수 있도록 만들어 준다.   
+   
+   
+   
+**CallListener.java 구현 클래스**
+   
+```java
+public class CallListener implements Button.OnClickListener {
 
+	@Override
+	public void onClick() {
+		System.out.println("전화를 겁니다.");
+	}
 
+}
+```
+   
+**MessageListener.java 구현 클래스**
+   
+```java
+public class MessageListener implements Button.OnClickListener {
 
+	@Override
+	public void onClick() {
+		System.out.println("메세지를 보냅니다.");
+	}
 
+}
 
+```
+   
+**ButtonExample.java 버튼 이벤트 처리**
+   
+```java
+public class ButtonExample {
 
+	public static void main(String[] args) {
+		Button btn = new Button();
+		
+		btn.setOnClickListener(new CallListener());		// listener에 원하는 구현 클래스를 넣는 기능.
+		btn.touch();									// 해당 이벤트 리스너에 있는 onClick 메소드 사용.
+		
+		btn.setOnClickListener(new MessageListener());
+		btn.touch();
 
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
+```
+   
+따라서 이런 구조를 통해 버튼 클래스 파일은 상황에 따라 A(Call), B(Message), C(etc)의 기능을 수행할 수 있다.   
+   
+<hr/>
