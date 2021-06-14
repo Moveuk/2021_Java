@@ -335,7 +335,7 @@ public class InnerTest {
    
  **a.method() 실행 결과**
    
-![image](https://user-images.githubusercontent.com/84966961/121832951-3d7c8280-cd06-11eb-96a9-64557e388828.png)
+![image](https://user-images.githubusercontent.com/84966961/121833197-ca274080-cd06-11eb-970d-4aea6d9ce0ab.png)
    
 <br/><br/>   
 <hr/>
