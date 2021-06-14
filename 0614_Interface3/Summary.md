@@ -1,5 +1,5 @@
 # Interface 활용
-Key Word : -able, 
+Key Word : -able, -able implements, 중첩 클래스, 
 <hr/>
    
 ### Starcraft의 건물(Building)으로 구조 익히기   
