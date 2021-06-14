@@ -162,7 +162,7 @@ public class StarcraftTest {
 
 <hr/>
 
- ### 객체 값 출력_toString 메소드 오버라이딩
+ ## 객체 값 출력_toString 메소드 오버라이딩
 
 [ toString 메소드 ]
 
@@ -188,7 +188,7 @@ public class StarcraftTest {
    
 <hr/> 
 
- ### UML Diagram 생성기 설치 방법.   
+ ## UML Diagram 생성기 설치 방법.   
     
  1. Help > Install New Software... 클릭.
    
