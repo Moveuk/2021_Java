@@ -195,13 +195,13 @@ public class StarcraftTest {
 ![image](https://user-images.githubusercontent.com/84966961/121830791-d4ded700-cd00-11eb-91e3-3285f5d47450.png)   
    
    
-   
+ <br/><br/><br/>
  2. add 버튼 클릭.
    
 ![image](https://user-images.githubusercontent.com/84966961/121830907-20918080-cd01-11eb-9335-1cf830bdc517.png)   
    
    
-   
+ <br/><br/><br/>
  3. https://www.objectaid.com/download 홈페이지의 값을 이클립스 창에 기입.    
    
 ![image](https://user-images.githubusercontent.com/84966961/121830980-5171b580-cd01-11eb-9921-dd10d9310207.png)   
@@ -209,13 +209,12 @@ public class StarcraftTest {
 ![image](https://user-images.githubusercontent.com/84966961/121831019-677f7600-cd01-11eb-9b40-1b8afa050e18.png)   
    
    
-   
+ <br/><br/><br/>
  4. add 버튼 클릭 후 다음 그림처럼 체크박스 클릭.   
    
 ![image](https://user-images.githubusercontent.com/84966961/121831061-82ea8100-cd01-11eb-9821-114908bc2a63.png)   
    
-   
-   
+ <br/><br/><br/>
  5. Next를 눌러 진행하다 term 동의 버튼 클릭 후 설치 진행.   
    
 ![image](https://user-images.githubusercontent.com/84966961/121831121-aa414e00-cd01-11eb-9dc5-c968843778cc.png)   
@@ -226,32 +225,28 @@ public class StarcraftTest {
    
  설치 후 재실행.
     
-    
-    
+  <br/><br/><br/>
  6. 생성을 원하는 패키지에 오른쪽 버튼 클릭을 하여 New > Other... 클릭.   
    
 ![image](https://user-images.githubusercontent.com/84966961/121831385-49664580-cd02-11eb-9e3f-8d4bc1b3d9d6.png)   
    
-      
-      
-
+ <br/><br/><br/>
  7. UML을 검색하여 UML ObjectAid class Diagram 클릭 후 다음 페이지로.   
    
  ![image](https://user-images.githubusercontent.com/84966961/121831475-816d8880-cd02-11eb-91da-8f3d186d4daa.png)   
    
-   
-   
+ <br/><br/><br/>
  8. 원하는 이름 입력 후 생성.   
    
 ![image](https://user-images.githubusercontent.com/84966961/121831532-a7932880-cd02-11eb-8ee0-83abb1fe49fd.png)   
    
-   
+ <br/><br/><br/>
  9. 구조를 보고 싶은 파일들을 그래그 앤 드롭(drag n drop).   
     
  ![image](https://user-images.githubusercontent.com/84966961/121831644-e7f2a680-cd02-11eb-91c0-fa024ed145c1.png)   
     
     
-    
+ <br/><br/><br/>
  10. UML Diagram 생성!   
    
 ![image](https://user-images.githubusercontent.com/84966961/121831683-05c00b80-cd03-11eb-9184-175034367334.png)   
