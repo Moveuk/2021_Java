@@ -158,6 +158,7 @@ public class StarcraftTest {
 인스턴스의 값을 출력할 때 그냥 인스턴스를 넣거나 기본 toString()메소드를 사용하면 해시값을 포함한 이상한 값이 출력됩니다. 만들어 둔 인스턴스의 정보를 편하게 출력하기 위해 toString()메소드를 오버라이딩 해두면 편리합니다.
 
 <hr/>   
+   
 **콜백(callback)**
 
  1. 피호출자(Callee)가 호출자(Caller)를 다시 호출하는 것   
