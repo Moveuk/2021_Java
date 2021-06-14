@@ -5,8 +5,11 @@ Key Word : -able,
 ### Starcraft의 건물(Building)으로 구조 익히기   
 **만들고자 하는 원하는 스타크래프트 빌딩의 구조**   
    
-![image](https://user-images.githubusercontent.com/84966961/121826382-5e3add00-ccf2-11eb-80ea-85108303e8f9.png)
+![image](https://user-images.githubusercontent.com/84966961/121826382-5e3add00-ccf2-11eb-80ea-85108303e8f9.png)   
    
+![image](https://user-images.githubusercontent.com/84966961/121832090-318fc100-cd04-11eb-845a-839af5d2f771.png)   
+
+      
 <br/><br/>
 <hr/>
     
