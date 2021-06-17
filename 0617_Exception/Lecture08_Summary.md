@@ -569,11 +569,13 @@ public class ThrowException3 {
    
  IOException 이 발생된다는 것이 API Document에 나와있음. 그렇기 때문에 코드상에서 try-catch 해줘야함.   
     
-**파일(test.txt) 생성 **    
+**파일 생성 **    
+(test.txt)
 
  ![image](https://user-images.githubusercontent.com/84966961/122326319-14a6f800-cf67-11eb-9367-81f3f8a5e934.png)    
    
-**예외 발생 후 (제목없음.txt) 생성 **    
+**예외 발생 후 생성 **    
+ (제목없음.txt)
    
 ![image](https://user-images.githubusercontent.com/84966961/122326446-44ee9680-cf67-11eb-94f7-07e0483640ea.png)
 
