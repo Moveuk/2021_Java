@@ -25,7 +25,6 @@ Key Word : 예외 처리(Exception)
 
  흔히 발생하는 실행 예외들의 예제를 보고 이해해보자.
 
-<br/><br/>
 <hr/>
 
 ### 교재 423p : 10.2.1 NullPonterException   
@@ -362,33 +361,167 @@ public class NumberFormatExceptionExample {
 <br/><br/>
 <hr/>
 
-## 교재 438p : 자동 리소스 닫기   
+## 교재 438p : 10.5 자동 리소스 닫기   
       
-
+ 자바 7에서 새로 추가된 try-with-resources를 사용하면 예외 발생 여부롸 상관없이 사용했던 리소스 객체(각종 입출력 스트림, 서버 소켓, 소켓, 각종 채널)의 close() 메소드를 호출해서 안전하게 리소스를 닫아준다.   
+    
+ try 블록이 정상적으로 실행을 완료했거나 도중에 예외가 발생하게 되면 자동으로 FileInputStream의 close() 메소드가 호출된다. try{}에서 예외가 발생하면 우선 close()로 리소스를 닫고 catch 블록을 실행한다.
 
 
 
 <br/><br/>
 <hr/>
 
-## 교재 440p : 예외 떠넘기기   
+## 교재 440p : 10.6 예외 떠넘기기   
       
+ 메소드 내부에서 예외가 발생할 수 있는 코드를 작성할 때 try-catch 블록으로 예외를 처리하는 것이 기본이지만, 경우에 따라서는 메소드를 **호출한 곳으로 예외를 떠넘길 수**도 있다.   
+    
+ 떠넘긴다는 것은 다른 곳에서 사용할 경우 호출당한 클래스의 예외들을 사용자가 예외 처리하여 사용한다는 의미이다.   
+    
+ 메소드를 정의할 때 `throws`를 붙여 그냥 예외를 내비두겠다는 표시를 남길 수 있다. 만약 이 메소드를 사용하고 싶다면 호출하는 곳에서 반드시 예외 처리를 해주어야지만 컴파일 오류가 안생길 것이다.   
+   
+**예외 떠넘기기 예제**
+```java
+public class ThrowException2 {
 
+	public static void main(String[] args) throws Exception {
+		// 또 다시 예외를 떠넘길 수 있지만 이는 바람직한 예외 처리 방법이 아님.
+		
+//		try {
+			method1(); 				// method1 호출하려면 예외 처리해야함(try-catch). 근데 또 예외를 넘김.		
+//		} catch (Exception e) {
 
+//		}
+	}
+	
+	public static void method1() throws Exception{ // 또 예외 만듬. 또 문제를 넘김. 
+		method2();
+		throw new ArithmeticException("수리적 예외가 발생!");	// 앞에서 예외 발생해서 못건들임.
+	}
 
+	public static void method2() throws Exception {	// 예외를 던져놓음. 쓰는 사람이 처리하게 내비둠.
+		throw new Exception("예외가 발생!");
+	}
+}
+```
+   
+ 하지만 이렇게 하게 되면 시스템에서 예외 처리를 해야하기 때문에 이런 방식은 추천되지 않는 방식이다. 원래는 3곳 중에서 예외 처리를 해주어야만 할 것이다. 다음은 예외를 정상적으로 처리를 하는 예제이다.   
+    
+```java
+public class ThrowException2 {
+
+	public static void main(String[] args) /*throws Exception*/ {
+		
+		try {
+			method1(); 				// method1 호출하려면 예외 처리해야함(try-catch). 근데 또 예외를 넘김.		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public static void method1() throws Exception{ // 또 예외 만듬. 또 문제를 넘김. 
+		method2();
+		throw new ArithmeticException("수리적 예외가 발생!");	// 앞에서 예외 발생해서 못건들임.
+	}
+
+	public static void method2() throws Exception {	// 예외를 던져놓음. 쓰는 사람이 처리하게 내비둠.
+		throw new Exception("예외가 발생!");
+	}
+}
+```
+    
+
+<br/><br/>
+<hr/>
+
+## 교재 443p : 10.7 사용자 정의 예외와 예외 발생     
+<hr/>
+
+### 교재 443p : 10.7.1&2 사용자 정의 예외 클래스 선언 & 예외 발생시키기
+
+ 사용자 정의 예외 또는 자바 표준 예외는 다음과 같이 발생시킨다.
+ 
+```java
+	throw new XXXException();
+	throw new XXXException("메시지");	
+```
+   
+ 예외가 발생하면 "메시지" 가 발생한다. 자바의 모든 예외는 이렇게 정의가 되어있다. 다음 강제 예외 발생 예제를 통해 알아보자.
+   
+```java
+public class ThrowException {
+
+	public static void main(String[] args) {
+		
+		try {	// 강제 예외 발생
+			throw new Exception("고의로 예외발생");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage()); // 고의로 예외 발생이 나오게 됨.
+		} finally {
+			
+		}
+	}
+}
+```
+   
+**강제 예외 발생 결과 화면**    
+![image](https://user-images.githubusercontent.com/84966961/122320831-d8bb6500-cf5d-11eb-97ab-bdcb7eee1a21.png)    
+   
 
 
 <br/><br/>
 <hr/>
 
-### 교재 438p : 자동 리소스 닫기   
+## 교재 445p : 10.8 예외 정보 얻기   
       
-
-
-
-
-<br/><br/>
+ `e.printStackTrace()`를 통해 예외가 어느 메소드를 통해 발생했는지 과정을 추적해서 보여 준다. 또한, `e.getMessage()`를 통해 `e.printStackTrace()` 첫줄에 있는 어떤 문제 때문에 발생한 것인지만 출력할 수도 있다. 다음 예제를 통해 확인해보자.    
+    
+**예외 추적 코드**
+```java
+public class NumberFormatExceptionExample {
+	public static void main(String[] args) {
+		String data1 = "100";
+		String data2 = "a100";
+		String string = null;
+				
+		int value1 = Integer.parseInt(data1);
+		int value2 = 0;
+		try {
+//			System.out.println(string.toString());	// NullPointException 이 catch에 없지만 마지막 Exception이 잡아줌.
+//			System.out.println(value1 / 0);		// catch문 조건에서 예외 처리 타입이 다르면 처리하지 못한다. 그래서 다른 catch문을 추가한다.(다중catch문)
+			value2 = Integer.parseInt(data2);
+		} catch (ArithmeticException | NumberFormatException e) {		// 멀티 catch문	
+			e.printStackTrace();  				// 예외가 어떤 과정을 통해 발생했는지.
+			System.out.println(e.getMessage() + " : 정수를 0으로 나누시면 안됩니다.");
+		} catch (Exception e) {					// 가장 상위 예외 클래스이므로 모든 예외를 받아준다. 
+			System.out.println(e.getMessage() + " : 예외가 발생했습니다.");
+		} finally {				// 예외와는 별개로 무조건 한번은 실행해야 할 때 작성
+			System.out.println("예외 처리에 대한 실행을 완료합니다.");
+		}
+		
+		int result = value1 + value2;
+		System.out.println(data1 + "+" + data2 + "=" + result);
+	}
+}
+```
+**결과 이미지**
+![image](https://user-images.githubusercontent.com/84966961/122319995-70b84f00-cf5c-11eb-9591-fd1b3bb40bd1.png)   
+   
+ 파란색은 `e.printStackTrace()` 빨간색은 `e.getMessage()`의 내용을 말해준다.
+ 
+ <br/><br/>
 <hr/>
 
-### 교재 438p : 자동 리소스 닫기   
-      
+## 파일 만들기 수업   
+   
+ 스캐너로 파일의 이름을 입력받아 컴퓨터 내부에 원하는 파일을 생성하는 클래스를 생성해보자.
+
+   
+```java
+
+```
+
+
+ <br/><br/>
+<hr/>
