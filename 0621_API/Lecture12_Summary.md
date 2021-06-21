@@ -120,7 +120,7 @@ public class MemberTest {
    
  해시코드란 객체를 식별하는 하나의 정수값을 말한다. 메모리 번지에 들어있는 각 객체의 값이기 때문에 이 값이 다르다면 두 객체가 다른 객체임을 뜻한다.   
    
-**해시코드 오버라이딩 전 MemberTest.java**  
+**해시코드 오버라이딩 전 MemberTest.java**    
 public class MemberTest {
 
 	public static void main(String[] args) {
@@ -147,7 +147,7 @@ public class MemberTest {
 	}
 }
 
-**결과 화면**
+**결과 화면**    
 ![image](https://user-images.githubusercontent.com/84966961/122695555-a7070e80-d27b-11eb-8251-5379e767b4f9.png)
 
 **해시코드를 오버라이딩한 Member.java**      
@@ -181,9 +181,9 @@ public class Member {
 }
 ``` 
    
-**결과 화면**
-![image](https://user-images.githubusercontent.com/84966961/122695734-40cebb80-d27c-11eb-8ad3-963a56ac3ecd.png)
-
+**결과 화면**    
+![image](https://user-images.githubusercontent.com/84966961/122695734-40cebb80-d27c-11eb-8ad3-963a56ac3ecd.png)    
+   
  마지막 해시코드의 오버라이딩을 이용해서 인위적으로 해시코드를 같게 만들 수 있다.(실제 값은 다르다. 단지, 같은 값처럼 보이게 만들었을 뿐이다.)   
    
  객체의 해시코드가 아니라 id의 해시코드를 뜻한다.
@@ -268,13 +268,15 @@ public class Member2Test {
 }
 ```
    
- 당연하게도 값이 같지 않다. 복제된 이후 복제의 값이 바뀌었기 때문.   
+ 당연하게도 값이 같지 않다. 복제된 이후 복제의 값이 바뀌었기 때문.    
+    
+ **결과 화면**   
     
 ![image](https://user-images.githubusercontent.com/84966961/122697757-f7cd3600-d280-11eb-961f-c912aa3df6ed.png)
    
 <hr/>
    
-**깊은 복제**
+**깊은 복제**    
 
 ```java
 public class DeepClone implements Cloneable{
@@ -299,7 +301,7 @@ public class DeepClone implements Cloneable{
    
  다음은 구조를 복제한 즉, 깊은 복제를 한 코드이다.   
    
-**깊은 복제 코드**   
+**깊은 복제 코드**    
 ```java
 public class DeepClone implements Cloneable{
 
@@ -353,8 +355,8 @@ public class DeepClone implements Cloneable{
 
 <hr/>
 
-**깊은 복제 테스트**   
-   
+**깊은 복제 테스트**    
+    
  깊은 복제를 다음 코드로 테스트해보자.   
    
 ```java
@@ -385,8 +387,8 @@ public class DeepCloneTest {
 }
 ```
 
-**결과 화면**   
-   
+**결과 화면**    
+    
 ![image](https://user-images.githubusercontent.com/84966961/122699632-b63e8a00-d284-11eb-8084-c1a301f3f6d6.png)
    
 
