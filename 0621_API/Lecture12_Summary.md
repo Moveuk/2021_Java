@@ -507,8 +507,9 @@ public class Tank extends GrountUnit implements Repairable {
 ![image](https://user-images.githubusercontent.com/84966961/122702020-82199800-d289-11eb-942c-670713931e2e.png)
 
 
-**클래스 정보 얻기**
-```
+**클래스 정보 얻기**   
+   
+```java
 public class ClassTest {
 
 	public static void main(String[] args) {
@@ -529,7 +530,7 @@ public class ClassTest {
    
 ![image](https://user-images.githubusercontent.com/84966961/122702087-a37a8400-d289-11eb-8f82-df641ca64652.png)
    
-```
+```java
 		// 클래스를 생성하지 않더라도 Car 클래스의 정보를 get할 수 있는 방법.
 		try {
 			Class Clazz2 = Class.forName("clone.Car");	// 클래스가 있는지 없는지 알고 싶을 때 사용한다.
@@ -608,7 +609,7 @@ java API 8 String : https://docs.oracle.com/javase/8/docs/api/
 
  메소드 또한 많은 양이 있다.(같은 이름의 메소드도 많음. 오버로딩된 메소드도 많다는 뜻임.)   
 
-```
+```java
 public class ByteToStringExample {
 	public static void main(String[] args) {
 		byte[] bytes = { 72, 101, 108, 108, 111, 32, 74, 97, 118, 97  };
@@ -626,28 +627,505 @@ public class ByteToStringExample {
 ![image](https://user-images.githubusercontent.com/84966961/122704531-e3903580-d28e-11eb-87d9-1623abcffe59.png)
    
  
+### 교재 498p : 11.7.2 String 메소드   
+   
+**주로 쓰이는 메소드**
+
+1. 교재 499p : 문자 추출 (charAt())   
+   
+ 
+```java
+public class StringCharAtExample {
+	public static void main(String[] args) {
+		String ssn = "010624-1230123";	// 주민번호
+		char sex = ssn.charAt(7);		// 7자리 (0부터시작)
+		switch (sex) {	// 1이 문자형태로 반환됨. `1`
+			case '1':
+			case '3':
+				System.out.println("남자 입니다.");
+				break;
+			case '2':
+			case '4':
+				System.out.println("여자 입니다.");
+				break;
+		}
+	}
+}
+```
+
+<br/>
+<hr/>
+
+2. 교재 500p : 문자열 비교 (equals())   
+
+```java
+public class StringEqualsExample {
+	public static void main(String[] args) {
+		String strVar1 = new String("신민철");
+		String strVar2 = "신민철";
+
+		if(strVar1 == strVar2) {
+			System.out.println("같은 String 객체를 참조");
+		} else {
+			System.out.println("다른 String 객체를 참조");
+		}
+		
+		if(strVar1.equals(strVar2)) {	// String.equals 는 이미 String으로 오버라이딩이 된 상태이다.
+			System.out.println("같은 문자열을 가짐");
+		} else {
+			System.out.println("다른 문자열을 가짐");
+		}
+	}
+}
+```
+   
+ `String.equals()` 는 이미 `String`으로 오버라이딩이 된 상태이다.
+
+<br/>
+<hr/>
+
+3. 교재 505p : 문자열 길이(length())   
+   
+
+```java
+package string;
+
+public class StringLengthExample {
+	public static void main(String[] args) {
+		String ssn = "7306241230123";
+		int length = ssn.length();		// 문자열의 길이 리턴.
+		if(length == 13) {
+			System.out.println("주민번호 자리수가 맞습니다.");
+		} else {
+			System.out.println("주민번호 자리수가 틀립니다.");
+		}
+	}
+}
+
+```
+   
+ 문자열의 길이(문자의 수)를 리턴한다.
+   
+
+<br/>
+<hr/>
+
+4. 교재 504p : 문자열 찾기(indexOf())
+   
+```java
+public class StringIndexOfExample {
+	public static void main(String[] args) {
+		String subject = "자바 프로그래밍";
+		
+		int location = subject.indexOf("프로그래밍");	// "프로그래밍"이 들어간 첫 인덱스를 리턴한다.
+		System.out.println(location);
+		
+		if(subject.indexOf("자바") != -1) {		// -1의 의미 : 못찾은 값에 대해서는 -1을 리턴한다.
+			System.out.println("자바와 관련된 책이군요");
+		} else {
+			System.out.println("자바와 관련없는 책이군요");
+		}
+	}
+}
+```
+   
+ 매개값으로 주어진 문자열이 시작되는 인덱스를 리턴한다. 다만 못찾은 값에 대해서는 `-1`을 리턴한다.
+
+
+<br/>
+<hr/>
+
+5. 교재 506p : 문자열 대치(replace())   
+   
+```java
+public class StringReplaceExample {
+	public static void main(String[] args) {
+		String oldStr = "자바는 객체지향언어 입니다. 자바는 풍부한 API를 지원합니다.";
+		String newStr = oldStr.replace("자바", "JAVA");
+		
+		System.out.println(oldStr);
+		System.out.println(newStr);
+	}
+}
+```
+
+ 찾아 바꾸기 와 같은 기능이다. 매개 변수의 값을 찾아 두번째 매개 변수 값으로 바꿔준다.
+
+<br/>
+<hr/>
+
+6. 교재 507p : 문자열 잘라내기(substring())   
+
+```java
+public class StringSubstringExample {
+	public static void main(String[] args) {	
+		String ssn = "880815-1234567 ";
+		
+		String firstNum = ssn.substring(0, 6);	// 0(포함) ~ 6(제외) 사이의 문자열을 추출하는 것.
+		System.out.println(firstNum);		
+		
+		String secondNum = ssn.substring(7);	// 7부터의 문자열 추출
+		System.out.println(secondNum);
+	} 
+}
+```
+   
+ 주어진 인덱스에서 문자열을 추출한다.
+
+
+<br/>
+<hr/>
+
+7. 교재 508p : 알파벳 소,대문자 변경(toLowerCase(),toUpperCase())   
+
+```java
+public class StringToLowerUpperCaseExample {
+	public static void main(String[] args) {
+		String str1 = "Java Programming";
+		String str2 = "JAVA Programming";		
+		
+		System.out.println(str1.equals(str2));
+		
+		String lowerStr1 = str1.toUpperCase();		// 대문자로
+		String lowerStr2 = str2.toLowerCase();		// 소문자로
+		System.out.println(lowerStr1.equals(lowerStr2));
+		
+		System.out.println(str1.equalsIgnoreCase(str2));	// 소문자 대문자 무시 비교하여 같은지 확인
+		}
+}
+```
+
+ 모두 소문자로 혹은 대문자로 변경해준다.
+
+<br/>
+<hr/>
+
+8. 교재 509p : 문자열 앞뒤 공백 잘라내기(trim())   
+   
+```java
+public class StringTrimExample {
+	public static void main(String[] args) {
+		String tel1 = "  02";
+		String tel2 = "123   ";
+		String tel3 = "   1234   ";
+		
+		String tel = tel1.trim() + tel2.trim() + tel3.trim();
+		System.out.println(tel);
+	}
+}
+```
+
+<br/>
+<hr/>
+
+9. 교재 510p : 문자열 변환(valueOf())   
+   
+```java
+public class StringValueOfExample {
+	public static void main(String[] args) {
+		String str1 = String.valueOf(10);		// 해당 타입을 문자열로 바꾸어줌. `10`
+		String str2 = String.valueOf(10.5);		// 해당 타입을 문자열로 바꾸어줌. `10.5`
+		String str3 = String.valueOf(true);		// 해당 타입을 문자열로 바꾸어줌. `true`	
+		
+		System.out.println(str1);
+		System.out.println(str2);
+		System.out.println(str3);
+	}
+}
+```
+
+ 해당 타입을 문자열로 바꾸어 주는 기능이다. 이와 반대로 문자열을 숫자로 바꾸어주는 `Integer.parseInt()`라는 기능이 있었다.   
+   
+
+<br/><br/>
+<hr/>
+
+## 교재 511p : 11.8 StringTokenizer 클래스   
+   
+ 문자열이 특정 구분자...
+ 
+ 생략
+
+<br/><br/>
+<hr/>
+
+## 교재 514p : 11.9 StringBuffer, StringBuilder 클래스   
+   
+ String 클래스의 단점을 없애기 위한 클래스이다. 기존에 메모리에 할당된 경우에 값의 변화를 주면 새로운 객체를 생성하여 메모리가 소비되게 된다. 이런 문제를 없애기 위한 클래스들인 것이다.    
+ 다음의 그림처럼 기존의 메모리를 사용(변경)하는 것이 아니라 새로운 객체를 생성하므로 잦은 변경이 있는 시스템에서는 비효율적인 데이터 처리가 되게 된다.
+    
+ ![image](https://user-images.githubusercontent.com/84966961/122710896-31f80100-d29c-11eb-9da7-6d65c51abac8.png)   
+   
+ `StringBuffer`, `StringBuilder` 클래스는 기능과 사용 방법 모두가 똑같다. 하지만 이 둘의 차이는 동기화 기능의 유무 차이이다. `StringBuffer`는 멀티 스레드 환경에서 사용할 수 있도록 동기화가 적용되어 있어 스레드에 안전하지만, `StringBuilder`는 단일 스레드 환경에서만 사용하도록 설계되어 있다. 그러므로 `StringBuffer`가 좀 더 무거운 클래스이다.   
+
+ `StringBuffer`, `StringBuilder` 클래스는 기존 String과는 달리 인스턴스 객체를 만든 이후에 사용하여야 한다.
+
+```java
+public class StringBuilderExample {
+	public static void main(String[] args) {
+		StringBuilder sb = new StringBuilder();	// 멀티 스레드 환경이 아니면 굳이 버퍼를 쓸 이유가 없다.
+		// 버퍼로 바꾸어도 아래 기능은 똑같다.
+		
+		sb.append("Java ");
+		sb.append("Program Study");		
+		// 기존 String은 기존 메모리를 무시하고 새로운 메모리를 할당하지만 append는 기존 메모리에 추가한다.
+		// 따라서 메모리 효율성이 증가한다.
+		System.out.println(sb.toString());	// StringBuilder는 String 타입이 아니므로 반드시 사용전 toString()으로 타입을 바꾸어줘야 한다.
+		
+		sb.insert(4, "2");
+		System.out.println(sb.toString());
+
+		sb.setCharAt(4, '6');		// 5번째를 6으로 바꾸어라(2를 6으로)
+		System.out.println(sb.toString());
+		
+		sb.replace(6, 13, "Book");	// 지정한 칸수(7칸)와 상관없이 book으로 바꾼다.
+		System.out.println(sb.toString());
+		
+		sb.delete(4, 5);		// 삭제도 범위로 삭제 가능하다.
+		System.out.println(sb.toString());
+		
+		int length = sb.length();
+		System.out.println("총문자수: " + length);
+		
+		String result = sb.toString();
+		System.out.println(result);		
+	}
+}
+```
+
+<br/><br/>
+<hr/>
+
+## 교재 517p : 11.11 정규표현식과 Pattern 클래스   
+   
+ 생략...
+
+
+<br/><br/>
+<hr/>
+
+## 교재 527p : 11.12 Wrapper(포장) 클래스   
+   
+ 자바는 기본 타입(byte, char, short, int, long, float, double, boolean)의 값을 갖는 객체를 생성할 수 있다. 이런 객체를 포장(Wrapper) 객체라고 하는데, 그 이유는 기본 타입의 값을 내부에 두고 포장하기 때문이다. (기본 타입을 객체로 만든다는 뜻이다.)   
+    
+ 기본형을 참조형으로 형변환 한다.(오토박싱)
+   
+| 기본 타입 | 포장 클래스 |
+|---|---|
+| byte | Byte |
+| char | Character |
+| short | Short |
+| int | Integer |
+| long | Long |
+| float | Float |
+| double | Double |
+| boolean | Boolean |
+
+ 기본형은 참조형으로 원래는 형변환이 불가능하다.
+
+```java
+ Car car = (Car) 1;         (X)
+```
+   
+ 다음과 같이 형변환이 불가능하다. 하지만 다음과 같은 오토박싱은 가능하다.    
+    
+```java
+		int x = 10;
+		Integer i = new Integer(100);	// 100을 가지고 있는 것이 아니라 힙영역의 주소값을 가지고 있는 것이다.
+		Double d = new Double(20.3);
+```
+   
+ 기본 타입으로는 객체를 구성할 수 없으니 Wapper 클래스를 사용하는 것이다. i와 d를 `System.out.println`으로 찍어보면 다음과 같다.
+   
+**결과 화면 Console**   
+   
+![image](https://user-images.githubusercontent.com/84966961/122713560-d4b27e80-d2a0-11eb-89ab-64f661d53456.png)   
+   
+ i와 d가 출력될 때 주소값이 나와야 하지만 이들은 toString이 오버라이드 되어서 출력된다는 것을 알 수 있다.    
+    
+```java
+		System.out.println(i.toString());
+		System.out.println(d.toString());
+```
+   
+**Wapper 클래스만 가지는 오토박싱의 특이한 특징**    
+   
+```java
+		int x = 10;
+		Integer i = x;
+		
+		System.out.println(i);
+```
+    
+ x의 기본 타입이 Integer 참조 타입에 들어가면 안된다. 하지만 위의 코드가 정상작동 되는 것을 알 수 있다. 이는 바로 Wapper 클래스의 오토박싱 특징 때문이다.   
+   
+```java
+		int x = 10;
+		Integer i = (Integer) x; // 오토박싱으로 형변환이 된다.
+		
+		Integer i2 = 30; 		// 바로 변수를 넣을 수 있다.
+		int y = i2;				// 심지어 참조를 기본 타입에 넣어도 된다.
+		
+		Object obj = y;			// new Integer(y); 객체가 생성되서 들어감.
+				
+		System.out.println(i + i2);	// int + Integer 계산 가능
+```
+   
+ Wrapper 클래스는 기본형 처리되어서 처리됨으로 기본형처럼 사용이 가능하다.    
+   
+<br/><br/>
+<hr/>
+
+### 교재 529p : 11.12.2 자동 박싱과 언박싱   
+   
+ **오토박싱 VS 오토언박싱**
+   
+   
+<br/><br/>
+<hr/>
+
+### 교재 530p : 11.12.3 문자열을 기본 타입 값으로 변환   
+   
+ 포장 클래스의 주요 용도는 기본 타입의 값을 박싱해서 포장 객체로 만드는 것이지만, 무자열을 기본 타입 값으로 변환할 때에도 많이 사용된다. 대부분의 포장 클래스에는 `"parse+기본타입"` 명으로 되어 있는 정적(static) 메소드가 있다. 이 메소드는 문자열을 매개값으로 받아 기본 타입 값으로 변환한다.
+
+| 기본 타입 | 포장 클래스 |
+|---|---|
+| byte | num = Byte.parseByte("10"); |
+| short | num = Short.parseShort("100"); |
+| int | num = Integer.parseInteger("1000"); |
+| long | num = Long.parseLong("10000"); |
+| float | num = Float.parseFloat("2.5F"); |
+| double | num = Double.parseDouble("3.5"); |
+| boolean | num = Boolean.parseBoolean("true"); |
 
 
 
 
 
+<br/><br/>
+<hr/>
+
+## 교재 538p : 11.14 Date, Calender 클래스   
+
+<hr/>
+   
+## 교재 538p : 11.14 Date 클래스   
+    
+```java
+		Date d = new Date();	//임포트 주의사항 : import java.util.Date; 을 해야함
+		
+		System.out.println(d);
+```
+   
+<hr/>
+   
+ 다음은 Date의 양식을 설정하여 표출한 방식이다.
+   
+
+```java
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 hh시");	// 해당 양식이 정해져 있음.
+		
+		sdf.format(d); // sdf의 양식으로 변환해줌.
+```
+**출력 화면**   
+![image](https://user-images.githubusercontent.com/84966961/122715317-a7b39b00-d2a3-11eb-94b9-392c480bb607.png)   
+
+<hr/>
+
+ 다음은 연, 월을 표기한 방식이다. 컴퓨터는 1900년부터 시작하고 월의 경우에는 0월부터 시작하여 0 ~ 11월을 가진다.
+
+```java
+		// 년 (프로그램은 1900부터 시작)
+		System.out.println(d.getYear());
+		System.out.println(1900+d.getYear());
+		// 월 (프로그램은 0월부터 시작)
+		System.out.println(d.getMonth());
+```
+   
+**출력 화면**   
+![image](https://user-images.githubusercontent.com/84966961/122715548-fd884300-d2a3-11eb-9783-24c1f724d280.png)
 
 
+<hr/>
+   
+### 교재 539p : 11.14.2 Calender 클래스  
 
+```java
+Calendar now = Calendar.getInstance(); 
+		// 자기 타입의 메소드를 호출한다. Private으로 정의 되어있어서 인스턴스를 못만들기 때문이다.
+		
+		System.out.println(now);
+```
+   
+**출력 화면** 
+```
+java.util.GregorianCalendar[time=1624256500418,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id="Asia/Seoul",offset=32400000,dstSavings=0,useDaylight=false,transitions=30,lastRule=null],firstDayOfWeek=1,minimalDaysInFirstWeek=1,ERA=1,YEAR=2021,MONTH=5,WEEK_OF_YEAR=26,WEEK_OF_MONTH=4,DAY_OF_MONTH=21,DAY_OF_YEAR=172,DAY_OF_WEEK=2,DAY_OF_WEEK_IN_MONTH=3,AM_PM=1,HOUR=3,HOUR_OF_DAY=15,MINUTE=21,SECOND=40,MILLISECOND=418,ZONE_OFFSET=32400000,DST_OFFSET=0]
+```
+   
+ Calender에는 다양항 상수(final)값들이 존재한다. YEAR, May, HOUR, MIN 등등..   
+   
+```java
+public class CalendarExample {
+	public static void main(String[] args) {
+		Calendar now = Calendar.getInstance();
+		
+		int year    = now.get(Calendar.YEAR);			// YEAR 상수 받기.          
+		int month  = now.get(Calendar.MONTH) + 1;		// MONTH 상수 + 1(0월부터이므로) 
+		int day    = now.get(Calendar.DAY_OF_MONTH);	// DAY_OF_MONTH 날짜 21 출력
 
+		int week    = now.get(Calendar.DAY_OF_WEEK);	// DAY_OF_WEEK 요일 상수 출력
+		String strWeek = null;
+		switch(week) {									// 상수 변수 출력 문자열로 반환.
+			case Calendar.MONDAY:
+				strWeek = "월";
+				break;
+			case Calendar.TUESDAY:
+				strWeek = "화";
+				break;
+			case Calendar.WEDNESDAY:
+				strWeek = "수";
+				break;
+			case Calendar.THURSDAY:
+				strWeek = "목";
+				break;
+			case Calendar.FRIDAY:
+				strWeek = "금";
+				break;
+			case Calendar.SATURDAY:
+				strWeek = "토";
+				break;
+			default:
+				strWeek = "일";
+		}
+		
+		int amPm  = now.get(Calendar.AM_PM);   // 오전 오후 값 반환
+		String strAmPm = null;
+		if(amPm == Calendar.AM) {
+			strAmPm = "오전";
+		} else {
+			strAmPm = "오후";
+		}
+		
+		int hour    = now.get(Calendar.HOUR);	// 시간 값 반환
+		int minute  = now.get(Calendar.MINUTE);	// 분 값 반환
+		int second  = now.get(Calendar.SECOND);	// 초 값 반환   
 
-
-
-
-
-
-
-
-
-
-
-
-
+		//출력
+		System.out.print(year + "년 ");
+		System.out.print(month + "월 ");
+		System.out.println(day + "일 ");
+		
+		System.out.print(strWeek + "요일 ");
+		System.out.println(strAmPm + " ");
+		
+		System.out.print(hour + "시 ");
+		System.out.print(minute + "분 ");
+		System.out.println(second + "초 ");
+	}
+}
+```
+   
+ 코드를 보고 이해하면 될 듯 싶다. 이해가 안되면 주석을 확인하자.
 
 
 
