@@ -481,29 +481,166 @@ public class Tank extends GrountUnit implements Repairable {
 ```
  
  
+
+
+<br/><br/>
+<hr/>
+
+## 교재 481p : 11.5 System 클래스   
+    
+생략
+
+
+<br/><br/>
+<hr/>
+
+## 교재 489p : 11.6 Class 클래스   
+   
+ 자바는 클래스와 인터페이스의 메타 데이터를 java.lang 패키지에 소속된 Class 클래스로 관리ㅏㄴ다. 여기서 메타 데이터란 클래스의 이름, 생성자 정보, 필드 정보, 메소드 정보를 말한다.   
+   
+<br/><br/>
+<hr/>
+
+### 교재 489p : 11.6.1 Class 클래스 객체 얻기(getClass(), forName())      
+   
+ java API 8 : Class 클래스 > getclasses
+![image](https://user-images.githubusercontent.com/84966961/122702020-82199800-d289-11eb-942c-670713931e2e.png)
+
+
+**클래스 정보 얻기**
+```
+public class ClassTest {
+
+	public static void main(String[] args) {
+		
+		Car car = new Car("마티즈");
+		
+		Class clazz = car.getClass();	// 클래스의 정보를 알아낼 수 있다.
+		
+		System.out.println(clazz.getName());
+		System.out.println(clazz.getSimpleName());
+		System.out.println(clazz.getPackage().getName());
+		System.out.println(clazz.getPackageName());
+	}
+}
+```
+
+**클래스 정보 화면**   
+   
+![image](https://user-images.githubusercontent.com/84966961/122702087-a37a8400-d289-11eb-8f82-df641ca64652.png)
+   
+```
+		// 클래스를 생성하지 않더라도 Car 클래스의 정보를 get할 수 있는 방법.
+		try {
+			Class Clazz2 = Class.forName("clone.Car");	// 클래스가 있는지 없는지 알고 싶을 때 사용한다.
+			// 클래스 생성 이전에 오류를 대비하여 생성함.
+			System.out.println(clazz.getName());
+			System.out.println(clazz.getSimpleName());
+			System.out.println(clazz.getPackage().getName());
+			System.out.println(clazz.getPackageName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+```
+   
+ 클래스 생성 전에 미리 `forName()` 메서드를 통해 클래스가 있는지 확인하여 미리 오류를 확인할 수 있다. `forName()`은 객체를 생성하는 것이 아니다. `forName()`을 통해서 객체를 생성하는 방법은 `11.6.3 동적 객체 생성(newInstance())`에 나와 있다.   
+   
+
+   
+<br/><br/>
+<hr/>
+
+### 교재 493p : 11.6.3 동적 객체 생성(newInstance())      
+
+ Class 객체를 이용하면 new 연산자를 사용하지 않아도 동적으로 객체를 생성할 수 있다. 이 방법은 코드 작성시에 클래스 이름을 결정할 수 없고, 런타임 시에 클래스 이름이 결정되는 경우에 매우 유용하게 사용된다. 다음 코드처럼 `Class.forName()` 메소드로 `Class` 객체를 얻은 다음 `newInstance()` 메소드를 호출하면 `SendAction` 타입의 객체를 얻을 수 있다.
+
+```java
+public class NewInstanceTest {
+
+	public static void main(String[] args) {
+
+		try {
+			Class clazz = Class.forName("newinstance.SendAction"); // 해당 객체의 존재 유무만 판단.
+			SendAction action = (SendAction) clazz.newInstance(); // newInstance 예외 경우
+			action.exectue();
+			Class clazz2 = Class.forName("newinstance.ReceiveAction"); // 해당 객체의 존재 유무만 판단.
+			ReceiveAction action2 = (ReceiveAction) clazz2.newInstance(); // newInstance 예외 경우
+			action2.exectue();
+		} catch (ClassNotFoundException e) { // forName 예외 경우
+			// forName 예외 경우 : 해당 클래스를 찾지 못할 경우
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// newInstance 예외 경우1 : 해당 클래스가 추상 클래스이거나 인터페이스일 경우
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// newInstance 예외 경우2 : 클래스나 생성자가 접근 제한자로 인해 접근할 수 없을 경우
+			e.printStackTrace();
+		}
+	}
+}
+```
+
+**결과 화면**   
+ ![image](https://user-images.githubusercontent.com/84966961/122703607-f30e7f00-d28c-11eb-97e2-645681f2d608.png)   
+    
+   
+<br/><br/>
+<hr/>
+
+## 교재 496p : 11.7 String 클래스   
+   
+ 어떤 프로그램이건 문자열은 데이터로서 아주 많이 사용된다. 그렇기 때문에 문자열을 생성하는 방법과 추출, 비교, 찾기, 분리, 변환 등을 제공하는 메소드를 잘 익혀두어야 한다.
+
+<br/><br/>
+<hr/>
+
+### 교재 496p : 11.7.1 String 생성자   
+   
+ 자바의 문자열은 java.lang 패키지의 String 클래스의 인스턴스로 관리된다. 소스상에서 문자열 리터럴은 String 객체로 자동 생성되지만, String 클래스의 다양한 생성자를 이용해서 직접 Sring 객체를 생성할 수도 있다.
+
+java API 8 String : https://docs.oracle.com/javase/8/docs/api/
+
+**많은 13개의 String 생성자들**   
+    
+![image](https://user-images.githubusercontent.com/84966961/122703977-a6777380-d28d-11eb-983c-3cb4c70f0336.png)   
+   
+ `Deprecated`는 사용을 추천하지 않는 생성자를 의미한다. 예전 자바에서는 사용되었으나, 현재 버전과 차후 버전에서는 사용하지 말라는 뜻이다.   
+
+ 메소드 또한 많은 양이 있다.(같은 이름의 메소드도 많음. 오버로딩된 메소드도 많다는 뜻임.)   
+
+```
+public class ByteToStringExample {
+	public static void main(String[] args) {
+		byte[] bytes = { 72, 101, 108, 108, 111, 32, 74, 97, 118, 97  };
+		
+		String str1 = new String(bytes);	// bytes로 초기화
+		System.out.println(str1);	// Hello Java
+		
+		String str2 = new String(bytes, 6, 4);	// 6번째 이후로 4열까지 초기화
+		System.out.println(str2);	// Java
+	}
+}
+```
+
+**출력 이미지**   
+![image](https://user-images.githubusercontent.com/84966961/122704531-e3903580-d28e-11eb-87d9-1623abcffe59.png)
+   
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
