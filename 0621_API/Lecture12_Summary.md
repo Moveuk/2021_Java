@@ -121,6 +121,8 @@ public class MemberTest {
  해시코드란 객체를 식별하는 하나의 정수값을 말한다. 메모리 번지에 들어있는 각 객체의 값이기 때문에 이 값이 다르다면 두 객체가 다른 객체임을 뜻한다.   
    
 **해시코드 오버라이딩 전 MemberTest.java**    
+
+```java
 public class MemberTest {
 
 	public static void main(String[] args) {
@@ -146,6 +148,8 @@ public class MemberTest {
 		// 해시코드가 다르다. 하지만 오버라이드를 통해 각 객체가 같은 해시코드를 같도록 만들 수 있다.
 	}
 }
+```
+   
 
 **결과 화면**    
 ![image](https://user-images.githubusercontent.com/84966961/122695555-a7070e80-d27b-11eb-8251-5379e767b4f9.png)
@@ -401,16 +405,105 @@ public class DeepCloneTest {
 ![image](https://user-images.githubusercontent.com/84966961/122699806-0fa6b900-d285-11eb-85ba-2d79837da747.png)   
    
  
+<br/><br/>
+<hr/>
+
+### 교재 472p : 11.3.5 객체 소멸자(finalize())  
+
+ 생략
+
+
+
+<br/><br/>
+<hr/>
+
+## 교재 473p : 11.4 Objects 클래스     
+
+
+생략
 
 
 
 
+<br/><br/>
+<hr/>
+
+### 교재 477p : 11.4.3 해시코드 생성(hash(), hashCode())    
+   
+ 기존에는 존재하던 해시코드를 복사하여 사용했었지만 다른 방법으로는 `Objects.hash();`를 통해 직접 해시코드를 새로 생성할 수도 있다. 기존 해시코드를 사용할 수 없는 경우도 있기 때문에 `Objects`의 `hash()`기능을 활용하여 만들면 될 것이다.
 
 
+<br/><br/>
+<hr/>
+
+### 교재 478p : 11.4.4 널 여부 조사(isNull(), nonNull(), requireNonNull())    
+   
+생략
 
 
+<br/><br/>
+<hr/>
 
+### 교재 480p : 11.4.5 객체 문자 정보(toString())    
+   
+ 일전에 스타크래프트의 탱크 이름을 그대로 불러오고 싶어서 `toString()`을 오버라이딩을 하면서 주소값이 아닌 직접 이름을 불러왔던 적이 있다.   
+   
+**0611_Interface2 starcraft.tank class**
+```java
+public class Tank extends GrountUnit implements Repairable {
 
+	public Tank() {
+		super(150);
+		hitPoint = MAX_HP;
+
+	}
+
+	@Override
+	public String toString() {
+		return "Tank";
+	}
+}
+```
+   
+ Objects.toString()은 객체의 문자 정보를 리턴하는데, 다음 두 가지로 오버로딩되어 있다.   
+    
+ | 리턴 타입 | 메소드(매개 변수) | 설명 |
+ |---|---|---|---|
+ | String | toString(Object o) | not null -> o.toString() / null -> "null" |
+ | String | toString(Object o, String nullDefault) | not null -> o.toString() / null -> "nullDefault" |
+   
+ 첫 번째 매개값이 not null이면 toString()으로 얻은 값을 리턴하고, null이면 "null" 또는 두 번째 매개값인 "nullDefault"를 리턴한다.   
+    
+  "nullDefault"에는 출력을 원하는 내용을 넣어주면 된다.
+ 
+```java
+ 	System.out.println(Objects.toString(str2, "이름이 없습니다."));
+```
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 
 
 
