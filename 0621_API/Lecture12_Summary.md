@@ -1040,10 +1040,11 @@ public class StringBuilderExample {
 		System.out.println(1900+d.getYear());
 		// 월 (프로그램은 0월부터 시작)
 		System.out.println(d.getMonth());
+		System.out.println(1+d.getMonth());
 ```
    
 **출력 화면**   
-![image](https://user-images.githubusercontent.com/84966961/122715548-fd884300-d2a3-11eb-9783-24c1f724d280.png)
+![image](https://user-images.githubusercontent.com/84966961/122718156-8ce32580-d2a7-11eb-9119-9fe9b9e334e0.png)
 
 
 <hr/>
@@ -1075,7 +1076,7 @@ public class CalendarExample {
 
 		int week    = now.get(Calendar.DAY_OF_WEEK);	// DAY_OF_WEEK 요일 상수 출력
 		String strWeek = null;
-		switch(week) {									// 상수 변수 출력 문자열로 반환.
+		switch(week) {		// 상수 변수(MONDAY, TUESDAY, ....) 출력 문자열로 반환.
 			case Calendar.MONDAY:
 				strWeek = "월";
 				break;
