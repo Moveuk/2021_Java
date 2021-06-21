@@ -1190,21 +1190,6 @@ public class CalendarTest {
 			}
 		}
 		
-		
-		// 나의 오답
-//		int i = 1;
-//		for (int x = 0; x < 5; x++) {
-//			for (int j = 1; k < 7*x; j++) {
-//				while (i < startWeek) {
-//					System.out.print("   ");
-//					i++;
-//				}
-//				for (i =1; i < 8; i++) {
-//					System.out.print("  " + k++);
-//				}
-//			}
-//			System.out.println("");
-//		}
 	}
 
 }
