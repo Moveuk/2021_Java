@@ -1200,11 +1200,52 @@ public class CalendarTest {
 ![image](https://user-images.githubusercontent.com/84966961/122728507-2b28b880-d2b3-11eb-91e2-b551879949f4.png)
 
 
+<hr/>
+   
+## Quiz : 달력의 앞달과 뒷달날짜로 빈 부분을 채우기.       
+    
 
+```
+		// 달력의 빈부분을 전 달과 앞달의 날짜로 채워라.
+		
+		// 전달 구하기
+		fDay.set(year, month - 1, 1);
+		fDay.add(Calendar.DATE, -startWeek);	// 전달 마지막날
+		int formerEndDay = fDay.get(Calendar.DAY_OF_MONTH);
+		// 다음달 구하기 : eDay + 1 하면 다음달 1일
+		eDay.add(Calendar.DATE, 1);
+		int nextStartDay = eDay.get(Calendar.DAY_OF_MONTH);
+		
+		
+		System.out.println("   " + year + "년 " + month + "월");
+		System.out.println(" Su Mo Tu We Th Fr Sa ");
 
+		int sValue = 0;
+		for (int i = 1; i < startWeek; i++) {
+			System.out.print((formerEndDay+i) < 10 ? "  "+ (formerEndDay+i): " "+(formerEndDay+i));
+		}
 
+		for (int i = 1,s = startWeek; i <= endDay; i++,s++) {
+			System.out.print(i < 10 ? "  "+i : " "+i);
+			if (s%7==0) {
+				System.out.println("");
+			}
+			sValue = s%7;
+		}
+		
+		if (0<sValue) {
+			for (int i = 0; i < (7-sValue); i++) {
+				System.out.print("  "+ (nextStartDay+i));
+			}
+		}
+		System.out.println("");
+		System.out.println("----------------------");
+	}
+```
 
+**실행 결과**   
 
+![image](https://user-images.githubusercontent.com/84966961/122735984-80b49380-d2ba-11eb-816b-7ba40eacc144.png)
 
 
 
