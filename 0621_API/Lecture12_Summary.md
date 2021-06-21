@@ -1076,26 +1076,26 @@ public class CalendarExample {
 
 		int week    = now.get(Calendar.DAY_OF_WEEK);	// DAY_OF_WEEK 요일 상수 출력
 		String strWeek = null;
-		switch(week) {		// 상수 변수(MONDAY, TUESDAY, ....) 출력 문자열로 반환.
-			case Calendar.MONDAY:
+		switch(week) {									// 상수 변수 출력 문자열로 반환.
+			case Calendar.MONDAY:	//2
 				strWeek = "월";
 				break;
-			case Calendar.TUESDAY:
+			case Calendar.TUESDAY:	//3
 				strWeek = "화";
 				break;
-			case Calendar.WEDNESDAY:
+			case Calendar.WEDNESDAY://4
 				strWeek = "수";
 				break;
-			case Calendar.THURSDAY:
+			case Calendar.THURSDAY:	//5
 				strWeek = "목";
 				break;
-			case Calendar.FRIDAY:
+			case Calendar.FRIDAY:	//6
 				strWeek = "금";
 				break;
-			case Calendar.SATURDAY:
+			case Calendar.SATURDAY:	//7
 				strWeek = "토";
 				break;
-			default:
+			default:				//1
 				strWeek = "일";
 		}
 		
@@ -1127,6 +1127,93 @@ public class CalendarExample {
 ```
    
  코드를 보고 이해하면 될 듯 싶다. 이해가 안되면 주석을 확인하자.
+
+ java API 8 : https://docs.oracle.com/javase/8/docs/api/
+
+ Calendar API를 보게 되면 엄청나게 다양한 상수값이 존재하는 것을 알 수 있다.   
+
+   
+   
+<hr/>
+   
+## 달력 만들기  
+
+```java
+package datecalendar;
+
+import java.util.Calendar;
+import java.util.Scanner;
+
+public class CalendarTest {
+
+	public static void main(String[] args) {
+		int endDay;
+		int startWeek;
+
+		// 달력 만들기
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("년도 입력 : ");
+		int year = sc.nextInt();
+		System.out.println("월 입력 : ");
+		int month = sc.nextInt();
+
+		Calendar sDay = Calendar.getInstance(); // 싱글턴 패턴 하나의 인스턴스로 공유해서 사용.
+		Calendar eDay = Calendar.getInstance();
+
+		// 달의 startDay, endDay 설정
+		sDay.set(year, month - 1, 1); // 우리가 입력한 달에서 -1을 해야 컴퓨터가 이해하는 월 값이 된다.
+		// 해당 연도, 해당 월의 1일 날짜로 세팅함.
+		eDay.set(year, month, 1);
+		// 다음 달 1일로 세팅함.
+
+		eDay.add(Calendar.DATE, -1); // eDay의 날짜정보 연산(Calendar.DATE)에 -1을 함.)
+		// 전 월의 마지막 날짜를 구하기 위함.(매 달마다 마지막 날짜가 다르기 때문에 쉽게 구하기 위하여 이렇게 접근한다.)
+
+		startWeek = sDay.get(Calendar.DAY_OF_WEEK); // 1일의 시작 요일을 구함.
+		endDay = eDay.get(Calendar.DAY_OF_MONTH); // 달의 마지막 날짜를 구함.
+
+		// 달력 모양 잡기
+		System.out.println("   " + year + "년 " + month + "월");
+		System.out.println(" Su Mo Tu We Th Fr Sa ");
+
+
+		
+		for (int i = 1; i <= (startWeek-1); i++) {	// startWeek 그대로 쓰면 값넣는 위치까지 공백 채우므로 -1 시켜줌
+			System.out.print("   ");
+		}
+
+		for (int i = 1,s = startWeek; i <= endDay; i++,s++) {
+			System.out.print(i < 10 ? "  "+i : " "+i);	//10보다 작으면 공백 2칸 10보다 작지 않으면 공백 1칸
+			if (s%7==0) {	// s가 7의 배수면 줄넘김.
+				System.out.println("");
+			}
+		}
+		
+		
+		// 나의 오답
+//		int i = 1;
+//		for (int x = 0; x < 5; x++) {
+//			for (int j = 1; k < 7*x; j++) {
+//				while (i < startWeek) {
+//					System.out.print("   ");
+//					i++;
+//				}
+//				for (i =1; i < 8; i++) {
+//					System.out.print("  " + k++);
+//				}
+//			}
+//			System.out.println("");
+//		}
+	}
+
+}
+```
+
+**실행 결과**   
+   
+![image](https://user-images.githubusercontent.com/84966961/122728507-2b28b880-d2b3-11eb-91e2-b551879949f4.png)
+
 
 
 
