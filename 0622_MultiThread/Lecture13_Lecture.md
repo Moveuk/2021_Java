@@ -80,27 +80,242 @@ Thread thread = new Thread( () -> { 		// 익명 구현 객체.
    
  이런 방식으로 작동하게 만들기 위해서 단순히 run()을 실행시키는 것이 아닌 스레드의 start() 메소드를 사용하는 것이다.   
    
+<br/>
+<hr/>
+   
+**비프와 프린트 동시에 출력하기**    
+   
+**BeepTask.java : 비프 소리 기능**   
+```java
+import java.awt.Toolkit;
 
+public class BeepTask implements Runnable {
+	public void run() {
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		for (int i = 0; i < 5; i++) {
+			toolkit.beep();
+			try {
+				Thread.sleep(500);
+			} catch (Exception e) {	}
+		}
+	}
+}
+```
+**BeepPrintExample.java**   
+```java
+public class BeepPrintExample {
+	public static void main(String[] args) {
+		Runnable beepTask = new BeepTask();
+		Thread thread = new Thread(beepTask);
+		thread.start();
+		
+		for (int i = 0; i < 5; i++) {
+			System.out.println("띵");
+			try { Thread.sleep(500); }
+			catch (Exception e) {}
+			}
+	}
 
+}
+```
+   
+ 이 두 클래스를 나누지 말고, 익명 객체 혹은 람다식으로 합쳐 표현할 수 있다.   
+   
+   
+**익명 객체와 Runnable을 이용한 스레드**
+```java
+public class BeepPrintExample_Runnable {
 
+	public static void main(String[] args) {
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Toolkit toolkit = Toolkit.getDefaultToolkit();
+				for (int i = 0; i < 5; i++) {
+					toolkit.beep();
+					try {
+						Thread.sleep(500);
+					} catch (Exception e) {
+					}
+				}
+			}
+		});
 
+		thread.start();
 
+		for (int i = 0; i < 5; i++) {
+			System.out.println("띵");
+			try {
+				Thread.sleep(500);
+			} catch (Exception e) {
+			}
+		}
+	}
+}
+```
+   
+**람다식을 이용한 스레드**
+```java
+public class BeepPrintExample_lambda {
 
+	public static void main(String[] args) {
+		Thread thread = new Thread(() -> {
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			for (int i = 0; i < 5; i++) {
+				toolkit.beep();
+				try {Thread.sleep(500);} 
+				catch (Exception e) {}
+			}
+		});
+		thread.start();
 
+		for (int i = 0; i < 5; i++) {
+			System.out.println("띵");
+			try {
+				Thread.sleep(500);
+			} catch (Exception e) {
+			}
+		}
+	}
+}
+```
+   
 <br/><br/>
 <hr/>
 
 ### 교재 583p : 12.2.2 Thread 하위 클래스로부터 생성   
        
- 
+ 작업 스레드가 실행할 작업을 Runnable로 만들지 않고, Thread의 하위 클래스로 작업 스레드를 정의하면서 작업 내용을 포함시킬 수도 있다. 다음은 작업 스레드 클래스를 정의하는 방법인데, Thread 클래스를 상속한 후 run 메소드를 재정의(overriding)해서 스레드가 실행할 코드를 작성하면 된다. 작업 스레드 클래스로부터 작업 스레드 객체를 생성하는 방법은 일반적인 객체를 생성하는 방법과 동일하다.   
+   
+```java
+public class WorkerThread extends Thread {
+	@override
+	public void run() {
+		//스레드가 실행할 코드;
+	}
+}
+Thread thread = new WorkerThread();
+```
+   
+ 코드를 좀 더 절약 하기 위해 다음과 같이 익명 객체로 작업 스레드 객체를 생성할 수도 있다.   
+    
+```java
+Thread thread - new Thread() {			// 익명 자식 객체
+	public void run() {
+		//스레드가 실행할 코드;
+	}
+};
+```
+   
+ 이렇게 생성된 작업 스레드 객체에서 `start()` 메소드를 호출하면 작업 스레드는 자신의 `run()` 메소드를 실행하게 된다.   
+   
+ 기존 예제를 이용하여 Thread 클래스를 상속받아 처리하는 코드를 구성해보자.   
+   
+**BeepThread.java**
+```java
+package thread;
 
+import java.awt.Toolkit;
 
+public class BeepThread extends Thread {
+	public void run() {
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		for (int i = 0; i < 5; i++) {
+			toolkit.beep();
+			try {
+				Thread.sleep(500);
+			} catch (Exception e) {	}
+		}
+	}
+}
+```
 
+**BeepPrintExample_Thread.java**
+```java
+package thread;
+// Thread 상속 클래스를 이용한 thread 실행.
+public class BeepPrintExample_Thread {
+	public static void main(String[] args) {
+		Thread thread = new BeepThread();
+		thread.start();
+		
+		for(int i=0; i<5; i++) {
+			System.out.println("띵");
+			try { Thread.sleep(500); } catch(Exception e) {}
+		}
+	}
+}
+```
 
+위 코드를 다른 방식으로 작성할 수도 있다.
 
+```java
+package thread;
 
+import java.awt.Toolkit;
 
+// Thread 상속 클래스를 이용한 thread 실행의 대체.
+public class BeepPrintExample_Thread_Alter {
+	public static void main(String[] args) {
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				Toolkit toolkit = Toolkit.getDefaultToolkit();
+				for (int i = 0; i < 5; i++) {
+					toolkit.beep();
+					try {
+						Thread.sleep(500);
+					} catch (Exception e) {	}
+				}
+			}
+		};
+		thread.start();
+		
+		for(int i=0; i<5; i++) {
+			System.out.println("띵");
+			try { Thread.sleep(500); } catch(Exception e) {}
+		}
+	}
+}
+```
 
+   
+
+   
+<br/><br/>
+<hr/>
+
+### 교재 586p : 12.2.3 스레드의 이름   
+   
+ 스레드는 자신의 이름을 가지고 있다. 스레드의 이름은 큰 역할을 하는 것은 아니지만, 디버깅할 때 어떤 스레드가 어떤 작업을 하는지 조사할 목적으로 가끔 사용한다. 메인 스레드의 니름은 `main`이라는 이름을 가지고 우리가 직접 생성한 스레드는 자동적으로 `Thread-n`이라는 이름으로 설정된다. `Tread-n` 대신 다른 이름으로 설정하고 싶다면 Thread 클래스의 `setName()` 메소드로 변경하면 된다.   
+   
+```java
+	thread.setName("스레드 이름");
+```
+ 반대로 스레드 이름을 알고 싶은 경우에는 `getName()` 메소드를 호출하면 된다.   
+   
+```java
+	thread.getName();
+```
+   
+ `setName()`과 `getName()` 메소드는 Thread의 인스턴스 메소드이므로 스레드 객체의 참조가 필요하다. 만약 스레드 객체의 참조를 가지고 있지 않다면 Thread의 정적 메소드인 `currentThread()`로 코드를 진행하는 현재 스레드의 참조를 얻을 수 있다.   
+   
+```java
+	Thread thread = Thread.currentThread();
+```
+   
+ `스레드는 언제나 순서대로 실행되지 않는다.`   
+    
+ 동시성
+   
+<br/><br/>
+<hr/>
+
+## 교재 588p : 12.3 스레드 우선순위   
+   
+ 동시성(Concurrency) 또는 병렬성(Parallelism)   
+    
+![image](https://user-images.githubusercontent.com/84966961/122850682-a4261f80-d348-11eb-8808-9e0fe8414c09.png) ![image](https://user-images.githubusercontent.com/84966961/122850688-a7b9a680-d348-11eb-94f3-bc860494c18c.png)
 
 
 
