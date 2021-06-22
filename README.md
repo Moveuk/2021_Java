@@ -21,4 +21,11 @@ Learning about basic Java
    이벤트(Event), GestureDetector, 수명 주기, 생명 주기(life cycle), 단말 방향 전환(Orientation), 토스트 메세지(Toast Message), 토스트 창 위치 변환(setGravity), 스낵바(Snackbar), 알림 대화상자(Dialog), 빌더(builder)
 6. 20210615 Lecture06  
 
-Key Word : -able, -able implements, 중첩 클래스, 중첩 인터페이스
+
+11. 20210621 Lecture11   
+   
+
+12. 20210622 Lecture12    
+   멀티 스레드, 스레드 생성 방법 두 가지, 스레드의 이름(getName(), setName("스레드 이름")), 스레드 우선순위(Priority), 스레드 동기화 메소드와 동기화 블록    
+   
+13.
