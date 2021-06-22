@@ -1,5 +1,5 @@
 # 멀티 스레드 (MultiThread)
-
+Key Word : 멀티 스레드, 스레드 생성 방법 두 가지, 스레드의 이름(getName(), setName("스레드 이름")), 스레드 우선순위(Priority), 스레드 동기화 메소드와 동기화 블록
 
 <hr/>
    
@@ -306,7 +306,58 @@ public class BeepPrintExample_Thread_Alter {
    
  `스레드는 언제나 순서대로 실행되지 않는다.`   
     
- 동시성
+ 다음 ㅇ제는 메인 스레드의 참조를 얻어 스레드 이름을 콘솔에 출력하고, 새로 생성한 스레드의 이름을 `setName()` 메소드로 설정한 후, `getName()` 메소드로 읽어오도록 했다.   
+ 
+**ThreadNameExample.java**
+```java
+public class ThreadNameExample {
+	public static void main(String[] args) {
+		Thread mainThread = Thread.currentThread();
+		System.out.println("프로그램 시작 스레드 이름: " + mainThread.getName());
+		
+		ThreadA threadA = new ThreadA();		
+		ThreadB threadB = new ThreadB();
+		
+		System.out.println("작업 스레드 이름: " + threadA.getName());
+		threadA.start();
+		System.out.println("작업 스레드 이름: " + threadB.getName());
+		threadB.start();
+	}
+}
+```
+  
+**ThreadA.java**
+```java
+public class ThreadA extends Thread {	
+	public ThreadA() {
+		setName("ThreadA");
+	}
+	
+	public void run() {		
+		for(int i=0; i<2; i++) {		
+			System.out.println(getName() + "가 출력한 내용");
+		}
+	}
+}
+```
+  
+**ThreadB.java**
+```java
+public class ThreadB extends Thread {	
+	public void run() {		
+		for(int i=0; i<2; i++) {		
+			System.out.println(getName() + "가 출력한 내용");
+		}
+	}
+}
+```
+ 
+ 위의 Example 코드를 돌리다보면 스레드 A와 B가 병렬적으로 경쟁하면서 돌다가 다음과 같이 순서가 꼬이는 경우를 보게 된다. 이는 스레드의 `동시성`과 `병렬성`을 보여주는 사례이다.   
+   
+**스레드가 병렬적으로 진행되는 화면**
+ ![image](https://user-images.githubusercontent.com/84966961/122852236-40e9bc80-d34b-11eb-89b9-f80588627f27.png)
+
+ 
    
 <br/><br/>
 <hr/>
@@ -315,16 +366,246 @@ public class BeepPrintExample_Thread_Alter {
    
  동시성(Concurrency) 또는 병렬성(Parallelism)   
     
-![image](https://user-images.githubusercontent.com/84966961/122850682-a4261f80-d348-11eb-8808-9e0fe8414c09.png) ![image](https://user-images.githubusercontent.com/84966961/122850688-a7b9a680-d348-11eb-94f3-bc860494c18c.png)
+![image](https://user-images.githubusercontent.com/84966961/122850682-a4261f80-d348-11eb-8808-9e0fe8414c09.png) 
 
+ 싱글 코어 CPU의 경우에 멀티 스레드 작업을 병렬적으로 실행하는 것처럼 보이지만 빠른 속도로 처리하여 동시에 처리하는 것처럼 보인다. 하지만, 사실은 번갈아가며 실행하는 동시성 작업이다. 스레드의 개수가 코어 수보다 많을 경우, 스레드를 어떤 순서에 의해 동시성으로 실행할 것인가를 결정해야 하는데, 이것을 스레드 스케줄링이라고 한다. 스레드 스케줄링에 의해 스레드들은 아주 짧은 시간에 번갈아 가면서 그들의 run() 메소드드들을 조금씩 실행한다.   
 
+   
+![image](https://user-images.githubusercontent.com/84966961/122850688-a7b9a680-d348-11eb-94f3-bc860494c18c.png)
+   
+ 자바의 스레드 스케줄링은 우선순위(Priority) 방식과 순환 할당(Round-Robin) 방식을 사용한다. 우선순위 방식은 우선순위가 높은 스레드가 실행 상태를 더 많이 가지도록 스케줄링하는 것을 말한다. 순환 할당 방식은 시간 할당량(Time Slice)을 정해서 하나의 스레드를 정해진 시간만큼 실행하고 다시 다른 스레드를 실행하는 방식을 말한다. 스레드 우선순위 방식은 스레드 객체에 우선순위 번호를 부여할 수 있기 때문에 개발자가 코드로 제어할 수 있다. 하지만 순환 할당 방식은 자바 가상 기계에 의해서 정해지기 때문에 코드로 제어할 수 없다.   
+ 
+ 우선순위 방식에서 우선순위는 1에서부터 10까지 부여되는데, 1이 가장 우선순위가 낮고, `10이 가장 높다.` 우선순위를 부여하지 않으면 모든 스레드들은 기본적으로 5의 우선순위를 할당받는다. 만약 우선순위를 변경하고 싶다면 Thread 클래스가 제공하는 `setPriority()` 메소드를 이용하면 된다.   
+   
+```java
+	thread.setPriority(우선순위);
+```
+   
+ **스레드의 우선순위 상수값**   
 
+```java
+	thread.setPriority(Thread.MAX_PRIORITY);	// 10
+	thread.setPriority(Thread.NORM_PRIORITY);	//  5
+	thread.setPriority(Thread.MIN_PRIORITY);	//  1	
+```
+   
+ 코어 수에 따라 스레드의 우선순의가 적용되는지 결정된다. 예를 들어 쿼드 코어는 코어가 4개이므로 우선순위의 영향을 받으려면 사용하는 스레드의 수가 5개 이상이 되어야 우선순위에 따라 처리 속도가 달라지게 된다.   
+   
+ 다음은 우선순위 차이에 따른 처리 속도 차이를 보기 위한 예제이다.   
+   
+**CalcThread.java**
+```java
+public class CalcThread extends Thread {
+	public CalcThread(String name) {
+		setName(name);
+	}
+	
+	public void run() {
+		for(int i=0; i<2000000000; i++) {
+		}
+		System.out.println(getName());
+	}
+}
+```
 
+**PriorityExample.java**
+```java
+public class PriorityExample {
+	public static void main(String[] args) {
+		for(int i=1; i<=10; i++) {
+			Thread thread = new CalcThread("thread" + i);
+			if(i != 10) {
+				thread.setPriority(Thread.MIN_PRIORITY);
+			} else {
+				thread.setPriority(Thread.MAX_PRIORITY);
+			}
+			thread.start();
+		}
+	}
+}
+```
 
+**결과 화면**
+![image](https://user-images.githubusercontent.com/84966961/122854644-fcf8b680-d34e-11eb-9e4a-45a1321e7439.png)
+   
+스레드 10번이 마지막에 생성되어 실행되었음에도 가장 먼저 끝나는 것을 확인할 수 있다. 이것이 스레드 우선순위에 따른 차이이다.   
+   
+ 학원 컴퓨터의 CPU 사양이 4코어 8스레드이기 때문에 10개의 스레드를 돌릴 경우 우선순위가 영향을 미치는 것을 알 수 있다.
+   
+![image](https://user-images.githubusercontent.com/84966961/122854832-477a3300-d34f-11eb-81d0-32875abe5cd0.png)
+   
+<br/><br/>
+<hr/>
 
+## 교재 591p : 12.4 동기화 메소드와 동기화 블록   
+   
+### 교재 591p : 12.4.1 공유 객체를 사용할 때의 주의할 점   
+   
+ 싱글 스레드 프로그램에서는 한 개의 스레드가 객체를 독차지할 수 있지만 다중 스레드 작업에서는 스레드들이 객체를 공유해야만 한다. 이 경우, 스레드 A를 사용하던 객체가 스레드 B에 의해 상태가 변경될 수 있기 때문에 스레드 A가 의도했던 것과는 다른 결과를 산출할 수도 있다.
+   
+![image](https://user-images.githubusercontent.com/84966961/122855118-b48dc880-d34f-11eb-80d7-572ff8435347.png)   
+ 
+ User1 스레드가 Calculaor 객체의 memory 필드에 100을 먼저 저장하고 2초간 일시 정지 상태가 된다. 그 동안에 User2 스레드가 memory 필드값을 50으로 변경한다. 2초가 지나 User1스레드가 다시 실행 상태가 되어 memory 필드의 값을 출력하면 User2가 저장한 50이 나온다.   
 
+ 이 말은 스레드끼리 경쟁적으로 작업을 처리하다가 공유 메모리를 사용함으로써 서로 변질시킬 수 있다는 말이다.
 
+**MainThreadExample.java**
+```java
+package unsynchronized;
 
+public class MainThreadExample {
+	public static void main(String[] args) {
+		Calculator calculator = new Calculator();
+		
+		User1 user1 = new User1();			// User1 스레드 생성
+		user1.setCalculator(calculator);	// 공유 객체 생성
+		user1.start();						// User1 스레드 시작
 
+		User2 user2 = new User2();			// User2 스레드 생성
+		user2.setCalculator(calculator);	// 공유 객체 생성
+		user2.start();						// User2 스레드 시작
+	}
+}
+```
 
+**Calculator.java**
+```java
+public class Calculator {
+	private int memory;
+
+	public int getMemory() {
+		return memory;
+	}
+
+	public void setMemory(int memory) {			// 계산기 메모리에 값을 저장하는 메소드
+		this.memory = memory;					// 매개값을 memory 필드에 저장
+		try {									// 스레드를 2초간 일시 정지시킴
+			Thread.sleep(2000);
+		} catch(InterruptedException e) {}	
+		System.out.println(Thread.currentThread().getName() + ": " +  this.memory);
+	}
+}
+```
+
+**User1.java**
+```java
+public class User1 extends Thread {	
+	private Calculator calculator;
+	
+	public void setCalculator(Calculator calculator) {
+		this.setName("User1");			// 스레드 이름을 User1로 설정
+		this.calculator = calculator;	// 공유객체인 Calculator를 필드에 저장
+	}
+	
+	public void run() {
+		calculator.setMemory(100);		// 공유객체인 Calculator의 메모리에 100을 저장
+	}
+}
+```
+
+**User2.java**
+```java
+public class User2 extends Thread {	
+	private Calculator calculator;
+	
+	public void setCalculator(Calculator calculator) {
+		this.setName("User2");			// 스레드 이름을 User2로 설정
+		this.calculator = calculator;	// 공유객체인 Calculator를 필드에 저장
+	}
+	
+	public void run() {
+		calculator.setMemory(50);		// 공유객체인 Calculator의 메모리에 50을 저장
+	}
+}
+```
+
+ 동시 작업이 가능한 예제였다. 이런 변질되는 문제점을 해결하기 위한 방법으로 동기화 메소드와 동기화 블록을 활용한다.
+   
+<br/><br/>
+<hr/>
+
+### 교재 593p : 12.4.2 동기화 메소드 및 동기화 블록   
+   
+ 스레드가 사용 중인 객체를 다른 스레드가 변경할 수 없도록 하려면 스레드 작업이 끝날 때까지 객체에 `잠금(lock)`을 걸어서 다른 스레드가 사용할 수 없도록 해야 한다. 멀티 스레드 프로그램에서 단 하나의 스레드만 실행할 수 있는 코드 영역을 `임계 영역(critical section)`이라고 한다. 자바는 임계 영역을 지정하기 위해 `동기화(synchronized)` 메소드와 동기화 블록을 제공한다. 스레드가 객체 내부의 동기화 메소드 또는 블록에 들어가면 즉시 객체에 `잠금`을 걸어 다른 스레드가 임계 영역 코드를 실행하지 못하도록 한다. 동기화 메소드를 만드는 방법은 다은과 같이 메소드 선언에 `synchronized` 키워드를 붙이면 된다. `synchronized` 키워드는 인스턴스와 정적 메소드 어디든 붙일 수 있다.   
+   
+```java
+public synchronized void method() {
+	임계 영역	//단 하나의 스레드만 실행
+}
+```
+   
+ 단순히 메소드 전체를 동기화 하고 싶은 것이 아니라 코드에서 일부분만 동기화를 하고 싶다면 다음과 같이 `동기화 블록`을 이용하면 된다.   
+   
+```java
+public void method() {
+// 여러 스레드가 실행 가능 영역
+...
+
+synchronized (공유 객체) {		// 동기화 블록
+	임계 영역	//단 하나의 스레드만 실행
+}
+
+// 여러 스레드가 실행 가능 영역
+...
+}
+```
+   
+ 만약 한 스레드가 동기화된 메소드나 블록에 접근 중이라면 다른 스레드들은 동기화된 임계 영역에 접근이 불가능하다. 단, 일반 메소드는 접근이 가능하다.   
+   
+![image](https://user-images.githubusercontent.com/84966961/122856593-02a3cb80-d352-11eb-9eea-1177173cc7ed.png)   
+   
+ 다음 코드는 이전 예제인 `Calculaor.java` 파일의 `setMemory()` 메소드를 동기화시켜 준 코드이다.   
+   
+**Calculator.java**
+```java
+public class Calculator {
+	private int memory;
+
+	public int getMemory() {
+		return memory;
+	}
+
+	public synchronized void setMemory(int memory) {			// 계산기 메모리에 값을 저장하는 메소드
+		this.memory = memory;									// 매개값을 memory 필드에 저장
+		try {													// 스레드를 2초간 일시 정지시킴
+			Thread.sleep(2000);
+		} catch(InterruptedException e) {}	
+		System.out.println(Thread.currentThread().getName() + ": " +  this.memory);
+	}
+}
+```
+   
+ 동기화를 진행하는 두번째 방식으로는 블록을 만드는 방식이다. 다음 예제를 보자.
+ 
+ ```java
+public class Calculator_block {
+	private int memory;
+
+	public int getMemory() {
+		return memory;
+	}
+
+	public void setMemory(int memory) { 		// 계산기 메모리에 값을 저장하는 메소드
+		synchronized (this) {
+			this.memory = memory; 				// 매개값을 memory 필드에 저장
+			try { 								// 스레드를 2초간 일시 정지시킴
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+			}
+			System.out.println(Thread.currentThread().getName() + ": " + this.memory);
+		}
+	}
+}
+```
+ 
+ 두 방식 모두 결과가 똑같이 나오는 것을 알 수 있다. 하지만 메소드에 동기화하는 방법과 달리 블록에 동기화를 해버리면 모든 동기화를 걸은 메소드와 블록이 `잠금(lock)`이 걸리게 된다. 이는 잘못 사용하게 되면 프로그램 처리 속도에 문제를 미칠 수 있는 이유가 된다.
+   
+ 동기화(synchronized)시켜준 코드는 다음과 같이 시간순으로 흐르게 된다.   
+   
+![image](https://user-images.githubusercontent.com/84966961/122857947-57484600-d354-11eb-88da-e6a28937ad36.png)   
+   
+ 
+
+<br/>
+<hr/>
 
