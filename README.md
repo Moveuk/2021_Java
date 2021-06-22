@@ -19,9 +19,12 @@ Learning about basic Java
   위젯(Widget), 드로어블 폴더(R.drawable), 버튼(Button)의 종류(radio, checkbox, ...), 에딧 텍스트(EditText, planeText), Pressed event(손가락 표시), View.OnTouchListener, View.OnkeyListner, OnTouch 기능
 5. 20210614 Lecture05   
    이벤트(Event), GestureDetector, 수명 주기, 생명 주기(life cycle), 단말 방향 전환(Orientation), 토스트 메세지(Toast Message), 토스트 창 위치 변환(setGravity), 스낵바(Snackbar), 알림 대화상자(Dialog), 빌더(builder)
-6. 20210615 Lecture06  
-
-
+6. 20210615 Lecture06   
+7. 20210615 Lecture06   
+8. 20210615 Lecture06   
+9. 20210615 Lecture06   
+10. 20210615 Lecture06   
+   
 11. 20210621 Lecture11   
    
 
