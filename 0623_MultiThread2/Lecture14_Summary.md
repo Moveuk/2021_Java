@@ -1,5 +1,5 @@
 # 멀티 스레드의 상태 제어    
-Key Word :    
+Key Word : 스레드 상태, 스레드 상태 제어, sleep(), yield(), join(), wait(), notify(), notifyAll(), Thread.currentThread()    
    
 <hr/>
    
@@ -507,8 +507,8 @@ public class Account {
 		return balance;
 	}
 	
-	public synchronized void withdraw(int money) {
-		if (balance >= money) {
+	public synchronized void withdraw(int money) {		// 동기화시켜서 한번에 한스레드만 붙도록함.
+		if (balance >= money) {				// 출금하려는 돈이 잔금보다 크면 불가능.
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
