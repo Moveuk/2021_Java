@@ -496,12 +496,74 @@ RUNNABLE 상태로 들어가면서 다른 쓰레드에게 작업을 양보하는
 <br/><br/>
 <hr/>
    
-## Quiz
+## Quiz   
+   
+**Account.java**
+```java
+public class Account {
+	private int balance = 1000;
+	
+	public int getBalance() {
+		return balance;
+	}
+	
+	public synchronized void withdraw(int money) {
+		if (balance >= money) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
+			balance -= money;
+		}
+	}
+}
+```
 
+   
+**RunnableEx.java**
+```java
+public class RunnableEx implements Runnable {
 
+	Account acc = new Account();
+	
+	@Override
+	public void run() {
 
+		while (acc.getBalance() > 0) {
+			int money = (int)(Math.random() * 3 + 1) * 100;
+			acc.withdraw(money);
+			System.out.println("balance" + acc.getBalance());
+			System.out.println(Thread.currentThread());		// 현재 쓰레드 참조 코드
+		}
 
+	}
 
+}
+```
+
+   
+**AccountTest.java**
+```java
+public class AccountTest {
+
+	public static void main(String[] args) {
+
+		RunnableEx r = new RunnableEx();
+		Thread p1 = new Thread(r);
+		Thread p2 = new Thread(r);
+		String name2 = p2.getName();
+		
+		p1.start();
+		p2.start();
+
+	}
+
+}
+```
+
+**결과 화면**   
+   
+![image](https://user-images.githubusercontent.com/84966961/123040782-47516480-d42f-11eb-8ebf-7fd3a2d2c5fc.png)
 
 
 
