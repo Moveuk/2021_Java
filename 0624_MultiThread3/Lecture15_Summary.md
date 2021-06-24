@@ -439,7 +439,121 @@ public class Table {
 
 ### 퍼포먼스를 올리기 위한 예제 수정.
     
+ table에 wait와 notify를 걸어 요리가 꽉 찼거나 음식이 없을 때 요리사와 고객이 쉴 수 있도록 만들어 주었다.
+    
+**table.java**
+```java
+public class Table {
+	String[] dishNames = { "donut", "donut", "burger" }; 	// 테이블에 올라갈 수 있는 음식을 배열로 정의함.
 
+	final int MAX_FOOD = 6; 								// 테이블에 최대로 올릴 수 있는 음식 갯수를 정함.
+			
+	public ArrayList<String> dishes = new ArrayList<>(); 	// 테이블에 저장할 수 있는 저장소를 배열리스트로 만듬.
+
+	public synchronized void add(String dish) { 			// 테이블에 음식을 저장하는 기능의 메소드
+
+		while (dishes.size() >= MAX_FOOD) { 				
+			String name = Thread.currentThread().getName();
+			System.out.println(name + " is waiting");
+			
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		dishes.add(dish); 									// 단순 배열이 아니라 객체 형태로 사용하기 때문에
+															// index 넘버로 구분하는 것이 아니라 add() 메소드를 이용하여 접시를 추가함.
+		notify();											// 스레드 불러내기.
+		System.out.println(Thread.currentThread().getName()+"이 "+ dish +" 한 개를 만들었습니다.");
+		System.out.println("Dishes : " + dishes.toString());
+	}
+
+	public void remove(String dishName) { 					// 먹는다는 것은 배열에서 지운다는 것.
+		synchronized (this) {								// 동기화 블록을 시키면 클래스 내부의 모두가 동기화 연동됨.
+			String name = Thread.currentThread().getName();
+			while (dishes.size() == 0) {					// 테이블에 음식없으면 정지.
+				System.out.println(name + " is waiting");
+				try {
+					wait();						
+				} catch (Exception e) {}
+			}
+
+			while (true) {
+				for (int i = 0; i < dishes.size(); i++) {	// 테이블 위의 음식 갯수만큼 반복하여 확인함.
+					if (dishName.equals(dishes.get(i))) { 	// 매개 변수가 i번째 dishes 값이랑 같으면
+						dishes.remove(i); 					// 삭제 : 소비자가 먹음.
+						notify();
+						return;
+					} 			
+				}
+				try {
+					System.out.println(name + " is waiting");
+					wait();						
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public int dishNum() { 									// 만들 수 있는 음식의 갯수.
+		return dishNames.length;
+	}
+}
+```
+
+**Customer.java boolean 값 수정**
+```java
+public class Customer implements Runnable {
+
+	private Table table;
+	private String food;
+	
+	// 스레드 만들때 다음과 같은 형식으로 만들어야 함.
+	public Customer(Table table, String food) {			// 매개변수를 넣게 하기 위한 생성자 생성.
+		super();
+		this.table = table;
+		this.food = food;
+	}
+
+
+	@Override
+	public void run() {
+
+		while (true) {
+			try {
+				Thread.sleep(100);
+				
+			} catch (InterruptedException e) {
+			}
+			
+			String name = Thread.currentThread().getName();
+			
+			table.remove(food);
+			System.out.println(name+"이 "+ food + "을 잘 먹었다.");
+		}
+	}
+}
+```
+
+**log확인**   
+![image](https://user-images.githubusercontent.com/84966961/123212125-59023d00-d4ff-11eb-8d30-662189bb65cf.png)   
+   
+**이상한 log 확인***    
+![image](https://user-images.githubusercontent.com/84966961/123212489-d4fc8500-d4ff-11eb-8661-b737f7bcd92b.png)
+    
+ 1. 위의 로그를 보면 처음 도넛으로 6자리가 꽉 차있다.   
+ 2. 그 다음 줄에 고객2가 버거가 없어서 기다린다. 이 때 `notify()`로 누군가를 `waiting pool` 에서 꺼내주는 데 문제는 누구를 꺼내는 지 모른다.    
+ 3. 이 `notify()` 때 아마도 Cook을 풀어줘서 다시 만드려고 보니 꽉 차있어서 다시 waiting 상태로 돌아가는 것을 볼 수 있다. Cook은 끝날 때 `notify()` 로 누군가를 풀었을 것이다.    
+ 4. 그런데 굳이 버거가 없어서 잠겨있는 Customer2를 다시 풀어서 또 다시 버거가 없음을 확인하고 다시 waiting 상태로 들어간다.   
+ 5. 이 번에는 동기화 상태에 있는 `remove()`에 Customer1이 먼저 접근해서 donut을 먹은 후 `notify()`로 Cook을 풀어서 바로 donut을 만드는 것을 확인 할 수 있다.   
+    
+<br/>
+    
+-> `notify()`로 `waiting pool`에서 꺼내줄 때 누굴 꺼낼지 모르는 점 때문에 작업 처리 효율이 다시 떨어지게 된다. 아마도 다음장 스레드 그룹화를 통해 `interrupt()` 를 시켜 해결하지 않을까 싶다.
+
+   
 <br/><br/>
 <hr/>
 
