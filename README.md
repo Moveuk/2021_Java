@@ -36,8 +36,11 @@ Learning about basic Java
 	멀티 스레드, 스레드 생성 방법 두 가지, 스레드의 이름(getName(), setName("스레드 이름")), 스레드 우선순위(Priority), 스레드 동기화 메소드와 동기화 블록    
 14. 20210623 Lecture14  
 	스레드 상태, 스레드 상태 제어, sleep(), yield(), join(), wait(), notify(), notifyAll(), Thread.currentThread()    
-15. 20210623 Lecture14  
-16. 
+15. 20210623 Lecture15
+	stop 플래그, interrupt(), interrupted(), isInterrupted(), 데몬 스레드(Daemon), 보조 스레드, isDaemon(), DiningTest(Cook, Table, Customer)  
+16. 20210624 Lecture16
+	
+17. 20210625 Lecture17
 
 
 
