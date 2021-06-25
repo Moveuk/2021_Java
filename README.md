@@ -39,8 +39,10 @@ Learning about basic Java
 15. 20210624 Lecture15   
 	stop 플래그, interrupt(), interrupted(), isInterrupted(), 데몬 스레드(Daemon), 보조 스레드, isDaemon(), DiningTest(Cook, Table, Customer)  
 16. 20210625 Lecture16
-	
-17. 202106
+	Reentrant, lock(), unlock(), await(), signal(), signalAll(), Condition, 스레드풀, 제네릭, 제네릭 타입, 멀티 타입 파라미터
+17. 20210628 Lecture17 or Test
+
+18. 
 
 
 
