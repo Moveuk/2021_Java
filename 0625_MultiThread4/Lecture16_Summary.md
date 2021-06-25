@@ -232,7 +232,6 @@ public class Cook implements Runnable {
 ### 교재 627p : 12.9.1 스레드풀 생성 및 종료    
    
 <br/>
-<hr/>
    
 #### 스레드풀 생성   
    
@@ -242,6 +241,7 @@ public class Cook implements Runnable {
 |---|---|---|---|
 | newCachedThreadPool() | 0 | 0 | Integer.MAX_VALUE |
 | newFixedThreadPool(int nThreads) | 0 | nThreads | nThreads |
+<br/><br/>
    
  **위 테이블 속성 설명**   
    
@@ -250,7 +250,7 @@ public class Cook implements Runnable {
  최대 스레드 수 : 스레드 풀에서 관리하는 최대 스레드 수
    
  `newCachedThreadPool() 메소드`로 생성된 스레드 풀의 특징은 초기 스레드 개수와 코어 스레드 개수는 0이고, 스레드 개수보다 작업 개수가 많으면 새 스레드를 생성시켜 작업을 처리한다. 이론적으로 int 값이 가질 수 있는 최대값 만큼 스레드가 추가되지만, 운영체제의 성능과 상황에 따라 달라진다. 1개 이상의 스레드가 추가되었을 경우 **60초동안** 추가된 스레드가 아무런 작업을 하지 않으면 **스레드를 종료**하고 **풀에서 제거**한다.    
-   
+<br/><br/>
 **newCachedThreadPool()을 호출해서 ExecutorService 객체 구현**   
 
 ```java
@@ -258,7 +258,7 @@ ExecutorService excutorService = Executors.newCachedThreadPool();
 ```
 
  `newFixedThreadPool(int nThreads) 메소드`로 생성된 스레드풀의 초기 스레드 개수는 0개이고, 코어 스레드 수는 nThreads 이다. 스레드 개수보다 작업 개수가 많으면 새 스레드를 생성시키고 작업을 처리한다. 최대 스레드 개수는 매개값으로 준 nThreads 이다. 이 스레드풀은 스레드가 작업을 처리하지 않고 놀고 있더라도 스레드 개수가 줄지 않는다. CPU 코어의 수 만큼 최대 스레드를 사용하는 스레드 풀을 생성한다.    
-   
+<br/><br/>
 **newFixedThreadPool()을 호출해서 ExecutorService 객체 구현**    
 ```java
 ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
