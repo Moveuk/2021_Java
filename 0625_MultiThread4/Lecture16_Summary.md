@@ -223,7 +223,6 @@ public class Cook implements Runnable {
 자바는 스레드 풀을 생성하고 사용할 수 있도록 `ava.util.concurrent`패키지에서 `xcutorService 인터페이스`와 `Excutors 클래스`를 제공하고 있다. Excutors의 다양한 정적 메소드를 이용해서 ExcutorService 구현 객체를 만들 수 있는데, 이것이 바로 스레드 풀이다. 아래 그림은 ExcutorService가 동작하는 방식을 보여준다.   
    
 ![image](https://user-images.githubusercontent.com/84966961/123356577-ed71ab80-d5a2-11eb-89a3-a9d8a5c80f9d.png)    
-출처 : https://velog.io/@sa1341/%EB%A9%80%ED%8B%B0-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%83%81%ED%83%9C-%EC%A0%9C%EC%96%B4
 
    
 <br/><br/>
@@ -406,10 +405,11 @@ public class ExecuteExample {
  ExecutorService의 `submit()` 메소드는 매개값으로 준 **Runnable 또는 Callable 작업**을 스레드풀의 작업 큐에 저장하고 즉시 Future 객체를 리턴한다.   
    
 
-|리턴타입|	메소드(매개변수)|	설명|
-|Future<?>|	Runnable(Runnable task)|	Runnalbe 또는 Callable을 작업 큐에 저장, 리턴된 Future를 통해 작업 처리결과를 얻음|
-|Future<V>|	submit(Runnable task, V result)|	Runnalbe 또는 Callable을 작업 큐에 저장, 리턴된 Future를 통해 작업 처리결과를 얻음|
-|Future<V>|	submit(Callable<V> task)|	Runnalbe 또는 Callable을 작업 큐에 저장, 리턴된 Future를 통해 작업 처리결과를 얻음|
+| 리턴타입 | 메소드(매개변수) | 설명|
+|---|---|---|
+|Future<?> | Runnable(Runnable task) | Runnalbe 또는 Callable을 작업 큐에 저장, 리턴된 Future를 통해 작업 처리결과를 얻음 |
+|Future<V> | submit(Runnable task, V result) | Runnalbe 또는 Callable을 작업 큐에 저장, 리턴된 Future를 통해 작업 처리결과를 얻음 |
+|Future<V> | submit(Callable<V> task) | Runnalbe 또는 Callable을 작업 큐에 저장, 리턴된 Future를 통해 작업 처리결과를 얻음 |
    
 `Future 객체`는 작업 결과가 아니라 작업이 완료될 때까지 기다렸다가 (지연했다가=블로킹되었다가) 최종 결과를 얻는데 사용된다. 그래서 Future를 **지연 완료(pending completion) 객체**라고 한다. Future의 `get()` 메소드를 호출하면 **스레드가 작업을 완료할 때까지 블로킹**되었다가 작업을 완료하면 **처리 결과를 리턴**한다. 이것이 블로킹을 사용하는 작업 완료 통보 방식이다. 
    
@@ -439,7 +439,7 @@ Future를 이용한 블로킹 방식의 작업 완료 통보에서 주의할 점
    
 <br/><br/>
    
-#### 리턴값이 없는 작업 완료 통보  
+#### 리턴값이 없는 작업 완료 통보(634p)  
    
  리턴값이 없는 작업일 경우는 Runnable 객체로 생성하면 된다. 다음 코드는 Runnable 객체를 생성하는 방법이다.   
    
@@ -471,10 +471,10 @@ try {
 }
 ```
 	
- -> 한마디로 Future에 스레드가 아무 일 없으면 `null`가지고 코드가 진행되고 예외 생기면 throw 예외를 해서 try-catch를 통해 잡을 수 있다. 다음 예제를 통해 Future를 활용하는 방식을 보자.
-	
-**1부터 10까지의 합을 스레드가 처리 예제**
-	
+ -> 한마디로 Future에 스레드가 아무 일 없으면 `null`가지고 코드가 진행되고 예외 생기면 throw 예외를 해서 try-catch를 통해 잡을 수 있다. 다음 예제를 통해 Future를 활용하는 방식을 보자.   
+<br/><br/>
+**1부터 10까지의 합을 스레드가 처리 예제**   
+   
 ```java
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -521,17 +521,246 @@ public class NoResultExample {
 **결과 화면**   
 ![image](https://user-images.githubusercontent.com/84966961/123364463-65de6980-d5af-11eb-8b5d-7c4fcf84452c.png)
    
+<br/><br/>
+
+**예외 발생 시키기**
+   
+```java
+        Runnable runnable = new Runnable() {			// 한개 스레드 생성함.
+            @Override
+            public void run() {
+                int sum = 0;
+                
+                System.out.println(100/sum); 	//예외 발생 코드
+                
+                for (int i = 1; i <= 10; i++) {
+                    sum += i;
+                }
+                System.out.println("스레드 이름 : " + Thread.currentThread().getName());
+                System.out.println("[처리 결과]: " + sum);
+            }
+        };
+```
+	
+**결과 화면**
+	
+![image](https://user-images.githubusercontent.com/84966961/123364756-f9b03580-d5af-11eb-9232-17e40cf03a2f.png)
+	
+  
+ 
+	
+<br/><br/>
+   
+#### 리턴값이 있는 작업 완료 통보(636p)   
+   
+ 스레드풀의 스레드가 작업을 완료한 후에 애플리케이션이 처리 결과를 얻어야 된다면 작업 객체를 Callable로 생성하면 된다.다음은 Callable 객체를 생성하는 코드인데, 주의할 점은 제네릭 타입 파라미터 T는 `call()` 메소드가 리턴하는 타입이 되도록 한다.   
+	
+```java
+Callable<T> task = new Callable<T>(){	// 제네틱 타입으로 되어있다.
+    @Override
+    public T call() throws Exception(){
+        // 스레드가 처리할 작업 내용
+        return T;
+    }
+};
+```
+	
+ Callable 작업의 처리 요청은 Runnable 작업과 마찬가지로 ExecutorService의 `submit()` 메소드를 호출하면 된다. `submit()` 메소드는 작업 큐에 Callable 객체를 저장하고 **즉시 Future를 리턴**한다. 이때 T는 `call()` 메소드가 리턴하는 타입이다.
+	
+	```java
+	Future<T> future = execitprService.submit(task);
+	```
+ 
+ 스레드풀의 스레드가 Callable 객체의 `call()` 메소드를 모두 실행하고 T 타입의 값을 리턴하면, Future의 `get()` 메소드는 블로킹이 해제되고 T타입의 값을 리턴한다.
+	
+```java
+try {
+
+} catch(InterruptedExcpetion e){
+    // 작업 처리 도중 스레드가 interrup 될 경우 실행할 코드
+} catch (ExecutionException e){
+    // 작업 처리 도중 예외가 발생된 경우 실행할 코드
+}
+```
+<br/>
+	
+**1부터 10까지 합 리턴을 Callable 객체로 스레드 처리**
+	
+```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class ResultByCallableExample {
+    public static void main(String[] args) {
+    	// 프로세서 갯수만큼 스레드풀 생성
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+        System.out.println("[작업 처리 요청]");
+        Callable<Integer> task = new Callable<Integer>() {	// 제네틱 타입으로 처리.
+            @Override
+            public Integer call() throws Exception {	// call()해서 리턴값 Integer로 받음
+                int sum = 0;
+                for (int i = 1; i <= 10; i++) {
+                    sum += i;
+                }
+
+                return sum;								// 리턴 sum
+            }
+        };
+        Future<Integer> future = executorService.submit(task);
+
+        try {
+           int sum = future.get();						// sum이 일로옴.
+            System.out.println("[처리 결과] " + sum);
+            System.out.println("[작업 처리 완료] ");
+
+
+        } catch (Exception e) {
+            System.out.println("[실행 예외 발생함]" + e.getMessage());
+        }
+
+        executorService.shutdown();
+    }
+}
+```
+	
+**결과 화면**   
+	
+![image](https://user-images.githubusercontent.com/84966961/123365389-26b11800-d5b1-11eb-81f6-75543cebf4c7.png)
 
 	
+**0625 자바 수업 종료...**
+	
+<br/><br/>
+	
+#### 작업 처리 결과를 외부 객체에 저장
+	
+ 상황에 따라서 스레드가 작업한 결과를 외부 객체에 저장해야 할 경우도 있다. 예를 들어 스레드가 작업 처리를 완료하고 외부 Result 객체에 작업 결과를 저장하면, 애플리케이션이 Result 객체를 사용해서 어떤 작업을 진행할 수 있을 것이다. 대개 Result 객체는 공유 객체가 되어, 두 개 이상의 스레드 작업을 취합할 목적으로 이용된다.
+	
+![image](https://user-images.githubusercontent.com/84966961/123365672-a9d26e00-d5b1-11eb-817a-ddc19ce1344f.png)
+	
+ 이런 작업을 하기 위해서 ExecutorService의 `submit(Runnable task, V result)` 메소드를 사용할 수 있는데, V가 바로 Result 타입이 된다. 메소드를 호출하면 스레드가 작업을 완료할 때까지 블로킹 되었다가 작업을 완료하면 V 타입 객체를 리턴한다. 리턴된 객체는 `submit()`의 두 번째 매개값으로 준 객체와 동일한데, 차이점은 스레드의 처리 결과가 내부에 저장되어 있다는 것이다.
+	
+```java
+Result result = '...'
+Runnable task = new Task(result);
+Future<Result> future = executorService.submit(task, result);
+result = future.get();
+```
+	
+ 작업 객체는 Runnable 구현 클래스로 생성하는데, 주의할 점은 스레드에서 결과를 저장하기 위해 외부 Result 객체를 사용해야 하므로 생성자를 통해 Result 객체를 주입받도록 해야 한다.
+	
+```java
+class Task implements Runnable{
+
+    private Result result;
+
+    public Task(Result result){
+        this.result = result;
+    }
+    @Override
+    public void run(){
+        // 작업 코드
+        // 처리 결과를 result 저장
+    }
+}
+```
 	
 	
 	
+**1부터 10까지 합 계산 2개의 스레드 풀 예제**
 	
-	
-	
+```java
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+public class ResultByRunnableExample {
+    public static void main(String[] args) {
+
+        ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+        System.out.println("[작업 처리 요청]");
+        class Task implements  Runnable{		// 작업정의
+
+            private Result result;
+
+            public Task(Result result){
+                this.result = result;
+            }
+
+            @Override
+            public void run() {
+                int sum = 0;
+                for (int i = 1; i <= 10; i++) {
+                    sum += i;
+                }
+                result.addValue(sum); // Result 객체에 작업 결과 저장
+            }
+        }
+
+	// 두가지 작업 처리를 요청
+        Result result = new Result();
+        Runnable task1 = new Task(result);
+        Runnable task2 = new Task(result);
+
+        Future<Result> future1 = executorService.submit(task1, result);
+        Future<Result> future2 = executorService.submit(task2, result);
+
+        try {
+	// 두 가지 작업 결과를 취합
+            result = future1.get();
+            result = future2.get();
+            System.out.println("[처리 결과] " + result.accumValue);
+
+        } catch (Exception e){
+            e.printStackTrace();
+            System.out.println("[실행 예외 발생함] " + e.getMessage());
+        }
+
+        executorService.shutdown();
+    }
+}
+
+// 처리 결과를 저장하는 Result 클래스
+class Result{
+    int accumValue;
+    synchronized void addValue(int value){
+        accumValue += value;
+    }
+}
+```
 	
 	
 
+
+<br/><br/>
+<hr/>
+
+# 교재 653p : 13 제네릭
+## 교재 654p : 13.1 왜 제네릭을 사용해야 하는가?
+	
+ 타입을 정의하지 아니하고 변수를 선언할때 사용한다.
+	
+```java
+List list = new ArrayList();
+list.add("hello");
+String str = (String) list.get(0);	// 타입 변환을 해야한다.
+```
+	
+ ArrayList를 배열처럼 사용할 수 있다. 하지만 모든 클래스의 부모인 object 타입으로 배열을 사용하게 된다. 이럴 때 모든 클래스 타입을 받을 수 는 있지만(기본형은 못사용한다. 오직 객체만 사용 가능하다.) 문제점은 사용할 때 모든 타입을 알고 있어야 캐스팅 형변환(Casting)을 해서 결국 사용할 수 있다.   
+	
+ 이런 불편함을 없애기 위해서 제네릭이 생겨났다.
+	
+ 다음과 같이 제네릭 코드로 수정하면 List에 저장되는 요소를 String 타입으로 국한하기 때문에 요소를 찾아올 때 타입 변환을 할 필요가 없어 프로그램 성능이 향상된다.
+	
+```java
+List<String> list = new ArrayList<String>();
+list.add("hello");
+String str = list.get(0); // 타입 변환을 하지 않습니다.
+```
 	
 	
 
@@ -543,3 +772,4 @@ public class NoResultExample {
 
 
 
+이미지 출처 : https://velog.io/@sa1341/%EB%A9%80%ED%8B%B0-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%83%81%ED%83%9C-%EC%A0%9C%EC%96%B4
