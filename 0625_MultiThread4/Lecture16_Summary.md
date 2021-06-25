@@ -263,7 +263,9 @@ ExecutorService excutorService = Executors.newCachedThreadPool();
 ```java
 ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 ```
-    
+
+<br/><br/>
+
 #### `newCachedThreadPool()`과 `newFixedThreadPool()`를 사용하지 않고 스레드 설정 방법.
 	
  `newCachedThreadPool()`과 `newFixedThreadPool()` 메소드를 사용하지 않고 코어 스레드 개수와 최대 스레드 개수를 설정하고 싶다면 직접 ThreadPoolExecutor 객체를 생성하면 된다. 사실 위 두가지 메소드 내부적으로 ThreadPoolExecutor 객체를 생성해서 리턴한다.    
@@ -280,7 +282,7 @@ ExecutorService threadPool = new ThreadPoolExecutor(
 );
 ```
 
-<br/>
+<br/><br/>
 <hr/>
 
 #### 스레드풀 종료   
@@ -305,14 +307,18 @@ executorService.shutdownNow();
 <hr/>
    
 ### 교재 629p : 12.9.2 작업 생성과 처리 요청  
-	
+   
+#### 작업 생성
 
+하나의 작업은 Runnable 또는 Callable 구현 클래스로 표현한다. Runnable과 Callable의 차이점은 작업 처리 완료 후 리턴값이 있느냐 없느냐 다. 다음은 작업을 정의하기 위해 Runnable과 Callable을 구현 클래스를 작성하는 방법을 보여준다.
 	
-	
-	
-	
-	
-	
+| Runnable 구현 클래스 | Callable 구현 클래스 |
+|---|---|
+| Runnable task = new Runnable(){ \n\t    @Override \n\t     public void run(){ \n\t         //스레드가 처리할 작업 내용\n\t     }\n} | Callable<T> task = new Callable<T>(){ \n\t \n\t  @Override \n\t     public T call() throws Exception{
+        //스레드가 처리할 작업 내용
+        return T;
+    }
+} |
 	
 	
 	
