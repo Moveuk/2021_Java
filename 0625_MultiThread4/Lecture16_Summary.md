@@ -1,5 +1,5 @@
 # Lecture16 MultiThread4
-Key Word : Reentrant, lock(), unlock(), await(), signal(), signalAll(), Condition,     
+Key Word : Reentrant, lock(), unlock(), await(), signal(), signalAll(), Condition, 스레드풀, 제네릭, 제네릭 타입, 멀티 타입 파라미터     
    
 <hr/>
    
@@ -761,9 +761,88 @@ List<String> list = new ArrayList<String>();
 list.add("hello");
 String str = list.get(0); // 타입 변환을 하지 않습니다.
 ```
+
+
+<br/><br/>
+<hr/>
+
+
+## 교재 655p : 13.2 제네릭 타입(class<T>, interface<t>)
 	
+ 제네릭 타입은 타입을 파라미터로 가지는 클래스와 인터페이스를 말한다. 제네릭 타입은 클래스 또는 인터페이스 이름 뒤에 `"<>"`부호가 붙고, 사이에 **타입 파라미터**가 위치한다.   
+	
+ **제네릭** : 클래스를 생성할 때 멤버 변수의 타입을 정해 놓을 수 있는 방식.
+	
+```java
+public class 클래스명<T> {...}
+public interface 인터페이스명<T> {...}
+```
+	
+ 타입 파라미터는 변수명과 동일한 규칙에 따라 작성할 수 있지만, 일반적으로 대문자 알파벳 한 글자로 표현한다. 제네릭 타입을 실제 코드에서 사용하려면 타입 파라미터 구체적인 타입을 지정해야 한다.
+	
+**제네릭을 이용한 Box 클래스**
+	
+```java
+public class Box<T>{
+    // 클래스 뒤에 <T> 타입 파라미터를 명시했기 때문에 변수의 타입으로 사용 가능합니다.
+    private T t; 
+    public T get() { return t; }
+    public void set(T t){ this.t = t; }
+}
+```
+	
+java 5 이전에는 제네릭이 없었기 때문에 이렇게 Object로 돌려서 사용했었다.
+	
+ 이런 코드를 만들 때는 자동으로 객체가 형변환되지만, 꺼내 쓸 때는 자동으로 안되기 때문에 강제형변환, 캐스팅을 해주어야 하는 불편함이 있었다. 
 	
 
+	
+**제네틱 타입을 이용한 예제**
+	
+	
+**Box<T>**
+```java
+public class Box<T> {
+	private T t;
+	public T get() { return t; }
+	public void set(T t) { this.t = t; }
+}	
+```
+	
+
+**BoxExample.java**	
+```java
+public class BoxExample {
+	public static void main(String[] args) {
+		Box<String> box1 = new Box<String>();
+		box1.set("hello");
+		String str = box1.get();
+
+		Box<Integer> box2 = new Box<Integer>();
+		box2.set(6);
+		int value = box2.get();
+		
+		System.out.println(value);
+	}
+}
+
+```
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 <br/><br/>
 <hr/>
