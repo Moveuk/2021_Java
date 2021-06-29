@@ -40,9 +40,11 @@ Learning about basic Java
 	stop 플래그, interrupt(), interrupted(), isInterrupted(), 데몬 스레드(Daemon), 보조 스레드, isDaemon(), DiningTest(Cook, Table, Customer)  
 16. 20210625 Lecture16
 	Reentrant, lock(), unlock(), await(), signal(), signalAll(), Condition, 스레드풀, 제네릭, 제네릭 타입, 멀티 타입 파라미터
-17. 20210628 Lecture17 or Test
-
-18. 
+17. 20210629 Lecture17
+	제네릭, 멀티 타입 파라미터, 제네릭 메소드, 제한된 타입 파라미터(extends), 와일드카드(?), 제네릭 타입의 상속과 구현
+18. 20210630 Lecture18
+	
+19. 
 
 
 
