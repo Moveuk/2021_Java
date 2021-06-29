@@ -54,6 +54,7 @@ public class ProductExample {
   
 ## 교재 660p : 13.4 제네릭 메소드(<T, R> R method(T d))	  
    
+   
  제네릭 메소드는 매개 타입과 리턴 타입으로 파라미터를 갖는 메소드를 말한다. 제네릭 메소드를 선언하는 방법은 리턴 타입 앞에 <>기호를 추가하고 타입 파라미터를 기술한 다음, 리턴 타입과 매개 타입으로 타입 파라미터를 사용하면 된다.	   
    
 ```
@@ -187,7 +188,6 @@ public class CompareMethodExample {
 }
 ```
 	
-
 
 
 <br/><br/>
@@ -492,3 +492,70 @@ public class ChildProductAndStorageExample {
 
 <br/><br/>
 <hr/>
+
+## 유튜브 제네릭 보충 
+
+ ### 제네릭 메소드 보충 내용   
+
+출처 https://www.youtube.com/watch?v=Vv0PGUxOzq0&ab_channel=%EC%9A%B0%EC%95%84%ED%95%9CTech
+
+```
+	 제네릭 메소드는 제네릭 클래스가 아니더라도 정의할 수 있다.
+	 또한, 제네릭 클래스와 제네릭 메소드의 타입 매개변수가 같다면 제네릭 메소드의 타입 매개변수를 우선.
+```
+
+![image](https://user-images.githubusercontent.com/84966961/123732953-a43c9700-d8d5-11eb-81f5-f9a02343c06b.png)
+
+
+<br/><br/>
+<hr/>
+	
+ ### 타입 매개변수의 제한  
+	
+![image](https://user-images.githubusercontent.com/84966961/123733155-f5e52180-d8d5-11eb-918b-8f7f29010da0.png)
+
+1. 상한경계		
+![image](https://user-images.githubusercontent.com/84966961/123733186-01384d00-d8d6-11eb-8342-df7db3936de6.png) 	
+	
+2. 하한경계		
+![image](https://user-images.githubusercontent.com/84966961/123733238-17dea400-d8d6-11eb-8654-27bda59cf374.png)	
+	
+**제한된 타입 매개변수**		
+![image](https://user-images.githubusercontent.com/84966961/123733303-33e24580-d8d6-11eb-87d7-e4b4de32c73f.png)
+
+3. 비경계 와일드카드의 사용.
+
+ Object를 사용하여 제네릭 매개변수를 지정하면 우리가 만든 타입(Fruit, Car, ... 등)은 사용자 정의 타입이라 Object의 자식 클래스가 아니므로 모든 타입을 넣지 못한다. 그렇기 때문에 `<?>` 비경계 와일드 카드를 사용하여 모든 클래스와 인터페이스 들이 들어갈 수 있도록 해준다.
+
+
+<br/><br/>
+
+
+#### get
+
+
+![image](https://user-images.githubusercontent.com/84966961/123733652-d6022d80-d8d6-11eb-8cf1-d4f7b87edb15.png)
+
+ 비경계 와일드카드로 매개변수를 제한하면 내부에서는 어떤 타입이 오더라도 받을 수 있도록 공통 조상인 `Object`로 받는다.   
+
+<br/><br/>
+
+
+#### set
+
+![image](https://user-images.githubusercontent.com/84966961/123733727-034edb80-d8d7-11eb-8f8e-2e9897c82f7e.png)
+
+ 비경계 와일드카드의 원소가 어떤 타입인지 알 수 없으므로 타입 안정성을 지키기 위해 null만 삽입할 수 있다.	   
+
+
+
+
+
+
+
+
+
+
+
+
+
