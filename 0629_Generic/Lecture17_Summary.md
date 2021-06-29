@@ -271,6 +271,9 @@ public class BoundedTypeParameterExample {
 
 #### 와일드 카드 예제
 
+![image](https://user-images.githubusercontent.com/84966961/123742810-42852880-d8e7-11eb-8a1b-083573c4e9b8.png)
+
+
  제네릭 타입 Course는 과정 클래스로 `과정 이름`과 `수강생`을 저장할 수 있는 배열을 가지고 있다. 타입 파라미터 T가 적용된 곳은 수강생 타입 부분이다.		
  
 
@@ -510,21 +513,21 @@ public class ChildProductAndStorageExample {
 <br/><br/>
 <hr/>
 	
- ### 타입 매개변수의 제한  
-	
-![image](https://user-images.githubusercontent.com/84966961/123733155-f5e52180-d8d5-11eb-918b-8f7f29010da0.png)
-
-1. 상한경계		
-![image](https://user-images.githubusercontent.com/84966961/123733186-01384d00-d8d6-11eb-8342-df7db3936de6.png) 	
-	
-2. 하한경계		
-![image](https://user-images.githubusercontent.com/84966961/123733238-17dea400-d8d6-11eb-8654-27bda59cf374.png)	
-	
-**제한된 타입 매개변수**		
-![image](https://user-images.githubusercontent.com/84966961/123733303-33e24580-d8d6-11eb-87d7-e4b4de32c73f.png)
-
-3. 비경계 와일드카드의 사용.
-
+ ### 타입 매개변수의 제한    
+    
+![image](https://user-images.githubusercontent.com/84966961/123733155-f5e52180-d8d5-11eb-918b-8f7f29010da0.png)  
+   
+1. 상한경계      
+![image](https://user-images.githubusercontent.com/84966961/123733186-01384d00-d8d6-11eb-8342-df7db3936de6.png)   	
+     <br/>      
+2. 하한경계	     
+![image](https://user-images.githubusercontent.com/84966961/123733238-17dea400-d8d6-11eb-8654-27bda59cf374.png)	  
+     <br/>      
+**제한된 타입 매개변수**	    
+![image](https://user-images.githubusercontent.com/84966961/123733303-33e24580-d8d6-11eb-87d7-e4b4de32c73f.png)   
+   
+3. 비경계 와일드카드의 사용.   
+   
  Object를 사용하여 제네릭 매개변수를 지정하면 우리가 만든 타입(Fruit, Car, ... 등)은 사용자 정의 타입이라 Object의 자식 클래스가 아니므로 모든 타입을 넣지 못한다. 그렇기 때문에 `<?>` 비경계 와일드 카드를 사용하여 모든 클래스와 인터페이스 들이 들어갈 수 있도록 해준다.
 
 
