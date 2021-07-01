@@ -1,4 +1,4 @@
-# 람다 (Lambda)
+# Lecture18 : 람다 (Lambda)
 Key Word : 람다식, 익명구현 객체, 람다식 생성 방법.
 
 <hr/>
