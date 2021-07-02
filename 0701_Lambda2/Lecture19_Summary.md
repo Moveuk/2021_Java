@@ -416,59 +416,6 @@ public class FunctionExample2 {
 <br/><br/>
 ---
 
- ### 교재 697p : 14.5.4 Operator 함수적 인터페이스    
-   
- Operator 함수적 인터페이스는 Function과 동일하게 매개 변수와 리턴값이 있는 applyXXX() 메소드를 가지고 있다. 하지만 이 메소드들은 매개값을 리턴값으로 매핑(타입 변환)하는 역할보다는 매개값을 이용해서 연산을 수행한 후 동일한 타입으로 리턴값을 제공하는 역할을 한다.   
-   
-
-   
-매개 변수의 타입과 수에 아래와 같은 Operator 함수적 인터페이스들이 있다.
-
-인터페이스명 | 추상메서드 | 설명
--------|-------|---
-BinaryOperator | BiFunction<T,U,R>의 하위 인터페이스 | T와 U를 연산한 후 R 리턴
-UnaryOperator | Function<T,R>의 하위 인터페이스 | T를 연산한 후 R 리턴
-DoubleBinaryOperator | double applyAsDouble(double, double) | 두 개의 double 연산
-DoubleUnaryOperator | double applyAsDouble(double) | 한 개의 double 연산
-IntBinaryOperator | int applyAsInt(int,int) | 두 개의 int 연산
-IntUnaryOperator | int applyAsInt(int) | 한 개의 int 연산
-LongBinaryOperator | long applyAsLong(long, long) | 두 개의 long 연산
-LongUnaryOperator | long applyAsLong(long) | 한 개의 long 연산
-
-
-
-
-
-
-
-인터페이스명 | 추상 메소드 | 설명
--------|--------|---
-Predicate | boolean test(T t) | 객체 T를 조사
-BiPredicate<T, U> | boolean test(T t, U u) | 객체 T와 U를 비교 조사
-DoublePredicate | boolean test(double value) | double 값을 조사
-IntPredicate | boolean test(int value) | int 값을 조사
-LongPredicate | boolean test(long value) | long 값을 조사
-
-
-
-종류 | 함수적 인터페이스 | andThen() | compose()
----|-----------|-----------|----------
-Consumer | Consumer | O | 
-BiConsumer<T, U> | O | 
-DoubleConsumer | O | 
-IntConsumer | O | 
-LongConsumer | O | 
-Function | Function<T, R> | O | O
-BiFunction<T, U, R> | O | 
-Operator | BinaryOperator | O | 
-DoubleUnaryOperator | O | O
-IntUnaryOperator | O | O
-LongUnaryOperator | O | O
-
-
-
-
-
 
 
 
