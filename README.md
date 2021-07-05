@@ -48,7 +48,9 @@ Learning about basic Java
 	람다식, 클래스 멤버와 로컬 변수 사용, 로컬 변수 사용, 표준 API 함수적 인터페이스	
 20. 20210702 Lecture20    
 	표준 API 함수적 인터페이스, 확인문제, 문제풀이	
-21. 20210702 Lecture21    
+21. 20210705 Lecture21    
+	컬렉션 프레임워크, List, ArrayList, Vector, LinkedList, Set, HashSet   
+22. 20210706 Lecture22    
 	
 
 
