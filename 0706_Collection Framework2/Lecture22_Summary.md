@@ -1,5 +1,5 @@
 # Lecture21 : 컬렉션 프레임워크(Collection Framework)
-Key Word : 컬렉션 프레임워크, Set, HashSet, Map, HashMap, HashTable, Properties, Tree, TreeSet, TreeMap, Comparable, Comparator
+Key Word : 컬렉션 프레임워크, Set, HashSet, Map, HashMap, HashTable, Properties, Tree, TreeSet, TreeMap, Comparable, Comparator, FIFO, LIFO
 
 <hr/>
 
@@ -310,6 +310,77 @@ public class HashMapTest2 {
 
  프로퍼티 파일은 키와 값이 = 기호로 연결되어 있는 테스트 파일로 ISO 8859-1 문자셋으로 저장된다. 이 문자셋으로 직접 표현할 수 없는 한글은 유니코드(Unicode)로 변환되어 저장된다. 예를 들어 다음과 같이 country와 language 키로 각각 "대한민국", "한글"을 입력하면 자동으로 유니코드로 변환되어 저장된다. 이클립스에서 유니코드로 변환된 내용을 다시 한글로 보려면 마우스를 유니코드 위에 올려놓으면 된다.
 
+**PropertiesTest.java**
+```java
+public class PropertiesTest {
+
+	public static void main(String[] args) {
+
+		Properties prop = new Properties();
+		
+		prop.setProperty("timeout", "30");
+		prop.setProperty("language", "kr");
+		prop.setProperty("size", "10");
+		prop.setProperty("capacity", "10");
+		
+		
+		prop.propertyNames(); // Enumeration 타입으로 반환 해준다.
+		
+		Enumeration e = prop.propertyNames();
+		
+		while (e.hasMoreElements()) {
+			String key = (String)e.nextElement();
+			System.out.println(key + " : "+ prop.getProperty(key));
+		}
+
+		Properties prop2 = new Properties();
+
+		try {
+//			prop2.load(new PropertiesTest().getClass().getResourceAsStream("src/properties/input.txt"));
+			prop2.load(new FileInputStream("src/properties/input"));
+//				prop.load(new ReadProperties().getClass().getResourceAsStream(filePath))
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println(prop2.getProperty("name"));
+		System.out.println(prop2.getProperty("data"));
+
+		String[] data = prop2.getProperty("data").split(",");
+
+		// 최대값
+		// 최소값
+		// 평균
+		// 총합
+		
+		int max = 0;
+		int min = Integer.parseInt(data[0]);
+		double avg = 0;
+		int total = 0;
+		
+		for (String i : data) {
+			if (max < Integer.parseInt(i)) {
+				max = Integer.parseInt(i);
+			} 
+			if (min > Integer.parseInt(i)) {
+				min = Integer.parseInt(i);
+			}
+			total += Integer.parseInt(i);
+			avg = total/data.length;
+		}
+		
+		System.out.println(max);
+		System.out.println(min);
+		System.out.println(total);
+		System.out.println(avg);
+		
+	}
+
+}
+```
+
+ properties 를 이용해 data를 받아 max, min, 평균, 총합을 구하는 코드이다.
 
 <br><br>
 <hr/>
@@ -329,8 +400,10 @@ public class HashMapTest2 {
  이진 트리(binary tree)는 여러 개의 노드(node)가 트리 형태로 연결된 구조로, 루트 노드(root node)라고 불리는 하나의 노드에서부터 시작해서 각 노드에 최대 2개의 노드를 연결 할 수 있는 구조를 가지고 있다. 위아래로 연결된 두 노드를 부모-자식관계에 있다고 하며 위의 노드를 부모 노드, 아래의 노드를 자식 노드라고 한다. 하나의 부모 노드는 최대 두개의 자식노드와 연결될 수 있다. 그림에서 보면 A 노드는 B, C 노드의 부모 노드이고 B, C 노드는 A 노드의 자식 노드이다.
  
  
- 
- 
+ ![image](https://user-images.githubusercontent.com/84966961/124546447-9d79cb00-de65-11eb-8807-fe2eff9723e1.png)
+
+ ![image](https://user-images.githubusercontent.com/84966961/124546190-3bb96100-de65-11eb-8541-43c0ead41b61.png)
+
  
  
 <br><br>
@@ -338,9 +411,164 @@ public class HashMapTest2 {
 
  ### 교재 752p : 15.5.2 TreeSet   
      
+ TreeSet은 이진 트리(binary tree)를 기반으로한 Set 컬렉션이다. 하나의 노드는 노드값인 value와 왼족과 오른쪽 자식 노드를 참조하기 위한 두 개의 변수로 구성된다. TreeSet에 객체를 저장하면 자동으로 정렬되는데 부모값과 비교해서 낮은 것은 왼족 자식 노드에, 높은 것은 오른쪽 자식 노드에 저장한다.
+
+![image](https://user-images.githubusercontent.com/84966961/124546500-af5b6e00-de65-11eb-9028-25734af9fef6.png)
+
+<br><br>
+
+#### TreeSet의 메소드들
+
+리턴 타입 | 메소드 | 설명
+------|-----|---
+E | first() | 제일 낮은 객체를 리턴
+E | last() | 제일 높은 객체를 리턴
+E | lower(E e) | 주어진 객체보다 바로 아래 객체를 리턴
+E | higer(E e) | 주어진 객체보다 바로 위 객체를 리턴
+E | floor(E e) | 주어진 객체와 동등한 객체가 있으면 리턴, 만약 없다면 주어진 객체의 바로 아래의 객체를 리턴
+E | ceiling(E e) | 주어진 객체와 동등한 객체가 있으면 리턴, 만약 없다면 주어진 객체의 바로 위의 객체를 리턴
+E | pollFirst() | 제일 낮은 객체를 꺼내오고 컬렉션에서 제거함
+E | pollLast() | 제일 높은 객체를 꺼내오고 컬렉션에서 제거함
+
+<br><br>
+
+#### 예제
+ 
+**TreeSetExample.java**
+ ```java
+public class TreeSetExample1 {
+	public static void main(String[] args) {
+		TreeSet<Integer> scores = new TreeSet<Integer>();
+		scores.add(new Integer(87));
+		scores.add(new Integer(98));
+		scores.add(new Integer(75));
+		scores.add(new Integer(95));
+		scores.add(new Integer(80));
+		
+		Integer score = null;
+		
+		score = scores.first();
+		System.out.println("가장 낮은 점수: " + score);
+		
+		score = scores.last();
+		System.out.println("가장 높은 점수: " + score + "\n");
+		
+		score = scores.lower(new Integer(95));
+		System.out.println("95점 아래 점수: " + score);
+		
+		score = scores.higher(new Integer(95));
+		System.out.println("95점 위의 점수: " + score + "\n");		
+		
+		score = scores.floor(new Integer(95));
+		System.out.println("95점 이거나 바로 아래 점수: " + score);
+		
+		score = scores.ceiling(new Integer(85));
+		System.out.println("85점 이거나 바로 위의 점수: " + score + "\n");
+		
+		while(!scores.isEmpty()) {
+			score = scores.pollFirst();
+			System.out.println(score + "(남은 객체 수: " + scores.size() + ")");
+		}
+	}
+}
+```
+   
+ **결과 화면**    
+ ![image](https://user-images.githubusercontent.com/84966961/124546916-4c1e0b80-de66-11eb-86c3-a49471c6d840.png)
+     
+ 
+<br><br>
+    
+ #### TreeSet 객체 정렬 : descendingIterator(), descendingSet()
+ 
+ TreeSet은 다음과 같은 정렬과 관련된 메서드를 제공한다.    
 
 
+| 리턴 타입 | 메소드 | 설명 |
+|---|---|---|
+| `Iterator<E>` | descendingIterator() | 내림차순으로 정렬된 Iterator를 리턴 |
+| `NavigableSet<E>` | descendingSet() | 내림차순으로 정렬된 NavigableSet을 반환 |
 
+	
+ NavigableSet은 TreeSet 처럼 first(), last(), lower(), higher(), floor(), ceiling() 메서드를 제공한다. 오름차순으로 정렬하고 싶다면 다음과 같이 descendingSet() 메소드를 두 번 호출 하면 된다.    
+
+
+```java
+NavigableSet<E> descendingSet = treeSet.descendingSet();
+NavigableSet<E> descendingSet = descendingSet.descendingSet();
+```
+
+**TreeSetExample2.java**
+ ```java
+public class TreeSetExample2 {
+	public static void main(String[] args) {
+		TreeSet<Integer> scores = new TreeSet<Integer>();
+		scores.add(new Integer(87));
+		scores.add(new Integer(98));
+		scores.add(new Integer(75));
+		scores.add(new Integer(95));
+		scores.add(new Integer(80));
+		
+		NavigableSet<Integer> descendingSet = scores.descendingSet();
+		for(Integer score : descendingSet) {
+			System.out.print(score + " ");
+		}
+		//  내림차순 : 98 95 87 80 75
+		System.out.println();
+		
+		NavigableSet<Integer> ascendingSet = descendingSet.descendingSet();
+		
+		for(Integer score : ascendingSet) {
+			System.out.print(score + " ");
+		}
+		//  오름차순 : 75 80 87 95 98
+	}
+}
+```
+
+**결과 화면**   
+![image](https://user-images.githubusercontent.com/84966961/124550215-4d9e0280-de6b-11eb-954e-50053e1a7964.png)
+  
+ 
+<br><br>
+    
+ #### TreeSet 객체 정렬 : headSet, tailSet, subSet
+ 
+다음은 TreeSet이 가지고 있는 범위 검색과 관련된 메소드들이다.
+
+| 리턴 타입 | 메소드 | 설명 |
+|---|---|---|
+| `NavigableSet<E>` | headSet(<br>  E toElement, <br>  boolean inclusive<br>) | 주어진 객체보다 낮은 객체들을 NaviableSet으로 리턴.<br> 주어진 객체 포함 여부는 두 번째 파라미터에 다라 달라짐. |
+| `NavigableSet<E>` | tailSet(<br>  E fromElement, <br>  boolean Inclusive <br>) | 주어진 객체보다 높은 객체들을 NavigableSet으로 리턴.<br> 주어진 객체 포함 여부는 두 번째 파라미터에 따라 달라짐. |
+| `NavigableSet<E>` | subSet(<br>  E toElement, <br>  boolean inclusive, <br>  E fromElement, <br>  boolean Inclusive ) | 시작과 끝으로 주어진 객체 사이의 객체들을 NavigableSet으로 리턴.<br> 시작과 끝 객체의 포함 여부는 두 번째, 네 번째 파라미터에 따라 달라짐. |
+
+
+**TreeSetExample3.java**
+ ```java
+public class TreeSetExample3 {
+	public static void main(String[] args) {
+		TreeSet<String> treeSet = new TreeSet<String>();
+		treeSet.add("apple");
+		treeSet.add("forever");		
+		treeSet.add("description");
+		treeSet.add("ever");
+		treeSet.add("zoo");
+		treeSet.add("base");
+		treeSet.add("guess");
+		treeSet.add("cherry");
+		
+		System.out.println("[c~f 사이의 단어 검색]");
+		NavigableSet<String> rangeSet = treeSet.subSet("c", true, "f", true);
+		for(String word : rangeSet) {
+			System.out.println(word);
+		}
+
+	}
+}
+```
+
+**결과 화면**     
+     
  
 <br><br>
 <hr/>
@@ -380,12 +608,175 @@ public class TreeMapTest {
 **오름차순된 결과 화면**   
 ![image](https://user-images.githubusercontent.com/84966961/124534455-4668fb80-de4f-11eb-80bf-2f21c68db849.png)
 
+<br><br>
+
+#### TreeMap 메소드
+
+리턴 타입 | 메소드 | 설명
+------|-----|---
+Map.Entry<K, V> | firstEntry() | 제일 낮은 Map.Entry 리턴
+Map.Entry<K, V> | lastEntry() | 제일 높은 Map.Entry 리턴
+Map.Entry<K, V> | lowerEntry() | 주어진 키보다 바로 아래 Map.Entry 리턴
+Map.Entry<K, V> | higherEntry() | 주어진 키보다 바로 위 Map.Entry 리턴
+Map.Entry<K, V> | floorEntry() | 키와 같은 키가 있으면 Map.Entry 리턴, 없다면 바로 아래의 Map.Entry 리턴
+Map.Entry<K, V> | ceilingEntry() | 키와 같은 키가 있으면 Map.Entry 리턴, 없다면 바로 위의 Map.Entry 리턴
+Map.Entry<K, V> | pollFirstEntry() | 제일 낮은 Map.Entry를 꺼내오고 컬렉션에서 제거
+Map.Entry<K, V> | pollLastEntry() | 제일 높은 Map.Entry를 꺼내오고 컬렉션에서 제거
+
  
+<br><br>
+
+#### TreeMap 예제
+
+**TreeMapExample1.java**
+```java
+public class TreeMapExample1 {
+	public static void main(String[] args) {
+		TreeMap<Integer,String> scores = new TreeMap<Integer,String>();
+		scores.put(new Integer(87), "홍길동");
+		scores.put(new Integer(98), "이동수");
+		scores.put(new Integer(75), "박길순");
+		scores.put(new Integer(95), "신용권");
+		scores.put(new Integer(80), "김자바");
+		
+		Map.Entry<Integer, String> entry = null;
+		
+		entry = scores.firstEntry();
+		System.out.println("가장 낮은 점수: " + entry.getKey() + "-" + entry.getValue());
+		
+		entry = scores.lastEntry();
+		System.out.println("가장 높은 점수: " + entry.getKey() + "-" + entry.getValue() + "\n");
+		
+		entry = scores.lowerEntry(new Integer(95));
+		System.out.println("95점 아래 점수: " + entry.getKey() + "-" + entry.getValue());
+		
+		entry = scores.higherEntry(new Integer(95));
+		System.out.println("95점 위의 점수: " + entry.getKey() + "-" + entry.getValue() + "\n");
+		
+		entry = scores.floorEntry(new Integer(95));
+		System.out.println("95점 이거나 바로 아래 점수: " + entry.getKey() + "-" + entry.getValue());
+		
+		entry = scores.ceilingEntry(new Integer(85));
+		System.out.println("85점 이거나 바로 위의 점수: " + entry.getKey() + "-" + entry.getValue() + "\n");
+		
+		while(!scores.isEmpty()) {
+			entry = scores.pollFirstEntry();
+			System.out.println(entry.getKey() + "-" + entry.getValue() + "(남은 객체 수: " + scores.size() + ")");
+		}
+	}
+}
+
+```
+
+**결과 화면**    
+![image](https://user-images.githubusercontent.com/84966961/124552840-00bc2b00-de6f-11eb-89ea-dbd04e7fac59.png)
+   
+<br><br>
+
+#### TreeMap NavigableSet 정렬 메소드
+
+리턴타입 | 메소드 | 설명
+-----|-----|---
+`NavigableSet<K>` | descendingKeySet() 내림차순으로 정렬된 키의 NavigableSet 리턴
+`NavigableMap<K,V>` | descendingMap() | 내림차순으로 정렬된 Map.Entry의 NavigableSet 리턴
+
+ NavigableSet 경우에 TreeSet 과 유사하다.
+
+**TreeMapExample2.java**
+```java
+public class TreeMapExample2 {
+	public static void main(String[] args) {
+		TreeMap<Integer, String> scores = new TreeMap<Integer, String>();
+		scores.put(new Integer(87), "홍길동");
+		scores.put(new Integer(98), "이동수");
+		scores.put(new Integer(75), "박길순");
+		scores.put(new Integer(95), "신용권");
+		scores.put(new Integer(80), "김자바");
+
+		NavigableMap<Integer, String> descendingMap = scores.descendingMap();
+		Set<Map.Entry<Integer, String>> descendingEntrySet = descendingMap.entrySet();
+		for (Map.Entry<Integer, String> entry : descendingEntrySet) {
+			System.out.print(entry.getKey() + "-" + entry.getValue() + " ");
+		}
+		System.out.println();
+
+		NavigableMap<Integer, String> ascendingMap = descendingMap.descendingMap();
+		Set<Map.Entry<Integer, String>> ascendingEntrySet = ascendingMap.entrySet();
+		// for문
+		System.out.println("for 문");
+		for (Map.Entry<Integer, String> entry : ascendingEntrySet) {
+			System.out.print(entry.getKey() + "-" + entry.getValue() + " ");
+		}
+		System.out.println();
+
+		Iterator<Map.Entry<Integer, String>> entryIterator = ascendingEntrySet.iterator();
+		
+		// while문
+		System.out.println("while 문");
+		while (entryIterator.hasNext()) {
+			Map.Entry<Integer, String> entry = entryIterator.next();
+			Integer key = entry.getKey();
+			String value = entry.getValue();
+			System.out.print(entry.getKey() + "-" + entry.getValue() + " ");
+
+		}
+	}
+}
+```
+
+**결과 화면**   
+![image](https://user-images.githubusercontent.com/84966961/124554340-d23f4f80-de70-11eb-83b5-fc6838622616.png)
+   
+
+
+<br><br>
+
+#### TreeMap NavigableSet 범위 검색 메소드
+
+
+리턴타입  |  메소드 | 설명
+---|---|---
+NavigableMap   | headMap(<br>  K toKey,<br>  boolean inclusive<br>)   | 주어진 키보다 낮은 Map.Entry를 NavigableMap으로 리턴.<br> 주어진 객체 포함 여부는 두 번째 boolean값에 따라 달라진다.
+NavigableMap   | tailMap(<br>  K fromKey,<br>  boolean inclusive<br>)   | 주어진 키보다 높은 Map.Entry를 NavigableMap으로 리턴.<br>주어진 객체 포함 여부는 두 번째 boolean값에 따라 달라진다.
+NavigableMap   | subMap(<br>  K fromKey,<br>  boolean fromInclusive,<br>  K toKey,<br>  boolean toInclusive<br>) | 시작과 끝 사이의 Map.Entry를 NavigableMap으로 리턴 
+
+
+**TreeMapExample3.java**
+```java
+public class TreeMapExample3 {
+	public static void main(String[] args) {
+		TreeMap<String,Integer> treeMap = new TreeMap<String,Integer>();
+		treeMap.put("apple", new Integer(10));
+		treeMap.put("forever", new Integer(60));		
+		treeMap.put("description", new Integer(40));
+		treeMap.put("ever", new Integer(50));
+		treeMap.put("zoo", new Integer(10));
+		treeMap.put("base", new Integer(20));
+		treeMap.put("guess", new Integer(70));
+		treeMap.put("cherry", new Integer(30));
+		
+		System.out.println("[c~f 사이의 단어 검색]");
+		NavigableMap<String,Integer> rangeMap = treeMap.subMap("c", true, "f", true);
+		for(Map.Entry<String, Integer> entry : rangeMap.entrySet()) {
+			System.out.println(entry.getKey() + "-" + entry.getValue() + "페이지");
+		}
+
+	}
+}
+```
+
+
+
+
 <br><br>
 <hr/>
 
-### 교재 763p : Comparable, Comparator   
-     
+### 교재 763p : 15.5.4 Comparable과 Comparator      
+   
+1. Comparable 인터페이스를 구현하여 하는 방법(compareTo() 메소드)   
+    
+2. Comparator 인터페이스를 구현하여 정렬자로 제공하는 방법(compare() 메소드)
+
 
 #### 정렬의 방식을 바꾸기 위한 방법 : Comparable, Comparator
    
@@ -433,26 +824,180 @@ public class TreeMapTest {
     
  정렬의 방식에서 비교 대상 o1과 o2를 빼는 순서 변경을 통해 오름차순과 내림차순을 정할 수 있다. 양수일 경우 비교 대상이 큰 것, 음수일 경우 비교 대상이 더 작은 것, 0일 경우에는 둘의 차순이 같으므로 위치 변경이 일어나지 않는다.   
    
+<br><br>
+<hr/>
+
+### 정렬을 구현하는 방법 : Comparable
+
+ 일반적으로 int형은 자동으로 트리셋에서 정수 값의 크고 작음에 따라 자동으로 정렬되게 된다. 하지만 String 타입의 키값은 기본 정렬이 되지 않으므로 비교하기 위해서 정렬을 원하는 클래스에 Comparable을 구현하여 CompareTo 메소드를 원하는 기준으로 정의해주면 된다.
 
 
+**Person.java**
+```java
+public class Person {
+	   public String name;
+	   public int age;
+	   public Person(String name, int age) {
+	      super();
+	      this.name = name;
+	      this.age = age;
+	   }
+	   
+	}
+```
+
+**PersonTest.java**
+```java
+public class PersonTest {
+
+	public static void main(String[] args) {
+
+		TreeSet<Person> treeSet = new TreeSet<>();
+		
+		treeSet.add(new Person("홍길동",10));
+		treeSet.add(new Person("김자동",12));
+		treeSet.add(new Person("고길동",14));
+
+		System.out.println(treeSet);
+	}
+
+}
+```
+
+**정렬 기준이 없어 생기는 예외 화면**
+
+![image](https://user-images.githubusercontent.com/84966961/124559779-0b7abe00-de77-11eb-914f-eb251972af31.png)
 
 
+**Compareble을 구현한 Person.java**   
+```java
+public class Person implements Comparable<Person> {
+	public String name;
+	public int age;
 
+	public Person(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
 
+	@Override
+	public int compareTo(Person o) {
 
+		return age - o.age; // 오름차순
+//		return o.age - age;	// 내림차순
+	}
+}
+```
 
+**PersonTest.java**   
+```java
+public class PersonTest {
 
+	public static void main(String[] args) {
 
+		TreeSet<Person> treeSet = new TreeSet<>();
+		
+		treeSet.add(new Person("홍길동",10));
+		treeSet.add(new Person("김자동",12));
+		treeSet.add(new Person("고길동",14));
 
+		Iterator<Person> it = treeSet.iterator();
+		
+		while (it.hasNext()) {
+			Person p = it.next();
+			System.out.println(p.name+"  " + p.age);
+		}
+	}
 
+}
+```
 
+**결과 화면**   
+![image](https://user-images.githubusercontent.com/84966961/124560482-cefb9200-de77-11eb-8221-809aa90ed112.png)
 
+   
+<br><br>
+<hr/>
 
+### String 정렬 구현 : Comparable
+   
+ 주소 기준으로도 해보았다.
+ 
+ 
 
+**주소로 정렬한 Person.java**   
+```java
+public class Person implements Comparable<Person> {
+	public String name;
+	public int age;
+	public String address;
 
+//	public Person(String name, int age) {
+//		super();
+//		this.name = name;
+//		this.age = age;
+//	}
 
+	
+	public Person(String name, int age, String address) {
+		super();
+		this.name = name;
+		this.age = age;
+		this.address = address;
+	}
 
+	@Override
+	public int compareTo(Person o) {
+		// String 정렬
+		return address.compareTo(o.address); // 오름차순
+//		return o.address.compareTo(address); // 오름차순
+		// 숫자 정렬
+//		return age - o.age; // 오름차순
+//		return o.age - age;	// 내림차순
+	}
+}
+```
 
+**PersonTest.java**   
+```java
+public class PersonTest {
+
+	public static void main(String[] args) {
+
+		TreeSet<Person> treeSet = new TreeSet<>();
+		
+		treeSet.add(new Person("홍길동",10,"서울"));
+		treeSet.add(new Person("김자동",12,"대전"));
+		treeSet.add(new Person("고길동",14,"부산"));
+
+		Iterator<Person> it = treeSet.iterator();
+		
+		while (it.hasNext()) {
+			Person p = it.next();
+			System.out.println(p.name+"  " + p.age+"  "+p.address);
+		}
+		
+		// 아이디어 노트 : String 구분 방법
+//		String aString = "a";
+//		String bString = "b";
+//		
+//		System.out.println(aString.compareTo(bString));
+
+	}
+
+}
+```
+
+<br><br>
+<hr/>
+
+## 교재 767p : 15.6 LIFO와 FIFO 컬렉션      
+    
+ 후입선출(LIFO : Last In First Out)은 나중에 넣은 객체가 먼저 빠져나가는 자료구조를 말한다. 반대로 선입선출(FIFO : First In First Out)은 먼저 넣은 객체가 먼저 빠져나가는 구조를 말한다. 컬렉션 프레임워크에는 LIFO 자료구조를 제공하는 스택(Stack) 클래스와 FIFO 자료구조를 제공하는 큐(Queue) 인터페이스를 제공하고 있다. 다음은 스택과 큐의 구조를 보여준다.
+
+![image](https://user-images.githubusercontent.com/84966961/124562410-f4899b00-de79-11eb-8e42-99e6953c4b26.png)   
+출처 : https://gohighbrow.com/stacks-and-queues/
 
 
 
