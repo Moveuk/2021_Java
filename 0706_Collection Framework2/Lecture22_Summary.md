@@ -999,16 +999,115 @@ public class PersonTest {
 ![image](https://user-images.githubusercontent.com/84966961/124562410-f4899b00-de79-11eb-8e42-99e6953c4b26.png)   
 출처 : https://gohighbrow.com/stacks-and-queues/
 
+![image](https://user-images.githubusercontent.com/84966961/124683299-b20e9f80-df07-11eb-80c0-883d363c5b25.png)
 
+   
+리턴 타입 | 메소드 | 설명 
+---|---|---
+E | push(E item) | 데이터를 스택에 입력
+E | pop() | 데이터 사용 후 삭제
+E | empty() | 스택 비어있는지 확인 (if 문에 `!stack.empty()` 이런 식으로 사용)
+E | peek() | 데이터 사용 후 삭제하지 않음.
 
+<br/><br>
+<hr>
 
+### 코드를 통한 스택 생성
 
+ 웹 브라우저의 뒤로가기 앞으로가기 기능의 로직을 한 번 짜보자.
 
+**BackForwardStack.java**
+```java
+package stacklifo;
 
+import java.util.EmptyStackException;
+import java.util.Stack;
 
+public class BackForwardStack {
+	
+	public static Stack back = new Stack<>();
+	public static Stack forward = new Stack<>();
+	
+	public static void main(String[] args) {
+		
+		goURL("1.네이버");
+		goURL("2.구글");
+		goURL("3.다음");
+		goURL("4.네이트");
+		
+		printURL();
+		
+		System.out.println("뒤로가기 forward 생김");
+		toBack();
+		printURL();
+		
+		System.out.println("네이버로 이동 : forward가 초기화.");
+		goURL("5.네이버");
+		printURL();
+		
+		System.out.println("뒤로가기 forward 생김");
+		toBack();
+		
+		printURL();
+	}
+	
+	public static void goURL(String url) {
+		back.push(url);
+		if (!forward.empty()) {
+			forward.clear();
+		}
+	}
+	
+	public static void goForward() {
+		if (!forward.empty()) {
+			back.push(forward.pop());
+		}
+		
+	}
+	
+	public static void toBack() {
+		if (!back.empty()) {
+			back.peek();
+			forward.push(back.pop());
+			// back.pop()의 리턴은 지우는 url인가봄.
+		    /**
+		     * Removes the object at the top of this stack and returns that
+		     * object as the value of this function.
+		     *
+		     * @return  The object at the top of this stack (the last item
+		     *          of the {@code Vector} object).
+		     * @throws  EmptyStackException  if this stack is empty.
+		     */
+//		    public synchronized E pop() {
+//		        E       obj;
+//		        int     len = size();
+//
+//		        obj = peek();
+//		        removeElementAt(len - 1);
+//
+//		        return obj;  // 지우는 obj를 리턴함.
+//		    }
+		}
+	}
+	
+	public static void printURL() {
+		System.out.println("--------------------");
+		System.out.println();
+		
+		System.out.println("현재 위치 : "+back.lastElement());
+		System.out.println("현재 위치 : "+back.peek());
+		
+		System.out.println("back"+back);
+		System.out.println("forward"+forward);
+		
+		System.out.println();
+		System.out.println("--------------------");
+	}
+}
+```
 
-
-
+**결과 화면**   
+![image](https://user-images.githubusercontent.com/84966961/124687357-b0e17080-df0f-11eb-84bd-bea93bd1f82b.png)
 
 
 
