@@ -11,7 +11,7 @@ Key Word : 컬렉션 프레임워크, Set, HashSet, Map, HashMap, HashTable, Pro
 
 **HashSet 흐름도**
 
-![image](https://user-images.githubusercontent.com/84966961/124412399-633afb80-dd89-11eb-9213-1e35b73caa9e.png)   
+![image](https://user-images.githubusercontent.com/84966961/124692906-6a910f00-df19-11eb-98cf-428c65757e1b.png)   
    
  문자열을 HashSet에 저장할 경우, 같은 문자열을 갖는 String 객체는 동등한 객체로 간주되고 다른 문자열을 갖는 String 객체는 다른 객체로 간주되는데, 그 이유는 String 클래스가 hashCode()와 equals() 메소드를 재정의해서 같은 문자열일 경우 hashCode()의 리턴값을 같게, equals()의 리턴값은 true가 나오도록 했기 때문이다.   
 
@@ -108,20 +108,6 @@ public class Member {
  ## 교재 736p : 15.4 Map 컬렉션   
      
  Map 컬렉션은 키(Key)와 값(Value)으로 구성된 Entry 객체를 저장하는 구조를 가지고 있다. 여기서 키와 값은 모두 객체이다. 키는 중복 저장될 수 없지만 값은 중복 저장될 수 있다. 만약 기존에 저장된 키와 동일한 키로 값을 저장하면 기존의 값은 없어지고 새로운 값으로 대치된다.    
-
-   
-![image](https://user-images.githubusercontent.com/84966961/124526963-3cd79780-de3f-11eb-8d95-73bda85e4f94.png)   
-    
- Map 컬렉션에는 HashMap, Hashtable, LinkedHashMap, Properties, TreeMap 등이 있다. 다음은 Map 컬렉션에서 공통적으로 사용 가능한 Map 인터페이스들의 메소드들이다.   
-
-![image](https://user-images.githubusercontent.com/84966961/124526959-334e2f80-de3f-11eb-9932-045f988dd410.png)
-   
- 객체를 추가 할 때는 `put(K key,V value)`을 이용하여 추가한다. 
-   
- 키를 리턴할 때는 Set을 값을 리턴할 때는 get을 사용하여 객체 검색을 한다.   
-    
- 삭제할 때는 `remove(Object Key)`를 사용한다.
-
    
 ![image](https://user-images.githubusercontent.com/84966961/124526963-3cd79780-de3f-11eb-8d95-73bda85e4f94.png)   
     
@@ -181,7 +167,7 @@ while(entryIterator.hasNext(0) {
      
  HashMap은 Map 인터페이스를 구현한 대표적인 Map 컬렉션이다. HashMap의 키로 사용할 객체는 hashCode()와 equals() 메소드를 재정의해서 동등 객체가 될 조건을 정해야 한다. 동등 객체, 즉 동일한 키가 될 조건은 hashCode()의 리턴값이 같아야 하고, equals() 메소드가 true를 리턴해야 한다.   
 
-![image](https://user-images.githubusercontent.com/84966961/124412399-633afb80-dd89-11eb-9213-1e35b73caa9e.png)
+![image](https://user-images.githubusercontent.com/84966961/124692871-551be500-df19-11eb-8068-d37910e888df.png)
 
  주로 키 타입은 String 을 많이 사용하는데, String은 문자열이 같을 경우 동등 객체가 될 수 있도록 hashCode()와 equals() 메소드가 재정의되어 있다. HashMap을 생성하기 위해서는 키 타입과 값 타입을 파라미터로 주고 기본 생성자를 호출하면 된다.   
  
