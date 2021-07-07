@@ -7,7 +7,7 @@ Learning about basic Java
 
 <img src="https://user-images.githubusercontent.com/84966961/121864993-6fa6d800-cd38-11eb-82ed-16686a536294.png" width="40%">
 
-## < 목차 > 정리중 ...
+## < 목차 >
 1. 20210603 Lecture01 : Hello Android~   
 	
 2. 20210604 Lecture02     
@@ -53,8 +53,10 @@ Learning about basic Java
 22. 20210706 Lecture22   
 	컬렉션 프레임워크, Set, HashSet, Map, HashMap, HashTable, Properties, Tree, TreeSet, TreeMap, Comparable, Comparator, FIFO, LIFO   
 23. 20210707 Lecture23    
-	
+	JDBC(Java DataBase Connectivity), build path, libraries, SQL, JAR, CRUD, Create, Insert, Delete, Update
 24. 20210709 Lecture24 
+
+25. 20210709 Lecture25 
 	
 
 
