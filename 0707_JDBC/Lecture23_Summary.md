@@ -1,5 +1,5 @@
 # JDBC (Java DataBase Connectivity) 
-Key Word : JDBC(Java DataBase Connectivity), build path, libraries, SQL, JAR, 
+Key Word : JDBC(Java DataBase Connectivity), build path, libraries, SQL, JAR, CRUD, Create, Insert, Delete, Update
 
 
 <hr/>
