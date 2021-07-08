@@ -54,8 +54,8 @@ Learning about basic Java
 	컬렉션 프레임워크, Set, HashSet, Map, HashMap, HashTable, Properties, Tree, TreeSet, TreeMap, Comparable, Comparator, FIFO, LIFO   
 23. 20210707 Lecture23    
 	JDBC(Java DataBase Connectivity), build path, libraries, SQL, JAR, CRUD, Create, Insert, Delete, Update
-24. 20210709 Lecture24 
-
+24. 20210708 Lecture24 
+	Sequence Insert Delete Update Select
 25. 20210709 Lecture25 
 	
 
