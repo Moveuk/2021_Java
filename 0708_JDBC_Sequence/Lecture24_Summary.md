@@ -1,4 +1,4 @@
-# Sequence
+# Lecture24 Sequence
 Key Word : Sequence    
 
 <hr/>
