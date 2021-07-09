@@ -297,22 +297,128 @@ case 2 :
 
 
 
+```java
+	case 4 :	//	학생정보수정
+		System.out.println("=====학생 정보 수정=====");
+		System.out.println();
+		System.out.println("수정하고 싶은 학생의 번호를 넣어주세요");
+		System.out.print(" >> ");
+		no = sc.nextInt();
+		System.out.println();
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(url,id,pw);
+
+			sql = "select rownum, a.* from student a where no = ? order by no desc";
+			// rownum, * 라고 하면 어느 테이블의 전부인지를 인식하지 못하고 a라는 별칭을 이용해서 a의 모든 칼럼을 불러오게끔 해야한다.
+
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, no);
+			// 해당 쿼리 내용을 rs 에 저장
+			rs = psmt.executeQuery();
+
+			// isList 값으로 값이 있는지 없는지에 따라 출력되는 정보 다르게 표현.
+			boolean isList = false;
+
+			// while 문을 통해 칼럼을 넘겨가며(rs.next()) rs에 저장된 DB를 출력시켜줌.
+			System.out.println("row\t번호\t이름\t나이\t번호\t\t이메일");
+			while (rs.next()) {
+				int row = rs.getRow();
+				no = rs.getInt(2);
+				name = rs.getString(3);
+				age = rs.getInt(4);
+				phone = rs.getString(5);
+				email = rs.getString(6);
+
+				System.out.println(row + 
+						"\t" + no + "\t"+ name + "\t"+ age + "\t"+ phone +"\t"+ email);
+				isList = true ;
+			} // print while end
+
+			if (!isList) {
+				System.out.println("검색된 학생이 없습니다.\n");
+				break;
+			}
+
+			System.out.println();
+
+			System.out.println("변경하실 정보를 선택해 주세요. \n 1.이름 2.나이 3.연락처 4.이메일 5.전체변경 ");
+			System.out.print(" >> ");
+			int select = sc.nextInt();
+
+			if (select == 1) {
+				System.out.print("\n 변경할 이름을 적어주세요.\n >> ");
+				name = sc.next();
+			} else if (select == 2) {
+				System.out.print("\n 변경할 나이를 적어주세요.\n >> ");
+				age = sc.nextInt();
+			} else if (select == 3) {
+				System.out.print("\n 변경할 연락처을 적어주세요.\n >> ");
+				phone = sc.next();
+			} else if (select == 4) {
+				System.out.print("\n 변경할 이메일를 적어주세요.\n >> ");
+				email = sc.next();
+			} else if (select == 5) {
+				System.out.print("\n 변경할 이름을 적어주세요.\n >> ");
+				name = sc.next();
+				System.out.print("\n 변경할 나이를 적어주세요.\n >> ");
+				age = sc.nextInt();
+				System.out.print("\n 변경할 연락처을 적어주세요.\n >> ");
+				phone = sc.next();
+				System.out.print("\n 변경할 이메일를 적어주세요.\n >> ");
+				email = sc.next();
+			}
+
+			sqlUpdate = "update student ";
+			sqlUpdate += "set name = ?,age = ?, phone = ?, email = ? where no = ?";
+			psmt2 = con.prepareStatement(sqlUpdate);
+
+			psmt2.setString(1, name);
+			psmt2.setInt(2, age);
+			psmt2.setString(3, phone);
+			psmt2.setString(4, email);
+			psmt2.setInt(5, no);
+
+			// executeUpdate()는 리턴값으로 업데이트 횟수를 보내줌. 0보다 크면 데이터 처리 성공
+			int cnt = psmt.executeUpdate();
+			if (cnt>0) {
+				System.out.println("학생 정보 변경 성공");
+			} else {
+				System.out.println("학생 정보 변경 실패");
+			}
 
 
+			// 변경 후 확인
+			rs = psmt.executeQuery();
+
+			// while 문을 통해 칼럼을 넘겨가며(rs.next()) rs에 저장된 DB를 출력시켜줌.
+			System.out.println("row\t번호\t이름\t나이\t번호\t\t이메일");
+			while (rs.next()) {
+				int row = rs.getRow();
+				no = rs.getInt(2);
+				name = rs.getString(3);
+				age = rs.getInt(4);
+				phone = rs.getString(5);
+				email = rs.getString(6);
+
+				System.out.println(row + 
+						"\t" + no + "\t"+ name + "\t"+ age + "\t"+ phone +"\t"+ email);
+			} // print while end
+			System.out.println();
 
 
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 
-
-
-
-
-
-
-
-
-
-
+		break;
+```
 
 
 
