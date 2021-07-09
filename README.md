@@ -56,9 +56,6 @@ Learning about basic Java
 	JDBC(Java DataBase Connectivity), build path, libraries, SQL, JAR, CRUD, Create, Insert, Delete, Update
 24. 20210708 Lecture24     
 	Sequence Insert Delete Update Select    
-25. 20210709 Lecture25     
-
-26. 20210712 Lecture26    
 	
-
+...
 
